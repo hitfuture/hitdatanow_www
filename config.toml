@@ -45,7 +45,11 @@ paginate = 10
     url = "https://github.com/hitfuture"
     pre = "<i class='fa fa-2x fa-github'></i>"
 
- 
+[[menu.topbar]]
+    weight = 1
+    name = "LinkedIn"
+    url = "https://linkedin.com/in/brettrtaylor"
+    pre = "<i class='fa fa-2x fa-linkedin'></i>" 
 
 [[menu.topbar]]
     weight = 3
@@ -53,11 +57,11 @@ paginate = 10
     url = "http://twitter.com/hitfuture"
     pre = "<i class='fa fa-2x fa-twitter'></i>"
 
-[[menu.topbar]]
-    weight = 4
-    name = "Email"
-    url = "mailto:info@hitfuturenow.com"
-    pre = "<i class='fa fa-2x fa-envelope'></i>"
+#[[menu.topbar]]
+#    weight = 4
+#    name = "Email"
+#    url = "mailto:info@hitfuturenow.com"
+#    pre = "<i class='fa fa-2x fa-envelope'></i>"
 
 [params]
     viewMorePostLink = "/blog/"
@@ -110,7 +114,7 @@ paginate = 10
 # Enable or disable top bar with social icons
 [params.topbar]
     enable = true
-    text = """<p class="hidden-sm hidden-xs">Contact us on 208-598-6509 or info@hitfuturenow.com</p>
+    text = """<p class="hidden-sm hidden-xs">Contact us on LinkedIn or  info@hitfuturenow.com</p>
       <p class="hidden-md hidden-lg"><a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>
       <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
       </p>
@@ -146,15 +150,15 @@ paginate = 10
     enable = true
     icon = "fa fa-file-code-o"
     title = "Do you want to see more?"
-    subtitle = "We have prepared for you more than 40 different HTML pages, including 5 variations of homepage."
-    link_url = "#"
-    link_text = "Check other homepages"
+    subtitle = "We are ready to help you go to the next step."
+    link_url = "/blog/"
+    link_text = "Check out our blog posts"
 
 [params.clients]
     enable = false
     # All clients are defined in their own files. You can find example items
     # at 'exampleSite/data/clients'.
-    # For more informtion take a look at the README.
+    # For more information take a look at the README.
     title = "Our Clients"
     subtitle = ""
 
