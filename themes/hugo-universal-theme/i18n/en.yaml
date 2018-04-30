@@ -1,7 +1,7 @@
 - id: home
   translation: "Home"
 
-- id: templateBy
+- id: setemplateBy
   translation: "Template by"
 
 - id: portedBy

@@ -17,27 +17,7 @@
       <pubDate>Mon, 30 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/2018/04/30/2018-04-30-hit-future-now/</guid>
-      <description>I have wanted to make a blog post to describe how I think we can extend the power of the Healthcare Information Technology environment. My focus has been in the development and the management of Healthcare I.T. for over 30 years.</description>
-    </item>
-    
-    <item>
-      <title>HIT Future Now</title>
-      <link>/post/hit-future-now/</link>
-      <pubDate>Mon, 30 Apr 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/hit-future-now/</guid>
-      <description>I have wanted to make a blog post to describe how I think we can extend the power of the Healthcare Information Technology environment. My focus has been in the development and the management of Healthcare I.T. for over 30 years.</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>/blog/2018/04/29/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Sun, 29 Apr 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2018/04/29/2015-07-23-r-rmarkdown/</guid>
-      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+      <description>I have wanted to make a blog post to describe how I think we can extend the power of the Healthcare Information Technology environment. My focus has been on the development and the management of Healthcare I.T. since the late 1980’s. I have worked for several Health Systems, including Sutter Health, St. Luke’s Idaho, Tahoe Forest as an employee and as a consultant, I have worked with dozen’s of other Health Systems.</description>
     </item>
     
     <item>
@@ -64,8 +44,7 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/faq/</guid>
-      <description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
-1. WHAT TO DO IF I HAVE STILL NOT RECEIVED THE ORDER? Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</description>
+      <description>1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?  ASSESSMENT OF A HEALTHCARE I.T. DEPARTMENT DATA MANAGEMENT DATA ANALYSIS WITH MACHINE LEARNING PROGRAMMING IN THE LANGUAGE R ENABLING USE OF NEO4J GRAPH DATABASE  2. DO YOU HAVE RESOURCES AVAILABLE TO HELP US? We partner with many other consulting groups that are focused in the industry. One of our strengths is finding the right resources to help you move forward.</description>
     </item>
     
   </channel>

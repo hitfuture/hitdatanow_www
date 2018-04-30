@@ -1,0 +1,5 @@
+weight: 5
+name: "R Statistics"
+icon: "fa fa-4x  fa-registered"
+#image: "img/clients/customer-6.png" 
+description: "Moving forward in Healthcare requires Analytics being applied to the data that you have access to. The language R is one of the top 2 languages used in this arena.  In fact, this website was built on a toolset that was developed by R-Studio to allow simple work occur for data scientist and statiticians.  The language R has over 12000 packages that were designed to enable Data Scientists and statiticians to rapidly take on analytics and Machine Learning. <br> The language has not only grown over the last 30 years, the environment platforms have also.  <a href='https://www.rstudio.com'target=_blank>R-Studio</a>, <a href='https://docs.microsoft.com/en-us/machine-learning-server/rebranding-microsoft-r-server'target=_blank>Microsoft R Analytics</a>, and <a href='https://shinyproxy.io'target=_blank>Open Analytics</a> have developed some great environments that enable you to work with this environment in the enterprise."

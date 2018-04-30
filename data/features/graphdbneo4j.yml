@@ -1,0 +1,5 @@
+weight: 6
+name: "Neo4j Graph Databases"
+icon: "fa fa-4x  fa-asterisk"
+#image: "img/clients/customer-6.png" 
+description: "Native Graph databases enable understanding of relationships between concepts and observations better than the past database structures that we have used.  Success in Healthcare is all about understanding the relationships.  Please take a look at Neo4j graph database."
