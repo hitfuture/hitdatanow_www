@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Graph Models on HIT Future Solutions</title>
+    <link>/tags/graph-models/</link>
+    <description>Recent content in Graph Models on HIT Future Solutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 30 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/graph-models/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Graph Databases that Supports Healthcare!</title>
+      <link>/blog/2018/04/30/2018-05-04-graph-databases-that-supports-healthcare/</link>
+      <pubDate>Mon, 30 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/04/30/2018-05-04-graph-databases-that-supports-healthcare/</guid>
+      <description>This is a test</description>
+    </item>
+    
+  </channel>
+</rss>
