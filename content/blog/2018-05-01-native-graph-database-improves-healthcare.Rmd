@@ -1,14 +1,20 @@
 ---
-title: Native Graph Database improves Healthcare
+title: Native Graph Database, Neo4j, improves Healthcare
 author: Brett Taylor
 date: '2018-05-01'
-slug: native-graph-database-improves-healthcare
 categories:
   - Data
 tags:
-  - Neo4j
   - Database
-banner: "img/banners/neo4j_logo.png"
-
+  - Neo4j
+slug: native-graph-database-improves-healthcare
+banner: img/banners/neo4j_logo.png
 ---
-This is a story about why graph databases matter.
+Data are one of the most import resources in Healthcare to enable the Triple Aim.  If you not familiar with the triple aim, it is focused on:
+* Better Health
+* Better Care
+* Lower Cost
+
+Healthcare Information Technology will help to drive forward the application of data analytics to enable the tripple aim.  Making good solutions in this area requires that we understand the connections between our data.   
+
+
