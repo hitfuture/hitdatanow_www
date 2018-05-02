@@ -1,0 +1,252 @@
+---
+title: "Referral Patterns in Healthcare with Graph Db's"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+library(RNeo4j)
+library(tidyverse)
+library(igraph)
+library(visNetwork)
+userid <- "neo4j"
+password <- "neo4j_is_nice"
+graph <- RNeo4j::startGraph( "http://172.20.0.1:7474/db/data/",
+  username = userid,
+  password = password)
+
+  
+
+       qry <- '  
+ MATCH  pth1 = (pg:Procedure_Group{name:{specialty_proc_group_name}})<-[isMembRel:IS_MEMBER_OF]-(ps:Procedure_Summary)
+<-[hasRel:HAS_A]-(specialist:Provider)-[ipo:IS_PART_OF]->(g:Group{name:{group_name}}) 
+USING INDEX g:Group(name)
+USING INDEX pg:Procedure_Group(name)
+WITH specialist
+ 
+MATCH
+pth2=(specialist)-[ps1:SHARED]->(sp:Shared_Patient)<-[ps2:SHARED]-(referring:Provider)-[ica:IS_CLASSIFED_AS]->(pc2:Provider_Class) 
+WHERE pc2.name =  {provider_class_name} AND sp.year = {year} AND sp.max_days = {max_days}
+
+with DISTINCT specialist,referring
+MATCH pth3=(referring)--(pr:Procedure_Referral)--(pg:Procedure_Group{name:{specialty_proc_group_name}}) //P2 refers Mohs Surgery  Procedures
+  
+with distinct specialist,referring,pr
+ RETURN    specialist.npi AS SURGEON_NPI, specialist.provider_last_name_legal_name  + ", " +  specialist.provider_first_name AS
+      SURGEON_NAME,
+       specialist.provider_business_practice_location_address_state_name AS SURGEON_STATE,
+       referring.npi  AS REF_DERM_NPI,  referring.provider_last_name_legal_name  + ", " +  referring.provider_first_name  AS REF_DERM_NAME,
+       referring.provider_business_practice_location_address_state_name AS REF_STATE,
+
+      sum(toInt(pr.patient_count))  AS REF_PT_CNT,sum(toInt( pr.transaction_line_service_total)) AS REF_SRVC_CNT
+'
+      our_group <- "Florida State Providers"
+            our_group <- "All Dermatologist"
+
+        results <- cypher(graph = graph,qry,group_name=our_group,year=2014,max_days = 90,specialty_proc_group_name="Mohs Surgery",provider_class_name = "Dermatology")
+      
+      surgeons <- results%>%select(SURGEON_NPI,SURGEON_NAME,SURGEON_STATE)%>%distinct()
+      ref_derms <- results%>%select(REF_DERM_NPI,REF_DERM_NAME,REF_STATE)%>%distinct()
+      names(surgeons) <- c('id','label','state' )
+      names(ref_derms) <- c('id','label','state' )
+      
+      nodes <- distinct(rbind(ref_derms,surgeons))
+      
+      
+      edges <- results%>%select(REF_DERM_NPI ,SURGEON_NPI ,REF_SRVC_CNT)
+      names(edges) <- c("from","to" ,"weight")
+      
+      
+      ig = graph_from_data_frame(edges, directed=F)
+      
+      nodes$value <- betweenness(ig)
+      
+      clusters = cluster_edge_betweenness(ig,directed = TRUE)
+      nodes$group = clusters$membership
+      
+      
+      surgeons_shaped <- nodes%>%filter(id %in% surgeons$id & !id %in% ref_derms$id)%>%mutate(shape = "square")
+      ref_derms_shaped <- nodes%>%filter(id %in% ref_derms$id & !id %in% surgeons$id)%>%mutate(shape ="diamond")
+      both_shaped <- nodes%>%filter(id %in% surgeons$id & id %in% ref_derms$id )%>%mutate(shape ="triangle")
+      
+      nodes <- rbind(surgeons_shaped,ref_derms_shaped,both_shaped)%>%arrange(label)
+       
+      legend_nodes <- nodes%>%mutate(shape=shape,label=ifelse(shape=="diamond","Referring Dermatologist",ifelse(shape=="square","Mohs Surgeon","Referring Derm & Surgeon")))%>%
+        select(shape,label)%>%distinct()
+      referral_info <- results%>%group_by(SURGEON_NPI,SURGEON_NAME,REF_DERM_NPI,REF_DERM_NAME)%>%summarise(`Patient Count`=sum(as.integer(REF_PT_CNT)),SRVC_COUNT=sum(as.integer(REF_SRVC_CNT)))
+       referal_pattern <- list(nodes=nodes, edges =edges,legends= legend_nodes ,referral_info=referral_info)
+       
+       
+      
+    
+```
+United States {data-navmenu="Region"}
+=====================================
+
+### All Dermatologists
+
+```{r}
+vn <-  visNetwork(nodes,edges = edges, main =  "U.S. Dermatologist")%>%
+       visEdges(arrows="to")%>%
+        visLegend(useGroups = FALSE,addNodes = legend_nodes )%>%
+       visInteraction(navigationButtons = TRUE)%>%
+       visOptions(nodesIdSelection = TRUE)%>%
+       visIgraphLayout()
+vn
+```
+ 
+ 
+
+California {data-navmenu="Region"}
+=====================================   
+ 
+ 
+```{r}
+
+
+ idaho_derms <- ref_derms%>%filter(state == "CA")
+      
+      
+      edges <- results%>%select(REF_DERM_NPI ,SURGEON_NPI ,REF_SRVC_CNT)%>%filter(REF_DERM_NPI %in% idaho_derms$id )
+       idaho_related_surgeons <- surgeons %>%filter(  id %in% edges$SURGEON_NPI)
+
+  nodes <- distinct(rbind(idaho_derms,idaho_related_surgeons))
+
+      names(edges) <- c("from","to" ,"weight")
+      
+      
+      ig = graph_from_data_frame(edges, directed=F)
+      
+      nodes$value <- betweenness(ig)
+      
+      clusters = cluster_edge_betweenness(ig,directed = TRUE)
+      nodes$group = clusters$membership
+      
+      
+      surgeons_shaped <- nodes%>%filter(id %in% surgeons$id & !id %in% ref_derms$id)%>%mutate(shape = "square")
+      ref_derms_shaped <- nodes%>%filter(id %in% ref_derms$id & !id %in% surgeons$id)%>%mutate(shape ="diamond")
+      both_shaped <- nodes%>%filter(id %in% surgeons$id & id %in% ref_derms$id )%>%mutate(shape ="triangle")
+      
+      nodes <- rbind(surgeons_shaped,ref_derms_shaped,both_shaped)%>%arrange(label)
+       
+      legend_nodes <- nodes%>%mutate(shape=shape,label=ifelse(shape=="diamond","Referring Dermatologist",ifelse(shape=="square","Mohs Surgeon","Referring Derm & Surgeon")))%>%
+        select(shape,label)%>%distinct()
+      referral_info <- results%>%group_by(SURGEON_NPI,SURGEON_NAME,REF_DERM_NPI,REF_DERM_NAME)%>%summarise(`Patient Count`=sum(as.integer(REF_PT_CNT)),SRVC_COUNT=sum(as.integer(REF_SRVC_CNT)))
+       referal_pattern <- list(nodes=nodes, edges =edges,legends= legend_nodes ,referral_info=referral_info)
+       
+```
+
+```{r}
+vn <-  visNetwork(nodes,edges = edges, main =  "California Dermatologists")%>%
+       visEdges(arrows="to")%>%
+        visLegend(useGroups = FALSE,addNodes = legend_nodes )%>%
+       visInteraction(navigationButtons = TRUE)%>%
+       visOptions(nodesIdSelection = TRUE)%>%
+       visIgraphLayout()
+vn
+``` 
+ 
+
+Florida {data-navmenu="Region"}
+=====================================   
+  
+ 
+```{r}
+
+
+ idaho_derms <- ref_derms%>%filter(state == "FL")
+      
+      
+      edges <- results%>%select(REF_DERM_NPI ,SURGEON_NPI ,REF_SRVC_CNT)%>%filter(REF_DERM_NPI %in% idaho_derms$id )
+       idaho_related_surgeons <- surgeons %>%filter(  id %in% edges$SURGEON_NPI)
+
+  nodes <- distinct(rbind(idaho_derms,idaho_related_surgeons))
+
+      names(edges) <- c("from","to" ,"weight")
+      
+      
+      ig = graph_from_data_frame(edges, directed=F)
+      
+      nodes$value <- betweenness(ig)
+      
+      clusters = cluster_edge_betweenness(ig,directed = TRUE)
+      nodes$group = clusters$membership
+      
+      
+      surgeons_shaped <- nodes%>%filter(id %in% surgeons$id & !id %in% ref_derms$id)%>%mutate(shape = "square")
+      ref_derms_shaped <- nodes%>%filter(id %in% ref_derms$id & !id %in% surgeons$id)%>%mutate(shape ="diamond")
+      both_shaped <- nodes%>%filter(id %in% surgeons$id & id %in% ref_derms$id )%>%mutate(shape ="triangle")
+      
+      nodes <- rbind(surgeons_shaped,ref_derms_shaped,both_shaped)%>%arrange(label)
+       
+      legend_nodes <- nodes%>%mutate(shape=shape,label=ifelse(shape=="diamond","Referring Dermatologist",ifelse(shape=="square","Mohs Surgeon","Referring Derm & Surgeon")))%>%
+        select(shape,label)%>%distinct()
+      referral_info <- results%>%group_by(SURGEON_NPI,SURGEON_NAME,REF_DERM_NPI,REF_DERM_NAME)%>%summarise(`Patient Count`=sum(as.integer(REF_PT_CNT)),SRVC_COUNT=sum(as.integer(REF_SRVC_CNT)))
+       referal_pattern <- list(nodes=nodes, edges =edges,legends= legend_nodes ,referral_info=referral_info)
+       
+```
+
+```{r}
+vn <-  visNetwork(nodes,edges = edges, main =  "Florida Dermatologists")%>%
+       visEdges(arrows="to")%>%
+        visLegend(useGroups = FALSE,addNodes = legend_nodes )%>%
+       visInteraction(navigationButtons = TRUE)%>%
+       visOptions(nodesIdSelection = TRUE)%>%
+       visIgraphLayout()
+vn
+``` 
+
+
+
+Pacific Northwest {data-navmenu="Region"}
+=====================================   
+  
+ 
+```{r}
+
+
+ idaho_derms <- ref_derms%>%filter(state %in% c("OR","WA","ID"))
+      
+      
+      edges <- results%>%select(REF_DERM_NPI ,SURGEON_NPI ,REF_SRVC_CNT)%>%filter(REF_DERM_NPI %in% idaho_derms$id )
+       idaho_related_surgeons <- surgeons %>%filter(  id %in% edges$SURGEON_NPI)
+
+  nodes <- distinct(rbind(idaho_derms,idaho_related_surgeons))
+
+      names(edges) <- c("from","to" ,"weight")
+      
+      
+      ig = graph_from_data_frame(edges, directed=F)
+      
+      nodes$value <- betweenness(ig)
+      
+      clusters = cluster_edge_betweenness(ig,directed = TRUE)
+      nodes$group = clusters$membership
+      
+      
+      surgeons_shaped <- nodes%>%filter(id %in% surgeons$id & !id %in% ref_derms$id)%>%mutate(shape = "square")
+      ref_derms_shaped <- nodes%>%filter(id %in% ref_derms$id & !id %in% surgeons$id)%>%mutate(shape ="diamond")
+      both_shaped <- nodes%>%filter(id %in% surgeons$id & id %in% ref_derms$id )%>%mutate(shape ="triangle")
+      
+      nodes <- rbind(surgeons_shaped,ref_derms_shaped,both_shaped)%>%arrange(label)
+       
+      legend_nodes <- nodes%>%mutate(shape=shape,label=ifelse(shape=="diamond","Referring Dermatologist",ifelse(shape=="square","Mohs Surgeon","Referring Derm & Surgeon")))%>%
+        select(shape,label)%>%distinct()
+      referral_info <- results%>%group_by(SURGEON_NPI,SURGEON_NAME,REF_DERM_NPI,REF_DERM_NAME)%>%summarise(`Patient Count`=sum(as.integer(REF_PT_CNT)),SRVC_COUNT=sum(as.integer(REF_SRVC_CNT)))
+       referal_pattern <- list(nodes=nodes, edges =edges,legends= legend_nodes ,referral_info=referral_info)
+       
+```
+
+```{r}
+vn <-  visNetwork(nodes,edges = edges, main =  "Pacific Northwest")%>%
+       visEdges(arrows="to")%>%
+        visLegend(useGroups = FALSE,addNodes = legend_nodes )%>%
+       visInteraction(navigationButtons = TRUE)%>%
+       visOptions(nodesIdSelection = TRUE)%>%
+       visIgraphLayout()
+vn
+``` 
