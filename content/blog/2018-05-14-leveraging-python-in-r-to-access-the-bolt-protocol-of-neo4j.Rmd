@@ -1,0 +1,207 @@
+---
+title: Leveraging Python in R to use the Neo4j Bolt driver
+author: Brett Taylor
+date: '2018-05-17'
+categories:
+  - Development
+tags:
+  - Neo4j
+  - Python
+  - R
+slug: leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j
+banner: "img/rp.png"
+
+---
+
+
+```{r setup, include=FALSE}
+library(reticulate)
+neo4j <- reticulate::import(module = "neo4j.v1")
+knitr::knit_engines$set(python=reticulate::eng_python)
+
+```
+
+###Neo4j in the language R
+
+I have been fortunate to work with the Neo4j graph database using the language R over the last two years.  A former data scientist that worked for Neo4j, Nicole White,  implemented the package RNeo4j and released it in 2015.  This solution enabled R developers and data scientists to access the Neo4j database in the R language.  The package uses the Neo4j REST API and then process the data in a data.frame, tabular format, which is the norm in the language R.   I started to use this solution in products that were based in Shiny, a R web environment, and queried the Neo4j database as a data source for the application.   The Neo4j library for R is very good.  It does have some limitations due to the focus on tabular data and the use of the REST API.   I would say that if Nicole hadn't released the RNeo4j package, I wouldn't have been able to use Neo4j in the environment I was developing in.
+
+Neo4j evolved significantly in April of 2016 with the release of Neo4j 3.0.  This release standardized the method of communicating with the database by creating the Bolt protocol which provides a very efficient and secure binary interface to the database.  Neo4j provided Bolt drivers for Java, JavaScript, Python and C# as part of the release so that this is standardized in the most used languages.  Communities began working on this protocol for other languages and some have been released.  Version 3.1 was released in December of 2016 and had a lot of new features including the Enterprise Casual Cluster.  This solution allowed a very modern scalable database with multiple nodes and it requires the bolt protocol for access to the database.  
+
+Bolt supports a load balancing solution that allows you to query the cluster and if a node in the cluster fails it will redirect your query to another node.  The RNeo4j driver did not support the bolt protocol and I was trying to see how we could get the next version of  RNeo4j to support bolt and the enterprise database.  I was very fortunate to have a great software developer working with me that took on implementing a new version of RNeo4j that supports Bolt and he used the language RUST to integrate a Neo4j C library.  This version of RNeo4j is now in Nicole White's GitHub repository.  Unfortunately the package is no longer in the R CRAN package system so it is not accessible through install.packages function in R.   The way to use this latest version RNeo4j is using devtools.
+
+```
+devtools::install_github("nicolewhite/RNeo4j")
+```
+Support of this package is minimal and we need to be focused on getting the next Neo4j driver for R up and running.
+
+### Next Generation Neo4j in R
+![rstats-neo4j](/blog/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j_files/neo4j-rstats.png){width=100px height=100px}
+I spend time on Slack in the Neo4j community and found out that there is an "neo4j=rstats" channel focused on using Neo4j in R.  One of the interesting areas of this channel is that there is a team of great R data scientists named ThinkR, @thinkR_fr, focused on creatinga new way of accessing the Neo4j platform from within the language R.  One of the first packages they built allows integration of Neo4j in the R Markdown files.  It is very much like using SQL in the RStudio environment.   Colin Fay, data analyst, is driving this work right now and is looking for the R community to support the work they are doing.  You can experiment with these new packages by installing them from  https://github.com/neo4j-rstats.  I think the community should invest in this area to make the Graph Database part of the R environment. Right now, the driver does not support the Bolt protocol and I'm going to show a workaround in this post on how to integrate Neo4j via the language Python in the R environment.
+ 
+
+###Using Python in the language R
+Python is now directly acessible in the language R.  RStudio has supported the use of Python in their Integrated Development Environment (IDE) for quite a while.  While it was good to be able to access Python in the IDE, there wasn't a solution to easily integrate Python within the language R.  This is no longer true.  There is a new R package that has been released by RStudio  on March 26, 2018 named reticulate.  Reticulate allows you to embed Python code and objects within your R code.  The reason this matters is the Neo4j company created the Python Neo4j driver and supports it for all updates.  Embedding this driver within the R environment is possible now and will provide a workaround until more development occurs to support a robust Neo4j driver in R.
+
+
+### R Dependencies to integrate Python
+
+The R language is highly dependent upon other languages including C++, Fortran, and C.  Operating system packages are also a common dependency.  Running the language R on Ubuntu 16.4 Linux O/S, you will have to install certain packages to integrate R packages. It is very similar in the Mac OS X environment. Windows tends to have binary installations which requires less dependencies.   Most R programmers know that integration is built in through special packages that allow easy access to other languages.  Below are some of the requirements for accessing Neo4j in R through the official Python Neo4j driver.
+
+#### O/S Dependencies
+
+One of the main dependencies of course is that you have the language Python installed on your computer.  It is recommended that you use Python 3.5 or later.  Installing this on Linux is pretty straight forward.  Ubuntu based installation requires:
+
+```
+sudo apt-get update
+sudo apt-get install python3 \
+           python3-pip
+sudo pip3 upgrade
+sudo pip3 install --upgrade pip
+```
+
+
+Installing on Windows requires a download and there is a YouTube video that will show you how to do this if you haven't done this yet.
+
+https://www.youtube.com/watch?v=dX2-V2BocqQ
+
+
+#### R Dependencies
+
+There is one major dependency required to integrate Python in the language R.  This package mentioned before allows you to access Python within your R environment.  It provides access to Python functions, data, and also Python objects which enables the ability to call the Python methods in R.   This is a pretty amazing expansion of R since a lot of Data Science tools are now built in the language Python.  Installing the Reticulate from CRAN is as follows:
+
+``` 
+install.packages("reticulate")
+```
+
+
+#### Python Dependencies
+
+There is one package you need to install in order to use the Python Neo4j driver in R.
+
+* neo4j-driver
+ 
+
+
+There are 2 ways to install Python packages in the R environment.   One way is to install it through the command line. 
+
+
+```{}
+pip3 install neo4j-driver
+```
+
+The alternative is to install the Python package using the R reticulate function.  Reticulate will install in two _virtual_ environments available:
+
+* Virtualenv
+* Conda
+
+Virtualenv only runs on the Mac OS and Linux.  Conda is a data science platform that installs both Python and R and has hundreds of embeded packages that support data science.  Conda may be valuable as you start to use both languages.  When installing Python libraries using Reticulate, it will determine if you have the virtualenv or conda installed and use this as the default.
+
+```{r}
+reticulate::py_install("neo4j_driver")
+
+```
+There is more control you can place through reticulate and I recommend that you review the RStudio documentation on Github. The site is here [Github Reticulate Documentation](https://rstudio.github.io/reticulate/).
+
+###Introduction to Neo4j in Python
+The first thing to understand prior to embedding the Neo4j Python driver in R is to see how the driver works in Python.   We will work with a little bit of public data from the United States CMS organization. I frequently use public data and I'm going to manualy create a very small subgraph with the Python driver by using cypher in a Python script to implement the nodes and relationships.  
+
+
+```
+from neo4j.v1 import GraphDatabase
+user_id = "public_user"
+password = "passwd"
+uri = "bolt://localhost:7687"
+driver = GraphDatabase.driver(uri, auth=(user_id, password ))
+with driver.session() as sess:
+   sess.run("MERGE (a1.Hospital{provider_id:50108,hospital_name: 'SUTTER MEDICAL CENTER, SACRAMENTO'})"
+            "MERGE (a2.Hospital{provider_id:51328  ,hospital_name: 'TAHOE FOREST HOSPITAL'})"
+            "MERGE (a3.Hospital{provider_id: 130006 ,hospital_name: 'ST LUKE\'S REGIONAL MEDICAL CENTER'})"
+            "MERGE (t1.Hospital_Type{name:'Acute Care Hospitals'})"
+            "MERGE (t2.Hospital_Type{name:'Critical Access Hospitals'})"
+            "MERGE (a1)-[:ISA]->(t1)"
+            "MERGE (a2)-[:ISA]->(t2)"
+            "MERGE (a3)-[:ISA]->(t3)")
+           
+```
+
+
+
+The Python language requires a well defined structured format of the code.  The language is very Object-Oriented so you will see objects returned back from each of the calls to methods below.  The first  step is to create  the driver which requires you authticate with your user id and your password.  We next create a  Python function, def print_hospital_info_and_typePyth(), so that we can send the provider id to Neo4j and it will return the prvider id, hospital name and the hospital type.  The function next executes the transaction and iterates through the records that are returned. It then prints out the fields in the record.   The final step is to run the function based on the provider ids.  The results are printed in this R markdown file below.
+
+
+```{python engine.path="/usr/bin/python3"}
+from neo4j.v1 import GraphDatabase
+
+uri = "bolt://localhost:7687"
+driver = GraphDatabase.driver(uri, auth=("public_user", "passwd"))
+def print_hospital_info_and_typePyth(provider_id): 
+     with driver.session() as session:  
+         with session.begin_transaction() as tx:  
+              for record in tx.run("MATCH (a:Hospital)-[:ISA]->(t:Hospital_Type) " 
+                                   "WHERE a.provider_id = {id} " 
+                                  "RETURN a.provider_id, a.hospital_name, t.name", id=provider_id):  
+                  print(str(record["a.provider_id"])+ ", "+record["a.hospital_name"] +", " + record["t.name"])  
+                 
+
+print_hospital_info_and_typePyth(50108) 
+print_hospital_info_and_typePyth(51328) 
+print_hospital_info_and_typePyth(130006) 
+
+```
+
+
+### How Python and R work together to access Neo4j
+
+
+Embedding Python in R with Reticulate is more sophisticated than I expected.  There is a great amount of capabilities.  The first thing you have to do is to import the driver module into the R environment.  When you import the driver, it will be an object accessible in the R environment.  Below, it tests to make sure that Python is available in your R environment. 
+
+```{r}
+library(reticulate)
+is_python_available <- py_available()
+paste("Is Python Available?", is_python_available)
+if(is_python_available){
+        neo4j <- reticulate::import(module = "neo4j.v1",as = "neo4j")
+        str(neo4j)
+       }
+
+```
+
+###R Integration with the Python Neo4j Driver
+
+Using the Python driver in R requires that you perform similar methods in the R environment.  The process is nearly identical to the Python script and it does require some changes.   Accessing a method in R from a Python based object requires that use the `$` separator between the object and the method.   I handled authentication differently in this R script by creating the token independently.  I use the basic_auth() method which solved a problem I was having with passing a list to the driver method which would fail.  I iterate over the data results of the transaction by using sapply R function directly from the data in the record.  Putting this into production would require you to use testthat library for unit testing where you will make sure that this works with your consumption of Neo4j Python driver in R.
+
+
+```{r}
+ uri = "bolt://localhost:7687"
+
+neo4j <- reticulate::import(module = "neo4j.v1",as = "neo4j")
+token <- neo4j$basic_auth("public_user","passwd")
+driver <- neo4j$GraphDatabase$driver(uri, auth=token)
+print_hospital_info_and_typeR <- function(provider_id) {
+        the_session <- driver$session()
+        tx <- the_session$begin_transaction()
+        record <- tx$run("MATCH (a:Hospital)-[:ISA]->(t:Hospital_Type) 
+                                   WHERE a.provider_id = {id}
+                                  RETURN a.provider_id, a.hospital_name, t.name", id=provider_id)
+        record_data <- record$data()
+        sapply(record_data,function(rec){ 
+                paste(rec$a.provider_id, rec$a.hospital_name, rec$t.name  ,sep = ", ")})
+         
+        }
+print_hospital_info_and_typeR(50108) 
+print_hospital_info_and_typeR(51328) 
+print_hospital_info_and_typeR(130006) 
+```
+
+### Next Posibility for the R Neo4j Driver
+
+Coming out of this experiment, I think there is an opportunity to build a package that would enable R to use the Python driver in an easy and reproducible way.  One thing that I discovered through reticulate is that there is a way to embed Python packages in R packages.  The Reticulate Documentation is here: https://rstudio.github.io/reticulate/articles/package.html.    We could build this so that it enables all of the features in the Neo4j Python driver and is accessible to R users.  This driver would allow us to determine if we need to eventually rewrite it using a different language library like the community edition based on C that was used to upgrade the RNeo4j library.    I would like the future R Neo4j driver to not have all of the capabilities that we need in R to use Neo4j.  It should only allow simple and secure access to the database in the format that works well for more interesting Packages to be built on top of it and be updated as new versions of the Neo4j platform are released.   I think that I may experiment with this idea and learn more about Reticulate and Python in R.  I'll expose what I learn as I'm going forward.
+
+
+
+
+Brett Taylor    
+https://linkedin.com/in/brettrtaylor
+
+ 
+
