@@ -34,8 +34,8 @@ devtools::install_github("nicolewhite/RNeo4j")
 ```
 Support of this package is minimal and we need to be focused on getting the next Neo4j driver for R up and running.
 
-### Next Generation Neo4j in R
-![rstats-neo4j](/blog/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j_files/neo4j-rstats.png){width=100px height=100px}
+### Next Generation Neo4j in R 
+![RStats-Neo4j](/blog/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j_files/neo4j-rstats.png){width=100px height=100px}    
 I spend time on Slack in the Neo4j community and found out that there is an "neo4j=rstats" channel focused on using Neo4j in R.  One of the interesting areas of this channel is that there is a team of great R data scientists named ThinkR, @thinkR_fr, focused on creatinga new way of accessing the Neo4j platform from within the language R.  One of the first packages they built allows integration of Neo4j in the R Markdown files.  It is very much like using SQL in the RStudio environment.   Colin Fay, data analyst, is driving this work right now and is looking for the R community to support the work they are doing.  You can experiment with these new packages by installing them from  https://github.com/neo4j-rstats.  I think the community should invest in this area to make the Graph Database part of the R environment. Right now, the driver does not support the Bolt protocol and I'm going to show a workaround in this post on how to integrate Neo4j via the language Python in the R environment.
  
 
