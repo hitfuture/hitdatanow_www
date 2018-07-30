@@ -1,0 +1,32 @@
+---
+title: Happy Trails to You
+author: Brett Taylor
+date: '2018-07-30'
+slug: brett-taylor-s-hit-past
+categories:
+  - Business Opportunity
+tags: [Healthcare, Information Technology, Leadership]
+banner: "img/BRT_OR.png"
+
+---
+
+
+I've been very fortunate to be in healthcare throughout my career.  My introduction to the industry occurred when I took on a job in the O/R at Sutter Health.  I ended up getting a position as a Surgical attendant in the O/R department at age 19 which was all about ensuring the patients were in the operating room at the right time and making sure the O/R was clean. While I ended up on the I.T. side of healthcare, starting out in the O/R has really helped me understand some of the challenges and opportunities in the industry.  This post is to show you that teaming up with the people that deliver care can help you improve your world in healtcare I.T.
+
+I want to share the publication below because while I've been working in Healthcare Information Technology (H.I.T.) for many years, most people don't know how I got so focused on this area.  If you know my history, I've worked in healthcare I.T. for over 30 years and have had some very interesting work.  My work includes advanced leadership in the I.T. departments in the areas of development, data science, and infrastructure and operations.  I've also done product development and consulting for the industry.  I love to do work in the area of data analytics in healthcare in which I build software and data models to improve performance in organizations.  
+
+![__Brett in the O/R in the 1980's__](/blog/2018-07-29-brett-taylor-s-hit-past_files/BRT_OR.png){width=400px}
+
+The document called _Happy Trails to You_ was created by Sutter Health in the early 1990's.  This gives a view of my 13+ years at Sutter.  I  want you to know that I think that the staff in H.I.T. should get tightly integrated to care delivery. My best times working for healthcare has been when I engaged directly with physicians, R.N.'s and other care delivery staff to optimize their world by reducing the complexity of their E.H.R., and providing them predictions of outcomes.  The interaction always allows me to listen to the real problems and opportunities which is better than me trying to say I know all of the answers to solve healthcare issues.  If you work in H.I.T., I recommend you find ways to do the same.
+
+![__Happy Trails to You__](/blog/2018-07-29-brett-taylor-s-hit-past_files/Sutter_Page_3_BRT.png){width=1000px height=1200px}  
+
+
+![](/blog/2018-07-29-brett-taylor-s-hit-past_files/Sutter_Page_4_BT.png)
+
+### Summary
+
+I'm glad to introduce how I started working in the Healthcare industry. My passion to enable better care, better health and to lower cost in the industry is persistent.  I expect to spend the rest of my career helping health systems to improve performance and create better outcomes.  If you are able to work with me, you'll see a guy that looks a bit older than in the pictures above! 
+
+
+![](/blog/2018-07-29-brett-taylor-s-hit-past_files/4d1e6b889d5a0.image.jpg)
