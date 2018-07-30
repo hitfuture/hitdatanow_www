@@ -2,17 +2,19 @@
 title: Happy Trails to You
 author: Brett Taylor
 date: '2018-07-29'
-slug: happy-trails
 categories:
   - Business Opportunity
-tags: [Healthcare, Information Technology, Leadership]
-banner: "img/BRT_OR.png"
-
+tags:
+  - Healthcare
+  - Information Technology
+  - Leadership
+slug: happy-trails
+banner: img/BRT_OR.png
 ---
 
 
 I've been very fortunate to be in healthcare throughout my career.  My introduction to the industry occurred when I took on a job in the O/R at Sutter Health.  I ended up getting a position as a Surgical attendant in the O/R department at age 19 which was all about ensuring the patients were in the operating room at the right time and making sure the O/R was clean. While I ended up on the I.T. side of healthcare, starting out in the O/R has really helped me understand some of the challenges and opportunities in the industry.  This post is to show you that teaming up with the people that deliver care can help you improve your world in healtcare I.T.
-
+ 
 I want to share the publication below because while I've been working in Healthcare Information Technology (H.I.T.) for many years, most people don't know how I got so focused on this area.  If you know my history, I've worked in healthcare I.T. for over 30 years and have had some very interesting work.  My work includes advanced leadership in the I.T. departments in the areas of development, data science, and infrastructure and operations.  I've also done product development and consulting for the industry.  I love to do work in the area of data analytics in healthcare in which I build software and data models to improve performance in organizations.  
 ![__Brett in the O/R in the 1980's__](/blog/2018-07-29-happy-trails_files/BRT_OR.png){width=400px}
  
