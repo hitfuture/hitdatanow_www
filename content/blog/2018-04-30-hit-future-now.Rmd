@@ -1,13 +1,14 @@
 ---
-title: HIT Future Now
+title: HIT Data Now
 author: Brett Taylor
 date: '2018-04-30'
-slug: hit-future-now
+slug: hit-data-now
 categories:
   - Business Opportunity
 tags:
   - Data
   - Management
+  - Science
 banner: "img/bretts_image001.jpg"
 
 ---
