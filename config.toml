@@ -1,5 +1,5 @@
 baseurl = "https://www.hitfuturenow.com/"
-title = "HIT Future Solutions" 
+title = "Brett Randall Taylor" 
 theme = "hugo-universal-theme"
 languageCode = "en-us"
 # Site language. Available translations in the theme's `/i18n` directory.
@@ -66,7 +66,7 @@ paginate = 10
 [params]
     viewMorePostLink = "/blog/"
     author = "Brett Taylor"
-    defaultKeywords = ["R" ,"RStudio" ,"Python" , "Data Science" ,"Healthcare" ,"ShinyProxy"]
+    defaultKeywords = ["R" ,"RStudio" ,"Python" , "Data Science" ,"Healthcare" , "Leadership","Data Archiving"]
     defaultDescription = "HIT Future Location"
 
     # Google Maps API key (if not set will default to not passing a key.)
@@ -90,14 +90,14 @@ paginate = 10
     # Enable the contact form by entering your Formspree.io email
     email = "info@hitfuturenow.com"
 
-    about_us = "<p>HIT Future Solutions LLC is a consulting company that helps I.T. staff in Healthcare HIT the future.</p>"
-    copyright = "Copyright (c) 2016 - 2018, HIT Future Solutions, LLC; all rights reserved."
+    about_us = "<p>Brett Taylor is focused on helping Healthcare organizations create a better experience for their patients by leveraging data.</p>"
+    copyright = "Copyright (c) 2019, Brett Taylor; all rights reserved."
 
     # Format dates with Go's time formatting
     date_format = "January 2, 2006"
 
-    logo = "img/hit40x300.png"
-    address = """<p><strong>HIT Future Solutions, LLC</strong>
+    logo = "img/bretts_image001.jpg"
+    address = """<p><strong>Brett Taylor</strong>
         <br>5737 W Plantation Lane
         <br>Garden City
         <br>Idaho, 83703
@@ -137,9 +137,11 @@ paginate = 10
     # All features are defined in their own files. You can find example items
     # at 'exampleSite/data/features'.
     # For more informtion take a look at the README.
+    title = "Capabilities"
+
 
 [params.testimonials]
-    enable = false
+    enable = true
     # All testimonials are defined in their own files. You can find example items
     # at 'exampleSite/data/testimonials'.
     # For more informtion take a look at the README.
@@ -155,7 +157,7 @@ paginate = 10
     link_text = "Check out our blog posts"
 
 [params.clients]
-    enable = false
+    enable = true
     # All clients are defined in their own files. You can find example items
     # at 'exampleSite/data/clients'.
     # For more information take a look at the README.
