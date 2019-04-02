@@ -22,12 +22,12 @@ paginate = 10
     weight = 1
 
 [[menu.main]]
-    name = "Blog posts"
+    name = "Examples"
     url  = "/blog/"
     weight = 2
 
 [[menu.main]]
-    name = "FAQ"
+    name = "Experience"
     identifier = "faq"
     url  = "/faq/"
     weight = 3
@@ -137,7 +137,7 @@ paginate = 10
     # All features are defined in their own files. You can find example items
     # at 'exampleSite/data/features'.
     # For more informtion take a look at the README.
-    title = "Capabilities"
+    title = "Skills"
 
 
 [params.testimonials]
@@ -145,8 +145,8 @@ paginate = 10
     # All testimonials are defined in their own files. You can find example items
     # at 'exampleSite/data/testimonials'.
     # For more informtion take a look at the README.
-    title = "Testimonials"
-    subtitle = "We have worked with many clients and we always like to hear they come out from the cooperation happy and satisfied. Have a look what our clients said about us."
+    title = "Projects"
+    subtitle = "I have been involved with many projects that adopt the right technology at the right time. There are some examples here."
 
 [params.see_more]
     enable = true
@@ -157,7 +157,7 @@ paginate = 10
     link_text = "Check out our blog posts"
 
 [params.clients]
-    enable = true
+    enable = false
     # All clients are defined in their own files. You can find example items
     # at 'exampleSite/data/clients'.
     # For more information take a look at the README.
@@ -166,5 +166,5 @@ paginate = 10
 
 [params.recent_posts]
     enable = true
-    title = "From our blog"
-    subtitle = "Blog Posts are just about me remembering what I'm doing!"
+    title = "Examples in Technology"
+    subtitle = "Examples are shown on Blog Posts."
