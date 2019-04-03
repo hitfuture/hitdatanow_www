@@ -11,6 +11,7 @@ tags:
   - R
   - Software Development
   - NLP
+banner: "img/NLP.jpg"
 ---
 
 > Utilizing Natural Language Processing to predict text is interesting. I built a small little tool to test the NLP process.
