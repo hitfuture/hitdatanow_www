@@ -220,6 +220,14 @@ ul.list-style-none {
 .features-buttons button {
   margin-bottom: 20px;
 }
+.btn {
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+}
 @media (min-width: 1300px) {
   body.boxed {
     background: url(https://www.toptal.com/designers/subtlepatterns/patterns/subtle_zebra_3d.png);

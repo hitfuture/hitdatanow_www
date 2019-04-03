@@ -16,7 +16,8 @@
 				<div class="col-md-4">
                     <div class="box-simple">
                         <div class="icon">
-                            <i class="{{ .icon }}"></i>
+                            <button class="btn" onclick="window.location.href= {{.link_url}} ;"><i class="{{ .icon }}"></i></button>
+                            
                         </div>
                         <h3>{{ $element.name }}</h3>
                         <p>{{ $element.description | markdownify }}</p>

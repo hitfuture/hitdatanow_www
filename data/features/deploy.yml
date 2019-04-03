@@ -1,4 +1,5 @@
 weight: 4
-name: "Deploy"
+name: "Legacy System Archiving"
 icon: "fa fa-4x fa-hourglass-half text-primary sr-icons"
-description: "Innovation is necessary in Healthcare. HIT Future Solutions brings resources, and experience to help you succeed in your implementations. We have experience in the development of software for the healthcare industry, and running day to day operations of IT departments for healthcare. We will work with you to deliver the right solution, on time, and on budget and ensure that the consumers of the service have an exceptional experience."
+link_url: "blog/"
+description: "One area that I have built a product for based on my own company is the creation of a Legacy system archive soltuion.  Legacy systems are applications should soon no longer be in service because they are being replace (or already have), yet the access to the information from the system from the past is required.  I developed a solution for claims archiving back in 2004 that ran on a co-location data center and it was web based.  I made the system secure through proper authentication, and I also created good features for the customer. In the future as an I.T. leader, I took on reducing the cost of legacy systems, and had a team focused on minimizing our efforts to support these old systems.  This is important, and you can see more information about this by clicking on the button."
