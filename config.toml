@@ -65,9 +65,9 @@ paginate = 10
 
 [params]
     viewMorePostLink = "/blog/"
-    author = "Brett Taylor"
+    author = "Brett R. Taylor"
     defaultKeywords = ["R" ,"RStudio" ,"Python" , "Data Science" ,"Healthcare" , "Leadership","Data Archiving"]
-    defaultDescription = "HIT Future Location"
+    defaultDescription = "HIT Data Now"
 
     # Google Maps API key (if not set will default to not passing a key.)
     googleMapsApiKey = "AIzaSyB0PaVgTjOXPlrBt_LVxRZItFNgf2OQSio" 
@@ -97,7 +97,7 @@ paginate = 10
     date_format = "January 2, 2006"
 
     logo = "img/bretts_image001.jpg"
-    address = """<p><strong>Brett Taylor</strong>
+    address = """<p><strong>Brett R. Taylor</strong>
         <br>5737 W Plantation Lane
         <br>Garden City
         <br>Idaho, 83703

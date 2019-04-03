@@ -1,0 +1,22 @@
+---
+title: Applying Natural Language Processing to Predict
+author: Brett R. Taylor
+date: '2019-04-03'
+slug: applying-natural-language-processing-to-predict-text
+categories:
+  - Data
+  - Development
+  - Science
+tags:
+  - R
+  - Software Development
+  - NLP
+---
+
+> Utilizing Natural Language Processing to predict text is interesting. I built a small little tool to test the NLP process.
+
+<iframe src="https://player.vimeo.com/video/152905392" width="640" height="378" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+> This tool is available online on shinyapp.io 
+
+https://hitfuturenow.shinyapps.io/DataScienceCapstoneWow/
