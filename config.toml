@@ -1,5 +1,6 @@
 baseurl = "https://www.hitdatanow.com/"
 title = "Brett Randall Taylor" 
+name = "Brett Randall Taylor"
 theme = "hugo-universal-theme"
 languageCode = "en-us"
 # Site language. Available translations in the theme's `/i18n` directory.
@@ -65,7 +66,7 @@ paginate = 10
 
 [params]
     viewMorePostLink = "/blog/"
-    author = "Brett R. Taylor"
+    author = "Brett Randall Taylor"
     defaultKeywords = ["R" ,"RStudio" ,"Python" , "Data Science" ,"Healthcare" , "Leadership","Data Archiving"]
     defaultDescription = "HIT Data Now"
 

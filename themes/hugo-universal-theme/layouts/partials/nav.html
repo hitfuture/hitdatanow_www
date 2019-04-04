@@ -9,7 +9,9 @@
                     <img src="{{ .Site.BaseURL }}img/logo-small.png" alt="{{ .Title }} logo" class="visible-xs visible-sm">
                     <span class= "sr-only">{{ .Title }} - {{ i18n "navHome" }}</span>
                 </a>
-                <span class = "navbar-brand"> {{ .Site.Params.author  }} </span>
+                {{ if .Site.Params.author }} 
+                    <span class = "navbar-brand"> {{ .Site.Params.author  }} </span>
+                {{ end }}
                 <div class="navbar-buttons">
                     <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
                       <span class="sr-only">{{ i18n "navToggle" }}</span>

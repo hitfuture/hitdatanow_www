@@ -1,5 +1,5 @@
 weight: 8
 name: "Data Management"
-icon: "fa fa-4x  fa-registered"
+icon: "fa fa-4x  fa-database"
 link_url: "blog/"
 description: "My experience in my career has been very focused on data to analyze and predict the future in my industry.  To make this successful, I have been accountable for managing the data.  Data management is extremly important, I have extended it in the areas of governance, and project management.  Since I have utilized a diverse types of databases, and other data sources, I understand the challenges with managing data, and implementing better solutions to allow for good management.  I have applied Machine Learning to understand data better, with tools like classification, clustering, and also applying Natural Language Processing (NLP).  I also have built out rule based systems to better understand complex data. "
