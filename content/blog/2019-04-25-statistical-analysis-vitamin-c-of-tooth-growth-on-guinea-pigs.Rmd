@@ -1,0 +1,131 @@
+---
+title: 'Statistical Analysis: Vitamin C of Tooth Growth on Guinea Pigs'
+author: Brett R. Taylor
+date: '2019-04-25'
+slug: statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs
+categories:
+  - Science
+tags:
+  - Data
+  - R
+  - Science
+banner: "img/teeth.jpeg"
+
+---
+# Overview 
+A data set has been created from an experiment in 1952 which demonstrates the impact of Vitamin C, on the growth of guinea pigs teeth.   The response is the length of teeth in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).  The analysis below works to determine if the two supplement types have different impacts on growth of the guinea pig's teeth.  
+
+# Analysis
+The beginning of the analysis is based on graphical review, and data analysis to determine what trends are seen in tooth growth of guinea pigs. The dataset "ToothGrowth" is utilized for this work.  The source of the data is from C. I. Bliss (1952) _The Statistics of Bioassay._ Academic Press     
+
+## Explore the data     
+The first component of the work is to load and clean up the data so that it is understandable, and presentable.    
+```{r cleanData, echo=TRUE,warning=FALSE,message=FALSE}
+library(plyr);library(dplyr);library(knitr)
+data("ToothGrowth")
+#Re-value factor so that the data is easier to understand
+ToothGrowth$supp <- revalue(x=ToothGrowth$supp,c( OJ="Orange Juice", VC="Ascorbic Acid"))
+ToothGrowth$dose <-factor(ToothGrowth$dose)
+#Rename columns for easy understanding
+names(ToothGrowth)<- c("tooth.length", "supplement", "dosage.mg")
+summ.data <- ToothGrowth%>%group_by(supplement,dosage.mg)%>%summarise(Count=n(),Mean=mean(tooth.length),Var=var(tooth.length),SD=sd(tooth.length))
+cross.tab <- xtabs(~supplement+dosage.mg,ToothGrowth)
+```
+
+
+```{r summaryOne}
+kable(cross.tab,caption="Observations Counts: Supplement Type vs. dosage")
+```
+
+A study was performed on 10 guinea pigs, with three dosage levels of Vitamin C.  There are two different types of Vitamin C supplements administered, orange juice and Ascorbic Acid, to each Guinea Pig. Three dosage levels were applied to each subject.  The data set has a total of `r nrow(ToothGrowth)` observations. Each subject was tested with the various supplements and dosages.   This indicates that the sample sizes are small, and we should expect results to be in a t-distribution.   
+
+```{r summaryTwo}
+kable(summ.data,caption="Summary by dosage and supplement type",digits = 2)
+```
+
+Figure 1. in the appendix shows the difference of tooth growth based on dosage.  It is clear that the dosages increase growth of the teeth as the dosage is increased.  Figure 2. demonstrates the impact of supplement type on tooth growth. It appears that _Orange Juice_ has a greater impact on tooth growth for guinea pigs. Finally, Figure 3. compares both supplement type and dosage and shows the impact on tooth growth.   This is an interesting area.  It is clear that at the first 2 dosage levels .5 and 1.0 mg _Orange Juice_ has more impact on tooth growth, when you look at the 2.0 mg dosage, the means are closer between the supplement types, and _Ascorbic Acid_ appears to have had a significant growth in the mean.   
+
+## Theory    
+What causes the most impact on tooth growth of the guinea pig subjects, the supplement type, or the dosage?   It appears that if you look at just the mean values of tooth growth, growth is based on dosage and supplement type.     
+
+## Initial Hypothesis - Supplement Type impact on growth   
+$H_0$ = The Vitamin-C supplement type _Orange Juice_, has a greater impact on tooth growth than _Ascorbic Acid_.    
+$H_1$ = The supplement type _Ascorbic Acid_ has more or no  greater impact on tooth growth than _Orange Juice_.     
+
+## Test the hypothesis      
+We will test using the t.test() function in R to determine if the 
+
+```{r test.hypoth02}
+orange.juice <- ToothGrowth%>%filter(supplement == "Orange Juice")
+ascorbic.acid <- ToothGrowth%>%filter(supplement == "Ascorbic Acid")
+
+t1<- t.test(orange.juice$tooth.length,ascorbic.acid$tooth.length,paired=FALSE,conf.level=0.95)
+p1<-t1$p.value
+print(t1)
+```
+
+The t.test results indicate that the $H_0$ NULL hypothesis is true since the p value is `r p1` and is greater than .05.  
+
+## Secondary Hypothesis - High dosage supplement type impact    
+$H_0$ = The Vitamin-C supplement type _Orange Juice_, has no significant difference on tooth growth than _Ascorbic Acid_ at dosage 2.0mg.    
+$H_1$ = There is a significant variance between the 2 supplement types when the guinea pigs are receiving dosage of 2.0mg.  
+
+## Hypothesis test - High dosage supplement type impact
+
+**Test the variance - is it homogeneous?**     
+```{r test.hypoth03,echo=FALSE,results='hide'}
+dose2.data <- ToothGrowth%>%filter(dosage.mg == "2")
+var.test(tooth.length~supplement,data=dose2.data,paired=FALSE)
+```
+Since the p-value is 0.09, this means that the variances show homegeneity. 
+```{r test.hypoth04}
+t.test(tooth.length~supplement,data=dose2.data,var.equal=TRUE,paired=FALSE,conf.level=0.975)
+```
+
+
+## Conclusions     
+The impact of supplement type on tooth growth is clear based on the assessment performed above.  First of all, tooth growth is most impacted by the dosage of _Vitamin C_.   Secondly, The _Orange Juice_ supplement causes significantly higher tooth growth than _Ascorbic Acid_ when not considering the dosage.  Finally, what is interesting is that at 2 mg, the mean growth is statistically similar, and the supplement type is no longer of significance. 
+
+There are certain assumptions made during this analysis.  The first is that measurements were accurate during the experiment.  Secondly, the outliers could have been impacted by significant differences in the genome.  The assumption is that this was not the driving factor due to the variance alignment of the supplement types.  
+
+
+\pagebreak 
+
+# Appendix   
+
+## Graphical Exploration of Data
+```{r plot1,echo=TRUE,fig.cap="The tooth length by the dosage",message=FALSE,warning=FALSE}
+library(ggplot2)
+str(ToothGrowth)
+ggplot(ToothGrowth,aes(x=dosage.mg,y=tooth.length))+
+  geom_boxplot()+
+  theme_bw()
+```
+
+
+dosage has a significant impact on tooth growth when you look at both supplements together.    
+
+\pagebreak 
+
+
+```{r plot2,echo=TRUE,fig.cap="The tooth length by the supplement type"}
+ 
+ggplot(ToothGrowth,aes(x=supplement,y=tooth.length,fill=supplement))+
+  geom_boxplot()+
+  theme_bw()
+```
+
+
+It does appear that _Orange Juice_ has the most impact of tooth growth for guinea pigs.  
+
+\pagebreak 
+
+```{r plot3,echo=TRUE,fig.cap="Tooth length by supplement type and dosage"}
+ggplot(ToothGrowth,aes(x=dosage.mg,y=tooth.length,fill=supplement))+
+  geom_boxplot()+
+#  facet_wrap(~supplement)+
+  theme_bw()
+```
+
+
+Figure 3. demonstrates that while _Orange Juice_ impacts growth at lower dosages (.5, 1), it appears that the mediate is identical at 2 mg.  

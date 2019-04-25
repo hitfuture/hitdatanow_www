@@ -1,0 +1,234 @@
+---
+title: 'Statistical Analysis: Vitamin C of Tooth Growth on Guinea Pigs'
+author: Brett R. Taylor
+date: '2019-04-25'
+slug: statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs
+categories:
+  - Science
+tags:
+  - Data
+  - R
+  - Science
+banner: "img/teeth.jpeg"
+
+---
+
+
+
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p>A data set has been created from an experiment in 1952 which demonstrates the impact of Vitamin C, on the growth of guinea pigs teeth. The response is the length of teeth in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid). The analysis below works to determine if the two supplement types have different impacts on growth of the guinea pig’s teeth.</p>
+</div>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
+<p>The beginning of the analysis is based on graphical review, and data analysis to determine what trends are seen in tooth growth of guinea pigs. The dataset “ToothGrowth” is utilized for this work. The source of the data is from C. I. Bliss (1952) <em>The Statistics of Bioassay.</em> Academic Press</p>
+<div id="explore-the-data" class="section level2">
+<h2>Explore the data</h2>
+<p>The first component of the work is to load and clean up the data so that it is understandable, and presentable.</p>
+<pre class="r"><code>library(plyr);library(dplyr);library(knitr)
+data(&quot;ToothGrowth&quot;)
+#Re-value factor so that the data is easier to understand
+ToothGrowth$supp &lt;- revalue(x=ToothGrowth$supp,c( OJ=&quot;Orange Juice&quot;, VC=&quot;Ascorbic Acid&quot;))
+ToothGrowth$dose &lt;-factor(ToothGrowth$dose)
+#Rename columns for easy understanding
+names(ToothGrowth)&lt;- c(&quot;tooth.length&quot;, &quot;supplement&quot;, &quot;dosage.mg&quot;)
+summ.data &lt;- ToothGrowth%&gt;%group_by(supplement,dosage.mg)%&gt;%summarise(Count=n(),Mean=mean(tooth.length),Var=var(tooth.length),SD=sd(tooth.length))
+cross.tab &lt;- xtabs(~supplement+dosage.mg,ToothGrowth)</code></pre>
+<pre class="r"><code>kable(cross.tab,caption=&quot;Observations Counts: Supplement Type vs. dosage&quot;)</code></pre>
+<table>
+<caption><span id="tab:summaryOne">Table 1: </span>Observations Counts: Supplement Type vs. dosage</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0.5</th>
+<th align="right">1</th>
+<th align="right">2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Orange Juice</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td>Ascorbic Acid</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<p>A study was performed on 10 guinea pigs, with three dosage levels of Vitamin C. There are two different types of Vitamin C supplements administered, orange juice and Ascorbic Acid, to each Guinea Pig. Three dosage levels were applied to each subject. The data set has a total of 60 observations. Each subject was tested with the various supplements and dosages. This indicates that the sample sizes are small, and we should expect results to be in a t-distribution.</p>
+<pre class="r"><code>kable(summ.data,caption=&quot;Summary by dosage and supplement type&quot;,digits = 2)</code></pre>
+<table>
+<caption><span id="tab:summaryTwo">Table 2: </span>Summary by dosage and supplement type</caption>
+<thead>
+<tr class="header">
+<th align="left">supplement</th>
+<th align="left">dosage.mg</th>
+<th align="right">Count</th>
+<th align="right">Mean</th>
+<th align="right">Var</th>
+<th align="right">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Orange Juice</td>
+<td align="left">0.5</td>
+<td align="right">10</td>
+<td align="right">13.23</td>
+<td align="right">19.89</td>
+<td align="right">4.46</td>
+</tr>
+<tr class="even">
+<td align="left">Orange Juice</td>
+<td align="left">1</td>
+<td align="right">10</td>
+<td align="right">22.70</td>
+<td align="right">15.30</td>
+<td align="right">3.91</td>
+</tr>
+<tr class="odd">
+<td align="left">Orange Juice</td>
+<td align="left">2</td>
+<td align="right">10</td>
+<td align="right">26.06</td>
+<td align="right">7.05</td>
+<td align="right">2.66</td>
+</tr>
+<tr class="even">
+<td align="left">Ascorbic Acid</td>
+<td align="left">0.5</td>
+<td align="right">10</td>
+<td align="right">7.98</td>
+<td align="right">7.54</td>
+<td align="right">2.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Ascorbic Acid</td>
+<td align="left">1</td>
+<td align="right">10</td>
+<td align="right">16.77</td>
+<td align="right">6.33</td>
+<td align="right">2.52</td>
+</tr>
+<tr class="even">
+<td align="left">Ascorbic Acid</td>
+<td align="left">2</td>
+<td align="right">10</td>
+<td align="right">26.14</td>
+<td align="right">23.02</td>
+<td align="right">4.80</td>
+</tr>
+</tbody>
+</table>
+<p>Figure 1. in the appendix shows the difference of tooth growth based on dosage. It is clear that the dosages increase growth of the teeth as the dosage is increased. Figure 2. demonstrates the impact of supplement type on tooth growth. It appears that <em>Orange Juice</em> has a greater impact on tooth growth for guinea pigs. Finally, Figure 3. compares both supplement type and dosage and shows the impact on tooth growth. This is an interesting area. It is clear that at the first 2 dosage levels .5 and 1.0 mg <em>Orange Juice</em> has more impact on tooth growth, when you look at the 2.0 mg dosage, the means are closer between the supplement types, and <em>Ascorbic Acid</em> appears to have had a significant growth in the mean.</p>
+</div>
+<div id="theory" class="section level2">
+<h2>Theory</h2>
+<p>What causes the most impact on tooth growth of the guinea pig subjects, the supplement type, or the dosage? It appears that if you look at just the mean values of tooth growth, growth is based on dosage and supplement type.</p>
+</div>
+<div id="initial-hypothesis---supplement-type-impact-on-growth" class="section level2">
+<h2>Initial Hypothesis - Supplement Type impact on growth</h2>
+<p><span class="math inline">\(H_0\)</span> = The Vitamin-C supplement type <em>Orange Juice</em>, has a greater impact on tooth growth than <em>Ascorbic Acid</em>.<br />
+<span class="math inline">\(H_1\)</span> = The supplement type <em>Ascorbic Acid</em> has more or no greater impact on tooth growth than <em>Orange Juice</em>.</p>
+</div>
+<div id="test-the-hypothesis" class="section level2">
+<h2>Test the hypothesis</h2>
+<p>We will test using the t.test() function in R to determine if the</p>
+<pre class="r"><code>orange.juice &lt;- ToothGrowth%&gt;%filter(supplement == &quot;Orange Juice&quot;)
+ascorbic.acid &lt;- ToothGrowth%&gt;%filter(supplement == &quot;Ascorbic Acid&quot;)
+
+t1&lt;- t.test(orange.juice$tooth.length,ascorbic.acid$tooth.length,paired=FALSE,conf.level=0.95)
+p1&lt;-t1$p.value
+print(t1)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  orange.juice$tooth.length and ascorbic.acid$tooth.length
+## t = 1.9153, df = 55.309, p-value = 0.06063
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1710156  7.5710156
+## sample estimates:
+## mean of x mean of y 
+##  20.66333  16.96333</code></pre>
+<p>The t.test results indicate that the <span class="math inline">\(H_0\)</span> NULL hypothesis is true since the p value is 0.0606345 and is greater than .05.</p>
+</div>
+<div id="secondary-hypothesis---high-dosage-supplement-type-impact" class="section level2">
+<h2>Secondary Hypothesis - High dosage supplement type impact</h2>
+<p><span class="math inline">\(H_0\)</span> = The Vitamin-C supplement type <em>Orange Juice</em>, has no significant difference on tooth growth than <em>Ascorbic Acid</em> at dosage 2.0mg.<br />
+<span class="math inline">\(H_1\)</span> = There is a significant variance between the 2 supplement types when the guinea pigs are receiving dosage of 2.0mg.</p>
+</div>
+<div id="hypothesis-test---high-dosage-supplement-type-impact" class="section level2">
+<h2>Hypothesis test - High dosage supplement type impact</h2>
+<p><strong>Test the variance - is it homogeneous?</strong></p>
+<p>Since the p-value is 0.09, this means that the variances show homegeneity.</p>
+<pre class="r"><code>t.test(tooth.length~supplement,data=dose2.data,var.equal=TRUE,paired=FALSE,conf.level=0.975)</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  tooth.length by supplement
+## t = -0.046136, df = 18, p-value = 0.9637
+## alternative hypothesis: true difference in means is not equal to 0
+## 97.5 percent confidence interval:
+##  -4.319639  4.159639
+## sample estimates:
+##  mean in group Orange Juice mean in group Ascorbic Acid 
+##                       26.06                       26.14</code></pre>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>The impact of supplement type on tooth growth is clear based on the assessment performed above. First of all, tooth growth is most impacted by the dosage of <em>Vitamin C</em>. Secondly, The <em>Orange Juice</em> supplement causes significantly higher tooth growth than <em>Ascorbic Acid</em> when not considering the dosage. Finally, what is interesting is that at 2 mg, the mean growth is statistically similar, and the supplement type is no longer of significance.</p>
+<p>There are certain assumptions made during this analysis. The first is that measurements were accurate during the experiment. Secondly, the outliers could have been impacted by significant differences in the genome. The assumption is that this was not the driving factor due to the variance alignment of the supplement types.</p>
+
+</div>
+</div>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<div id="graphical-exploration-of-data" class="section level2">
+<h2>Graphical Exploration of Data</h2>
+<pre class="r"><code>library(ggplot2)
+str(ToothGrowth)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    60 obs. of  3 variables:
+##  $ tooth.length: num  4.2 11.5 7.3 5.8 6.4 10 11.2 11.2 5.2 7 ...
+##  $ supplement  : Factor w/ 2 levels &quot;Orange Juice&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ dosage.mg   : Factor w/ 3 levels &quot;0.5&quot;,&quot;1&quot;,&quot;2&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<pre class="r"><code>ggplot(ToothGrowth,aes(x=dosage.mg,y=tooth.length))+
+  geom_boxplot()+
+  theme_bw()</code></pre>
+<div class="figure"><span id="fig:plot1"></span>
+<img src="/blog/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs_files/figure-html/plot1-1.png" alt="The tooth length by the dosage" width="672" />
+<p class="caption">
+Figure 1: The tooth length by the dosage
+</p>
+</div>
+<p>dosage has a significant impact on tooth growth when you look at both supplements together.</p>
+
+<pre class="r"><code>ggplot(ToothGrowth,aes(x=supplement,y=tooth.length,fill=supplement))+
+  geom_boxplot()+
+  theme_bw()</code></pre>
+<div class="figure"><span id="fig:plot2"></span>
+<img src="/blog/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs_files/figure-html/plot2-1.png" alt="The tooth length by the supplement type" width="672" />
+<p class="caption">
+Figure 2: The tooth length by the supplement type
+</p>
+</div>
+<p>It does appear that <em>Orange Juice</em> has the most impact of tooth growth for guinea pigs.</p>
+
+<pre class="r"><code>ggplot(ToothGrowth,aes(x=dosage.mg,y=tooth.length,fill=supplement))+
+  geom_boxplot()+
+#  facet_wrap(~supplement)+
+  theme_bw()</code></pre>
+<div class="figure"><span id="fig:plot3"></span>
+<img src="/blog/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs_files/figure-html/plot3-1.png" alt="Tooth length by supplement type and dosage" width="672" />
+<p class="caption">
+Figure 3: Tooth length by supplement type and dosage
+</p>
+</div>
+<p>Figure 3. demonstrates that while <em>Orange Juice</em> impacts growth at lower dosages (.5, 1), it appears that the mediate is identical at 2 mg.</p>
+</div>
+</div>
