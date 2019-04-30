@@ -1,0 +1,161 @@
+---
+title: 'Statistics: Central Limit Theorem'
+author: Brett Taylor
+date: '2019-04-30'
+slug: statistics-central-limit-theorm
+categories:
+  - Statistics
+tags:
+  - R
+  - Data
+banner: "img/plot2-1.png"
+--- 
+# Overview 
+The _Central Limit Theorem_ states that when samples of a population are large, the _sampliing distribution_ will take the shape of a normal distribution regardless of the shape of the population from which the sample was drawn.  This is proven out through the simulation below that projects the theoretical mean of the exponential distribution compared to the sampling.  The variance between the theorectical mean, and the sample mean is .03.  This maps correctly to the _Central Limit Theorem_.   
+
+# Analysis   
+
+## Simulation Methods
+
+To ensure that this report is reproducible, we set the random generator seed, and set overall parameters including the number of simulations and lambda rate.  We have set the sample size above 30 to ensure that we can use the normal distribution.   
+
+```{r, echo=TRUE}
+set.seed(4957)
+# Total number of simulation samples sets that will be ran.
+sim.count <- 1000  
+lambda <- .2  #Rate
+sample.size <-40  #Number of observations per sample
+```
+ 
+This simulation generates a couple of random simulations of the Exponential Distribution utilizing the R function rexp().  Lambda ($\lambda$) was set at `r lambda`.  The inital simulation generates `r sim.count` observations. It utilizes the rexp() R function and sets the rate at the recommended lambda = 0.2.       
+
+```{r sim1, echo=TRUE }
+exp.sim <- rexp(sim.count,rate = lambda)
+sim.mean <- mean(exp.sim)
+sim.sd <- sd(exp.sim)
+```
+This simulation is displayed in Figure 1 in the Appendix.  It shows how the exponential distribution exponentially declines from x=0 to $x=\infty$.  It also displays the mean of the distribution, and has an overaly of the exponential function.
+
+
+Central Limit Theorem
+$\sigma _{x} =\frac{s}{\sqrt{N}}$    
+Sample should be larger than 30  
+
+## How close is the Sample Mean to the Theoretical Mean?    
+
+
+The theoretical mean of exponential distribution is:    
+$\mu=\frac{1}{\lambda}$ =`r theoretical.mean <- 1/lambda;theoretical.mean`
+
+**Sample Mean Simulation**    
+To generate the sample mean, there are several possible methods of performing this.  The method chosen here is to create a matrix which is randomly generated using the rexp() function.  The total number of simulations is `r sim.count` with a sample size of `r sample.size`. The method for calculating this is the creation of a matrix  with dimensions `r sim.count` x `r sample.size`.  The matrix has a set of samples on each row.   The number of observations in the matrix is 40000.  The apply() function is used to iterate through each row of the matrix, and apply the mean to the observations of the row.   This creates an array of size `r sim.count `, and assigns it to variable _sample.means_.   
+
+```{r sim2,echo=TRUE,message=FALSE,warning=FALSE}
+library(knitr)
+# Generate a matrix that has 1000 rows
+sample.matrix <-matrix(rexp(sim.count*sample.size,rate=lambda),sim.count)  
+sample.means <- apply(sample.matrix, 1,mean) #1 has apply mean() at the row level.
+sample.mean <- mean(sample.means)
+ summary(sample.means)
+ kable(head(sample.matrix),digits=2)
+
+```
+
+
+The sample mean is displayed in Figure 2 in the appendix.  The mean value of all samples is `r round(sample.mean,3)`.  This is compared to the theoretical mean which is `r theoretical.mean`.  The difference between these is `r round(sample.mean - theoretical.mean,3)`.   
+ 
+
+
+## What is the difference between the Sample Variance and the Theoretical Variance?    
+We have several components of distribution that vary compared to the exponential distribution.  
+**Theoretical Variance Equation** $\sigma^2 =\frac{\sum(x_{i}-\mu)^2}{N}$ 
+The theoretical variance of an exponential distribution is the following formula:    
+$Var=S^2=\frac{(\frac{1}{\lambda})^2}{N}$  
+    
+
+**Sample Variance Equation** $s^2 =\frac{\sum(x_{i}-\overline{x})^2}{N-1}$   
+```{r sample.var,echo=TRUE}
+  sample.var <- apply(sample.matrix, 1,var)
+  sample.mean.var <- mean(sample.var)
+  sample.mean.sd <- sqrt(sample.mean.var)
+```
+
+**Theoretical Variance** = `r theoretical.var<-round(((1/lambda^2)/sample.size),3); theoretical.var `    
+**Sample Varariance** = `r sample.var <-round(var(sample.means),3); sample.var`    
+
+The theoretical variance is approximately equal to the sample variance.
+
+## Is the sample mean simulation a normal Distribution?   
+ It was chosen to use 40 observations per sample.  This leveraged the Central Limit Theorem that states that with large samples (greater than 30), the means of the samples will be normally distributed, and the mean will approximate the population mean.   Figure 2 shows a histogram of the mean samples of the exponential distribution.  There is a distribution normal function overlayed on the plot, which shows that the histogram is close to the standard normal distribution. In addition, the Standard Error is the same as the standard deviation which is `r round(sample.mean.sd,2)`.  This is close to the standard deviation of the exponential distribution which value is `r round(1/lambda,2)/sample.size`
+ 
+
+
+**The distribution is approximately normal based on the mapping of the normal distributions .**    
+
+\pagebreak  
+
+# Appendix    
+## Figure 1 - Exponential Distribution
+
+```{r plot1,warning=FALSE, echo=TRUE,fig.cap=paste("The mean of random exponential simulation of",sim.count," observations")}
+library(ggplot2)
+ggplot(data.frame(x=exp.sim),aes(x=x))+
+  geom_histogram(fill="red",color="black", binwidth=.5)+
+  stat_function(fun = function(x, rate,n){n * dexp(x = x, rate = rate)},
+                args =  c(rate= lambda, n= sim.count *.5)
+        ,geom="line",color="green") +
+  geom_vline(aes(xintercept=sim.mean),color="blue",size=1) +
+  annotate("text", x = sim.mean , y =50, vjust=-1, hjust=-1,
+        label =sprintf("Sample mean = %03.2f",sim.mean),
+        colour ="Dark Red", angle=0 ) + 
+   annotate("text", x =theoretical.mean, y =50,  hjust=-1,
+        label =sprintf("Theoretical mean = %03.2f",theoretical.mean),
+        colour ="Dark Red", angle=0 ) + 
+    annotate("text", x = 30, y = 40, parse = TRUE, 
+        label ="mu==frac(1,lambda)")+
+  theme_bw()
+```
+
+
+\pagebreak     
+ 
+
+## Figure 2 - Normal Distribution of Sample Means
+
+
+```{r plot2,echo=TRUE,fig.cap="40 average samples is close to a normal distribution"}
+sample.mean<-mean(sample.means)
+ggplot(data.frame(x=sample.means),aes(x=x))+
+  geom_histogram(fill="red",color="black", binwidth=.1)+
+  geom_density()+
+  stat_function(
+                fun = function(x, mean, sd, n){
+                        n * dnorm(x = x, mean = mean, sd = sd)},
+                args =  c(mean =sample.mean, sd = sd(sample.means), 
+                                n = sim.count/5/2)
+        ) +
+
+  geom_vline(aes(xintercept=sample.mean),color="blue",size=1) +
+  annotate("text", x = sample.mean , y =((sim.count/10)/4), vjust=-1,  
+  label =sprintf("Sample mean = %03.2f",sample.mean),colour ="white", angle=270 ) + 
+   annotate("text", x = 7, y = 30, parse = TRUE, 
+        label ="f(x)==frac( 1, sqrt( 2 * pi)) * e ^ {-x ^ 2 / 2}") +
+ 
+  theme_bw()
+```
+   
+   
+\pagebreak 
+
+## Normality of the Sample Mean distribution     
+
+### Figure 3 - QQPlot of Sample Means     
+
+A method of testing the mean distribution is to plot the qq-norm of the sample means.  
+```{r plot4,echo=TRUE,fig.cap="Variance"}
+qqnorm(sample.means)
+qqline(sample.means)
+```
+
+
+The results of this show that the norm of the sample means is following the qqline, and demonstrates that this a a normal distribution as expected based on the Central Limit Theorem
