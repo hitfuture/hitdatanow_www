@@ -7,7 +7,6 @@ categories:
   - Leadership
 tags:
   - Communication
-  - Communicatiobn
   - Neo4j
 banner: "img/nonverbal.png"
 ---
