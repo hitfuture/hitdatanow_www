@@ -24,7 +24,11 @@ install_github("kassambara/factoextra")
 ```
 
 
-```{r setup}
+```{r setup,message=FALSE,error=FALSE,echo=FALSE}
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE
+)
 library(tidyverse)
 
 ```
@@ -57,13 +61,13 @@ set.seed(1234)
 dat <- data.frame(x = rnorm(20, 30, .2), 
                   y = runif(20, 3, 5),
                   z = runif(20, 10, 20))
-dat
+head(dat)
 
 ```
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 
 dat2 <- dat %>% mutate_at(.vars = vars(c("y","z")),.funs = funs(scale(.) %>% as.vector))
-dat2
+head(dat2)
 
 ```
 
@@ -305,7 +309,7 @@ df_clust_1 <- data.frame(x=rnorm(n = 200,mean = 0,sd = 8),y=rnorm(n = 200,mean =
 df_clust_2 <- data.frame(x=rnorm(n = 300,mean = 50,sd = 8),y=rnorm(n = 300,mean = 50,sd = 8))
 df <- rbind(df_clust_1,df_clust_2)
 rownames(df) <- paste0("S",1:nrow(df))
-df
+head(df)
 
 ```
 ### Required R packages and functions
@@ -338,7 +342,7 @@ df$id <- rownames(df)
 df <- df%>%select(id,x,y)
 clustering <- data.frame(id= names(clara_res$clustering), cluster = clara_res$clustering)
 df <- left_join(df,clustering)
-df
+head(df)
 
 ```
 
