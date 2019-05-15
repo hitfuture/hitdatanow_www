@@ -1,0 +1,828 @@
+---
+title: Cluster Analysis
+author: Brett R. Taylor
+date: '2019-05-14'
+slug: cluster-analysis
+categories:
+  - Data
+  - Statistics
+  - Science
+tags:
+  - Data
+  - R
+banner: "img/cluster_analysis.png"
+
+---
+# Basics
+
+Tidyverse is a set of R libraries that enables the best methods for Data Management.  I will use the tidyverse libraries to perform cluster analysis and provide this information to other data science teams in the industry. 
+
+
+```{r eval=FALSE}
+library(devtools)
+install_github("kassambara/factoextra")
+```
+
+
+```{r setup}
+library(tidyverse)
+
+```
+
+## Introduction to R
+
+## Data Preparation and R Packages
+
+### Required Packages
+
+* dplyr
+* tidyr
+* testthat
+* cluster
+* factoextra
+
+
+### Data Standardization 
+We need the ability to transform vectors in our data frames to standard variables.  A standard variable is the 0 +|- 1 std.  In other words, the variables need to be similar so that clustering algorithms can accurately determine the distance between each variable used in the algorithm.  The solution is to standardize the variables using the scale() function.
+
+#### How to apply Data Standardization with tidyverse
+
+Tidyverse has evolved over the last year and a half significantly since version 0.7 was released.  A new way to mutate columns in a data.frame is to use the function mutate_at().  This function allows you to programatically create a solution to transform specific columns into a different format.  
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+
+set.seed(1234)
+dat <- data.frame(x = rnorm(20, 30, .2), 
+                  y = runif(20, 3, 5),
+                  z = runif(20, 10, 20))
+dat
+
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+dat2 <- dat %>% mutate_at(.vars = vars(c("y","z")),.funs = funs(scale(.) %>% as.vector))
+dat2
+
+```
+
+## Clustering Distance Measures
+
+### Distance Matrix Computation
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+str(USArrests)
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(123)
+data("USArrests")
+df <- USArrests%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+
+### Calculate Euclidean Distance
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+dist_eucl <- dist(df_scaled,method = "euclidean")
+dist_eucl
+
+```
+
+Reformat as Matrix
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+round(as.matrix(dist_eucl),1)
+```
+
+
+### Computing correlation based distances
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+dist_cor <- df_scaled%>%get_dist(method = "pearson")
+dist_cor
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+round(as.matrix(dist_cor),1)
+```
+
+### Computing distances for mixed data
+
+Gower's metric
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+data(flower)
+head(flower,3)
+ 
+``` 
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+str(flower)
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+dd <- daisy(flower)
+dd
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+round(as.matrix(dd),2)
+```
+
+
+### Visualize distance matricies
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dist(dist_eucl)
+```
+
+# Partitioning Clustering
+
+* K-means clustering
+* K-medoids clustering (PAM)
+* CLARA algorithm (Clustering Large Applications)
+
+### How it works
+* Classify observations in a data-set
+* Based on similarity
+* Requires the analyst to specify the number of clusters.
+
+## K-means clustering
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df <- USArrests #%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_nbclust(df_scaled,kmeans,method = "wss")+
+  geom_vline(xintercept = 4,linetype=2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(123)
+km_res <- kmeans(df_scaled,4,nstart = 25)
+print(km_res)
+```
+
+### Compute the mean for each varabiles by clusters
+
+#### Build a combined dataset of the USArrests and the Clusters
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+the_us_arrests <- USArrests
+the_us_arrests$state <- rownames(USArrests)
+
+the_clusters <- data.frame(state = names(km_res$cluster),cluster=km_res$cluster)
+
+
+the_us_arrests <- left_join(the_us_arrests,the_clusters)
+the_us_arrests
+
+```
+#### Summarize the data set to determine the mean
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+the_us_arrests%>%group_by(cluster)%>%summarise_if(.predicate = is.numeric,.funs = mean)
+```
+
+### Visualizing k-means clusters
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(km_res,data = df,
+             palette=c("#C1FFC1", "#FFB6C1", "#98F5FF", "#FFD700"),
+             ellipse.type = "euclid",star.plot=TRUE,repel = TRUE,ggtheme = theme_minimal())
+```
+
+## K-medoids
+K-medoids utilize the median to remove the impact of outliers on the cluster.
+
+* Cluster medoids
+* Less reactive to noise and outliers
+* silhouette algorithm determines cluster counts (k)
+
+### PAM (Partioning Arround Medoids)
+
+### Computing PAM in R
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df <- USArrests #%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+There are 2 packages that support PAM.
+* cluster
+* fpc
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+install.packages("cluster","fpc")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+library(factoextra)
+fviz_nbclust(df_scaled, pam, method = "silhouette") +
+  theme_classic()
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+pam_res <- pam(df_scaled, 2)
+pam_res
+```
+```{r}
+the_us_arrests <- USArrests
+the_us_arrests$state <- rownames(USArrests)
+
+the_clusters <- data.frame(state = names(pam_res$cluster),cluster=pam_res$cluster)
+
+
+the_us_arrests <- left_join(the_us_arrests,the_clusters)
+the_us_arrests
+```
+```{r}
+pam_res$medoids
+```
+```{r}
+pam_res$clustering
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(pam_res,palete = c("#00CDCD", "#FFA07A"),ellipse.type = "t",
+             repel = TRUE, ggtheme =  theme_classic())
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(fpc)
+pamk_res <- fpc::pamk(data = df_scaled)
+pamk_res
+```
+```{r}
+the_us_arrests <- USArrests
+the_us_arrests$state <- rownames(USArrests)
+
+the_clusters <- data.frame(state = names(pamk_res$pamobject$clustering),cluster=pamk_res$pamobject$clustering)
+
+
+the_us_arrests <- left_join(the_us_arrests,the_clusters)
+the_us_arrests
+```
+```{r}
+ plot(pamk_res$pamobject)
+```
+
+## CLARA - Clustering Large Applications
+
+CLARA extends the k-medoids algorithm to handle big data.  It utilizes sampling to handle the large data sets.
+
+### CLARA concept
+
+Minimize Sampling Bias by running multiple samples and comparing the results.  Each sample medoid is measured by the avergage dissimilarity of each object.
+
+
+### Computing CLARA in R
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(1234)
+df_clust_1 <- data.frame(x=rnorm(n = 200,mean = 0,sd = 8),y=rnorm(n = 200,mean = 0,sd = 8))
+df_clust_2 <- data.frame(x=rnorm(n = 300,mean = 50,sd = 8),y=rnorm(n = 300,mean = 50,sd = 8))
+df <- rbind(df_clust_1,df_clust_2)
+rownames(df) <- paste0("S",1:nrow(df))
+df
+
+```
+### Required R packages and functions
+
+__Packages:__ cluster, factoextra
+__functions:__ 
+clara()
+
+### Estimating the optimal number of clusters
+Utilize factoextra::fviz_nbclust() function to determine the correct number of clusters.
+
+```{r ,fig.cap="The number of clusters created in the simulated data frame is 2.  The results from the optimal cluster determination is 2."}
+library(cluster)
+library(factoextra)
+fviz_nbclust(df,clara,method = "silhouette") +
+  theme_classic()
+```
+
+### Computing CLARA
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+clara_res <- clara(df, 2, samples = 50, pamLike = TRUE)
+
+knitr::knit_print(clara_res)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+df$id <- rownames(df)
+df <- df%>%select(id,x,y)
+clustering <- data.frame(id= names(clara_res$clustering), cluster = clara_res$clustering)
+df <- left_join(df,clustering)
+df
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+clara_res$medoids
+```
+
+### Visualizing CLARA clusters
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(clara_res,palette=c("#008B8B", "#EE3B3B"),ellipse.type = "t",geom = "point",ggtheme = theme_classic()
+             )
+```
+
+### Summary 
+The CLARA algorithm is an extension to the PAM clustering method for large data sets.  You must specify the number of clusters.  
+
+# Hierachial Clustering 
+
+Also known as _Hierarchial cluster analysis_ __(HCA)__
+
+There are two types of Hierachial Clusting
+
+* Agglomerative
+* Divisive
+
+
+Agglomearative is from the bottom up and Divisive is from the top down.  
+
+The term dendogram is used to describe the hierarchial structure of clustering.  
+
+## Agglomerative Clustering
+
+This clustering method initially assigns each observation as its own cluster (leaf), and then iterates to find common leafs that will match together to create the next level of cluster.
+
+### Algorithm
+
+### Data Structure and preparation
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(123)
+data("USArrests")
+df <- USArrests
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+head(df_scaled)
+```
+
+### Similarity Measures
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_dist <- df_scaled%>%dist(method = "euclidian")
+head(res_dist)
+```
+ 
+
+
+### Linkage
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_hc <- hclust(d = res_dist,method = "ward.D2")
+
+```
+
+### Dendogram
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dend(res_hc, cex = 0.8)
+```
+
+### Verify the cluster tree
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_coph <- cophenetic(res_hc)
+
+
+cor(res_dist,res_coph)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_hc2 <- hclust(res_dist, method="average")
+cor(res_dist,cophenetic(res_hc2))
+```
+
+### Cut the dendogram into different groups
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+grp <- cutree(res_hc,k = 4)
+grp
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+table(grp)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+str(grp)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_dend(res_hc,k = 4, cex = 0.5, k_colors = c("cornflowerblue", "aquamarine", "darkorange2", "darkkhaki"),
+          color_labels_by_k = TRUE,
+          rect = TRUE)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(list(data=df,cluster = grp),
+             palette =  c("cornflowerblue", "aquamarine", "darkorange2", "darkkhaki"),
+             ellipse.type = "convex",
+             repel = TRUE,
+             show.clust.cent = FALSE,
+             ggtheme = theme_minimal())
+```
+
+### Cluster R package
+
+
+Agglomerative Nesting (Hierarchial Clustering)
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+res_agnes  <- agnes(x = USArrests, 
+                    stand = TRUE,
+                    metric = "euclidean",
+                    method = "ward")
+res_agnes
+```
+
+DIvisive ANAlysis Clustering
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_diana <- diana(x = USArrests,
+                   stand = TRUE,
+                   metric = "euclidean")
+
+res_diana
+```
+
+
+Visualize 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dend(res_agnes, cex = 0.6, k = 4)
+```
+
+
+# Comparing Dendograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df <- USArrests #%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+### Sample 10 rows
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+set.seed(123)
+df_sample <- df_scaled%>%sample_n(10)
+head(df_sample)
+
+```
+
+
+## Comparing dendograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dendextend)
+res_dist <- dist(df_sample, method = "euclidean")
+
+hc1 <- hclust(res_dist, method = "average")
+hc2 <- hclust(res_dist, method = "ward.D2")
+
+
+dend1 <- as.dendrogram(hc1)
+dend2 <- as.dendrogram(hc2)
+
+dend_list <- dendlist(dend1,dend2)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+tanglegram(dend1,dend2)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+tanglegram(dend1,dend2,
+           highlight_distinct_edges = FALSE,
+           common_subtrees_color_lines = FALSE,
+           common_subtrees_color_branches = TRUE,
+           main = paste("entanglement =",round(entanglement(dend_list),2)))
+```
+
+### Correlation matrix between a list of dendograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+cor.dendlist(dend_list,method = "cophenetic")
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor.dendlist(dend_list,method = "baker")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor_cophenetic(dend1,dend2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor_bakers_gamma(dend1,dend2)
+```
+
+```{r}
+dend1 <- df_sample%>%dist%>% hclust("complete" ) %>% as.dendrogram
+dend2 <- df_sample%>%dist%>% hclust("single" ) %>% as.dendrogram
+dend3 <- df_sample%>%dist%>% hclust("average" ) %>% as.dendrogram
+dend4 <- df_sample%>%dist%>% hclust("centroid" ) %>% as.dendrogram
+
+dend_list <- dendlist("Complete"= dend1, "Single" = dend2,
+                      "Average"=dend3, "Centroid"= dend4)
+
+cors <-- cor.dendlist(dend_list)
+round(cors, 2)
+
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(corrplot)
+corrplot(cors, "pie","lower")
+```
+
+# Visualizing Dendrograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df_scale <- USArrests%>%mutate_all(.funs = funs(scale(.)))
+
+rownames(df_scale) <- rownames(USArrests)
+dd <- dist(df_scale, method = "euclidean")
+
+hc <- dd%>%hclust(method =  "ward.D2")
+hc
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dend(hc, cex = 0.5)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_dend(hc, cex = 0.5,
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",
+          sub = "")
+```
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_dend(hc, k=4, 
+          cex = 0.5,
+          k_colors = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",
+          sub = "",
+          color_labels_by_k = TRUE,
+          rect = TRUE,
+          rect_border = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          rect_fill = TRUE)
+```
+
+```{r}
+fviz_dend(hc, k=4, 
+          cex = 0.5,
+          k_colors = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",type = "circular",
+          sub = "",
+          color_labels_by_k = TRUE,
+          rect = TRUE,
+          rect_border = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          rect_fill = TRUE)
+```
+
+```{r}
+require(igraph)
+
+```
+```{r}
+fviz_dend(hc, k=4, 
+          k_colors = "jco",
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",
+          sub = "",
+          type = "phylogenic",
+          phylo_layout = "layout.gem",
+          repel = TRUE)
+```
+
+
+# Cluster Validation
+
+* Assessing clustering tendency
+* Determing the optimal number of clusters
+* Cluster validation statistics
+* Choosing the best clustering algorithms
+* Computing p-value for hierarchial clustering
+
+## Assessing Clustering Tendency
+
+### Required R packages
+```{r eval=FALSE, include=FALSE}
+install.packages(c("factoextra","clustertend"))
+```
+
+
+### Data preparation
+
+```{r}
+head(iris, 3)
+```
+
+```{r}
+df <- iris%>%select(-Species)
+random_df <- apply(df,2, function(x){
+  runif(length(x),min(x),max(x))
+})
+random_df <- as.data.frame(random_df)
+df <- iris_scaled <- df%>%mutate_all(.funs = funs(scale(.)))%>%as.vector
+random_df <- random_df %>% mutate_all(.funs = funs(scale(.))) %>% as.vector
+```
+
+
+### Visual inspection of the data
+```{r}
+library(factoextra)
+fviz_pca_ind(prcomp(df), title= "PCA - Iris data",
+             habillage = iris$Species, palette = "jco",
+             geom = "point",
+             ggtheme = theme_classic(),
+             legend = "bottom")
+```
+
+```{r}
+fviz_pca_ind(prcomp(random_df), title= "PCA - Random data",
+             habillage = iris$Species, palette = "jco",
+             geom = "point",
+             ggtheme = theme_classic(),
+             legend = "bottom")
+```
+
+### Why assessing clustering tendency?
+
+ 
+
+
+```{r}
+library(factoextra)
+set.seed(123)
+
+km_res1 <- kmeans(df, 3)
+fviz_cluster(list(data = df, cluster = km_res1$cluster),
+             ellipse.type = "norm", geom = "point", stand = FALSE,
+             palette = "jco", ggtheme = theme_classic())
+```
+
+### K-means on the random dataset
+```{r}
+km_res2 <- kmeans(random_df, 3)
+fviz_cluster(list(data = df, cluster = km_res2$cluster),
+             ellipse.type = "norm", geom = "point", stand = FALSE,
+             palette = "jco", ggtheme = theme_classic())
+```
+
+### Hierarchial clustering on random data set
+```{r}
+fviz_dend(hclust(dist(random_df)), k = 3, k_colors = "jco", as.ggplot = TRUE, show_labels = FALSE)
+```
+
+### Methods for assessing clustering tendency
+There are two methods recommended for evaluating the clustering tendency:
+
+* Statistical method - _Hopkins statistic_
+* Visual methods - _Visual Assessment of cluster Tendency (VAT) algorithm_
+
+#### Statistical Methods
+
+Hopkins statistical method.  
+
+
+* __Null hypothesis:__  the data set D is uniformly distributed (i.e., no meaningful clusters)
+* __Alternative hypothesis:__ the dataset D is not uniformly distributed (i.e., contains meaningful clusters)
+
+Rejecting the Null hypothesis occurs if the Hopkins statistic is close to zero.
+
+
+__Non-Random Data Set__
+```{r}
+library(clustertend)
+set.seed(123)
+hopkins(df,n = nrow(df)-1)
+```
+Null Hypothesis is rejected.  Clustering is possible.
+
+__Random Data Set__
+
+```{r}
+set.seed(123)
+hopkins(random_df,n = nrow(random_df) - 1)
+```
+Null Hypothesis is TRUE.  Clustering is not possible
+
+
+#### Visual methods
+
+```{r}
+fviz_dist(dist(df), show_labels = FALSE) + 
+  labs(title = "Iris data")
+```
+
+```{r}
+fviz_dist(dist(random_df), show_labels = FALSE) +
+  labs(title = "Random data")
+```
+
+## Determining the Optimal Number of Clusters
+
+There is no specific method for determing the optimal number of clusters.  There are about 30 algorithms that can be used to project the best number of clusters.   The following 3 methods are fequently consumed:
+
+* Elbow method
+* Average silhoette method
+* Gap statistic method
+
+
+### Computing the number of clusters using R
+
+Two functions to use:   
+1) factoextra::fviz_nbclust()
+2) NbClust::NbClust()  
+
+```{r}
+library(factoextra)
+library(NbClust)
+```
+
+### Data preparation
+
+```{r}
+df <- USArrests %>% mutate_all(.funs = funs(scale(.))) %>% as.vector
+head(df)
+```
+
+__Elbow Method (WSS)__
+```{r}
+fviz_nbclust(df,kmeans, method = "wss") +
+  geom_vline(xintercept = 4, linetype = 2)
+```
+
+__Silhouette Method__
+
+```{r}
+fviz_nbclust(df, kmeans, method = "silhouette") + 
+  labs(subtitle = "Silhouette method")
+```
+
+__Gap Statitic Method__
+
+```{r}
+set.seed(123)
+fviz_nbclust(df,kmeans, nstart = 25, method = "gap_stat", nboot =50) +
+  labs(subtitle = "Gap statitic method")
+```
