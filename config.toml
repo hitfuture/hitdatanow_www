@@ -99,15 +99,15 @@ paginate = 10
 
     logo = "img/bretts_image001.jpg"
     address = """<p><strong>Brett R. Taylor</strong>
-        <br>5737 W Plantation Lane
-        <br>Garden City
-        <br>Idaho, 83703
+        <br>808 Carano Ct
+        <br>Incline Village
+        <br>Nevada, 89451
         <br>
         <strong>United States of America</strong>
       </p>
       """
-    latitude = "43.653963"
-    longitude = "-116.260076"
+    latitude = "39.257143"
+    longitude = "-119.958766"
  
 [Permalinks]
     blog = "/blog/:year/:month/:day/:filename/"
