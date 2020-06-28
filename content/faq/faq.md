@@ -4,7 +4,7 @@ description = "Frequently asked questions"
 keywords = ["FAQ","How do I","questions","what if"]
 +++
 
-[Brett Taylor's Resume](/faq/Taylor_Brett--Resume-2020.html)
+[Brett Taylor's Resume](/html/Taylor_Brett--Resume-2020.html)
 
 
 ## 1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?
