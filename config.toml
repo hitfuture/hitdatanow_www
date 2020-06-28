@@ -92,7 +92,7 @@ paginate = 10
     email = "info@hitfuturenow.com"
 
     about_us = "<p>Brett Taylor is focused on helping Healthcare organizations create a better experience for their patients by leveraging data.</p>"
-    copyright = "Copyright (c) 2019, Brett Taylor; all rights reserved."
+    copyright = "Copyright (c) 2020, Brett Taylor; all rights reserved."
 
     # Format dates with Go's time formatting
     date_format = "January 2, 2006"
