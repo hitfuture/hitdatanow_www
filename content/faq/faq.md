@@ -12,10 +12,11 @@ keywords = ["FAQ","How do I","questions","what if"]
 * ASSESSMENT OF A HEALTHCARE I.T. DEPARTMENT
 * DATA MANAGEMENT
 * DATA ANALYSIS WITH MACHINE LEARNING
-* PROGRAMMING IN THE LANGUAGE R
+* PROGRAMMING IN THE LANGUAGE Ra
 * ENABLING USE OF NEO4J GRAPH DATABASE
 
 ## 2. DO YOU HAVE RESOURCES AVAILABLE TO HELP US?
+
 We partner with many other consulting groups that are focused in the industry. One of our strengths is finding the right resources to help you move forward.
 
 ---
