@@ -1,11 +1,9 @@
 +++
-title = "FAQ"
+title = "Experience"
 description = "Frequently asked questions"
 keywords = ["FAQ","How do I","questions","what if"]
 +++
 
-
-<iframe width="1080" height="720" src="/html/Taylor_Brett--Resume-2020.html" frameborder="0" allowfullscreen></iframe>
 
 
 ## 1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?
@@ -13,13 +11,19 @@ keywords = ["FAQ","How do I","questions","what if"]
 * ASSESSMENT OF A HEALTHCARE I.T. DEPARTMENT
 * DATA MANAGEMENT
 * DATA ANALYSIS WITH MACHINE LEARNING
-* PROGRAMMING IN THE LANGUAGE Ra
+* PROGRAMMING IN THE LANGUAGE R AND PYTHON
+* DATA ARCHIVING - REDUCE COST
 * ENABLING USE OF NEO4J GRAPH DATABASE
 
 ## 2. DO YOU HAVE RESOURCES AVAILABLE TO HELP US?
 
 We partner with many other consulting groups that are focused in the industry. One of our strengths is finding the right resources to help you move forward.
 
+
+
+<iframe width="1080" height="720" src="/html/Taylor_Brett--Resume-2020.html" frameborder="0" allowfullscreen></iframe>
+
 ---
 
 > In case you haven't found the answer for your question please feel free to contact us, our customer support will be happy to help you.
+```

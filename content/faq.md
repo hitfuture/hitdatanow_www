@@ -1,10 +1,13 @@
 +++
-title = "FAQ"
+title = "Resume"
 description = "Frequently asked questions"
 keywords = ["FAQ","How do I","questions","what if"]
 +++
 
-[Brett Taylor's Resume](Taylor_Brett--Resume-2020.html)
+
+
+<iframe width="1080" height="720" src="/html/Taylor_Brett--Resume-2020.html" frameborder="0" allowfullscreen></iframe>
+
 
 
 ## 1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?
