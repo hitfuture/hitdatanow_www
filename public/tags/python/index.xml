@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Brett Randall Taylor</title>
+    <link>/tags/python/</link>
+    <description>Recent content in Python on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 May 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leveraging Python in R to use the Neo4j Bolt driver</title>
+      <link>/blog/2018/05/17/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j/</link>
+      <pubDate>Thu, 17 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/05/17/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j/</guid>
+      <description>Neo4j in the language R I have been fortunate to work with the Neo4j graph database using the language R over the last two years. A former data scientist that worked for Neo4j, Nicole White, implemented the package RNeo4j and released it in 2015. This solution enabled R developers and data scientists to access the Neo4j database in the R language. The package uses the Neo4j REST API and then process the data in a data.</description>
+    </item>
+    
+  </channel>
+</rss>

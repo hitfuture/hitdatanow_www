@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Faqs on Brett Randall Taylor</title>
+    <link>/faq/</link>
+    <description>Recent content in Faqs on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/faq/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Resume</title>
+      <link>/faq/resume/</link>
+      <pubDate>Sun, 28 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/faq/resume/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>/faq/faq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/faq/faq/</guid>
+      <description>Brett Taylor&amp;rsquo;s Resume
+1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?  ASSESSMENT OF A HEALTHCARE I.T. DEPARTMENT DATA MANAGEMENT DATA ANALYSIS WITH MACHINE LEARNING PROGRAMMING IN THE LANGUAGE R ENABLING USE OF NEO4J GRAPH DATABASE  2. DO YOU HAVE RESOURCES AVAILABLE TO HELP US? We partner with many other consulting groups that are focused in the industry. One of our strengths is finding the right resources to help you move forward.</description>
+    </item>
+    
+  </channel>
+</rss>

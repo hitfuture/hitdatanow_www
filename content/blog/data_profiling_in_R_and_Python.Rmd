@@ -1,0 +1,104 @@
+---
+title: "Data Profiling using Pandas in R Shiny"
+author: "[Brett R. Taylor](https://www.hitdatanow.com/)"
+categories: Business Opportunity
+output:
+  html_document:
+    df_print: paged
+    highlight: zenburn
+    theme: journal
+  html_notebook:
+    highlight: zenburn
+    theme: journal
+slug: data-profiling-pandas
+tags:
+- Data
+- Management
+- Science
+banner: img/bretts_image001.jpg
+---
+
+```{r init, echo=TRUE, message=FALSE, warning=FALSE}
+library(DBI)
+library(reticulate)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(progress = FALSE,verbose = FALSE)
+use_condaenv('mdata',conda = '/opt/conda/bin/conda',required = TRUE)
+ 
+
+```
+
+
+
+
+
+
+Data Profiling
+
+Profiling data in SQL is possible.  There are many other tools today that are better at analyzing the data, and this will increase in the future.  
+
+
+```{python}
+import sys
+from  pandas import read_csv,concat
+ 
+df1 =  read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_archive.csv")
+df2 =  read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_investigate.csv")
+df =  concat([df1,df2],ignore_index=True) 
+```
+
+### Breach Data Output
+ 
+ 
+
+ 
+## Profiling DataFrames using Data Science Tools
+
+Data Science has evolved over the last thirteen years, and one of the best tools for understanding tables in databases, and CSV file sources is based on Python.  The Python tool that should be used is pandas-profiling which is opensource, and avaiable on [GitHub](https://github.com/pandas-profiling/pandas-profiling)
+
+This is an example of how to display the analysis of pandas-profiling in the markdown file.
+
+```{python echo=TRUE, error=TRUE, message=TRUE}
+
+import sys
+import pandas as pd
+import pandas_profiling as pdp
+import matplotlib
+ 
+df1 = pd.read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_archive.csv")
+df2 = pd.read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_investigate.csv")
+df = pd.concat([df1,df2],ignore_index=True) 
+profile = df.profile_report(title='Portfolio Report', plot={'histogram': {'bins': 8}},progress_bar=True)
+
+```
+ 
+ 
+## Error Occurs and displaying HTML on Markdown fails 
+ 
+```{r display_pandas_profile_in_rmarkdown, echo=TRUE, error=TRUE, message=FALSE}
+library(shiny)
+
+ tags$div(
+                HTML(py$profile$to_html()  )
+ )  
+ 
+```
+
+
+# Fixing the RMarkdown and Shiny problem
+
+
+
+Displaying the profile using shiny works in the Rmarkdown environment.
+
+```{r display_pandas_profile_in_rmarkdown_works, echo=TRUE, error=FALSE, message=FALSE}
+library(shiny)
+reticulate::import("matplotlib") 
+py$matplotlib$use("Agg")
+tags$iframe(srcdoc=HTML(py$profile$to_html()), height=800, width=900)
+ 
+```
+
+## Enabling the Pandas Profiler to be interactive in the RMarkdown file 
+ 
+ 

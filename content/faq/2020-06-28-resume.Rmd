@@ -1,0 +1,12 @@
+---
+title: Resume
+author: Brett R. Taylor
+date: '2020-06-28'
+slug: resume
+categories:
+  - Leadership
+tags: []
+---
+
+
+ 

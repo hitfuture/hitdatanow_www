@@ -1,0 +1,53 @@
+---
+title: "Historical Work in Healthcare"
+author: "Brett R. Taylor"
+date: '2020-11-25'
+output:
+  html_document:
+    df_print: paged
+slug: []
+categories:
+- Business Opportunity
+- Data
+tags:
+- Communication
+- Leadership
+- Management
+---
+
+
+### Walker HIT
+Health Insurance company - Cacb&e 
+
+Legacy Systems
+
+* Health Partners
+
+
+## Historical Locations
+
+|Time Period| City | State | Company |Job Type | Description |
+|-----|------|--------|----------|----------------|-------------|
+|1979-1990| Sacramento | California | Sutter General Hospital| O/R Attendant |  Multiple work including Software Support for MUMPs Sugical Scheduling system. Ran data related Performance improvement for the O/R. |
+| 1989-1990 | Sacramento | California | Sutter General Hospital | Patient Care Operating Analyst | Data Analysis of Nursing |
+|1990-1991 | Sacramento | California | Sutter Health Information Systems | Programmer Analyst | Data development - Perinatal Management System / Accounting Data |
+| 1991-1993 | Sacramento | California | Sutter Health Information Systems | Strategic Planning Analyst | Capitation for capitated market, Healthcare Information System | 
+|1993-1994| Pasadena | California | Decision Support Group, Inc. | Senior Software Engineer  | Developed product for healthcare data |
+|1994 | Burlington | Vermont |  Decision Support Group, Inc. | Product Manager ||
+|1995 | Dallas | Texas | Nations Bank | Consultant | Mentring and programming for Custoemr Profitability System | 
+| 1995 | San Antonio | Texas | USAA | Consultant | Techical leadership to re-architect and refactor mutual funts trading system | 
+| 1995-1996| Fargo | North Dakota | Luteran Health Systems (Banner Health) | Consultant | Mentored and trained team of maintframe programeers to adopt Object-Oriented progamming. Healthcare Data came from mainframes.  | 
+|1996 | Alameda | California | Quadramed | Consultant | Provided technical leadership, mentoring and development for Healthcare Contract Modeling and CaseMix analysis.  |
+|1997-1998| Saint Louis | Missouri | Quadramed / Medicus Systems | Consultant | Leader of development of rulb ebased engines |
+| 1999-2001 | Granite Bay | California | Capitated Concepts for Healthcare, LLC | V.P. Data Analytics | Healthcare Claim Data Management for Healthcare Capitation - built tool for auditors to use. |
+| 2001-2003 | Los Angeles | California | Cedars-Sinai Medical Center via Canfield & Associates, Inc. | Patient Accouting & Charge Capture |
+| 2003-2005  | Incline Village | Nevada | Brett Taylor & Associates, Inc.| Customer: TL Consulting - Development | Built Healthcare billing collections follow-up system.  |
+| 2003-2009  | Incline Village | Nevada | BT&A, Inc. | | Customer: Southern California Healthcare Systems,Inc. | Claims Archive system - Developed on 7 data sources, Product for Data Archiving |
+| 2005-2009 | Truckee | California | Tahoe Forest health System | Director, I.T. Development | Technical Leadership - created data analytics platform | 
+| 2009-2011 | Twin Falls | Idaho | St. Luke's Health System (Magic Valley)| I.T. Site Leader | Lead IT migration and implementation of new medical center.  Personally built data analytics platform that managed patient transistion in real-time during the hospital migration. Approximately 30 staff members reported to me during this work.|
+| 2011-2016 | Boise | Idaho | St. Luke's Health System | Director, Infrastructure&Operations (CTO) | Managed over 140 people focused in the technology side.  Included implementing the first and second generation of Epic based on Cach^e. Data archiving - worked with Donna Carter etc. | 
+| 2016-2018 | Boise | Idaho | Proskriptve, Inc. | Cheif Technology Strategist | Data Science - Handled Epic data from SFMC for Performance Improvement product in healthcare |
+| 2018... | Incline Village | Nevada | Carter Consulting of Ohio, LLC | Data Scientists and Programming Architect | Consluting services in data archiving and predictive analytics.  Developed MUMPs 
+
+
+* patient information: patient discharges, patient length of stay, patient average lengths of stay, * internal organisation of the hospital :  day of admission into the hospital, day of discharge, occupation of the hospital beds, ...  * market situation :  number of patients coming from a  certain city and market shares * financial information: receipts and expenditures, expenditures versus budget, balance-account, financial ratio's, ... *  personnel information: functions, age, wages 

@@ -11,6 +11,9 @@ tags:
   - Management
   - Leadership
 banner: "img/hit_value_healthcare.png"
+html_notebook:
+   theme: journal
+   highlight: zenburn
 ---
 
 # Exceptional Experience

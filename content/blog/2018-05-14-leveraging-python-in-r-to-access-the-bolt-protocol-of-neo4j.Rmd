@@ -16,7 +16,9 @@ banner: "img/rp.png"
 
 ```{r setup, include=FALSE}
 library(reticulate)
-neo4j <- reticulate::import(module = "neo4j.v1")
+knitr::opts_chunk$set(echo = FALSE) 
+use_condaenv('mdata',conda = '/opt/conda/bin/conda',required = TRUE)
+neo4j <- reticulate::import(module = "neo4j")
 knitr::knit_engines$set(python=reticulate::eng_python)
 
 ```

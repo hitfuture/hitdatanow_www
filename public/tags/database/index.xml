@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Database on Brett Randall Taylor</title>
+    <link>/tags/database/</link>
+    <description>Recent content in Database on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 May 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Native Graph Database, Neo4j, improves Healthcare</title>
+      <link>/blog/2018/05/01/2018-05-01-native-graph-database-improves-healthcare/</link>
+      <pubDate>Tue, 01 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/05/01/2018-05-01-native-graph-database-improves-healthcare/</guid>
+      <description>Data are one of the most import resources in Healthcare to enable the Triple Aim. If you not familiar with the triple aim, it is focused on:
+ Better Health Better Care Lower Cost  Better health means that your organization and you are working on finding ways to create a better experience for the healthcare population that you support. Better care requires that you are delivering care at the highest level.</description>
+    </item>
+    
+  </channel>
+</rss>

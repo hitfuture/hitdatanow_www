@@ -20,28 +20,19 @@ banner: img/banners/neo4j_logo.png
 <li>Lower Cost</li>
 </ul>
 <p><strong>Better health</strong> means that your organization and you are working on finding ways to create a better experience for the healthcare population that you support. <strong>Better care</strong> requires that you are delivering care at the highest level. <strong>Lower cost</strong> is required to create a better patient experience and to ensure that you can deliver care at the best level. Healthcare Information Technology will help to drive forward the application of data analytics to enable the triple aim. Making good solutions in this area requires that we understand the connections between our data. The Neo4j graph platform will help you enable this.</p>
-<div class="figure">
-<img src="/blog/2018-05-01-native-graph-database-improves-healthcare_files/neo4j_logo.png" width="300" height="100" />
-
-</div>
-<div id="neo4j-database-for-referrals" class="section level3">
-<h3>Neo4j Database for Referrals</h3>
-<p>I adopted the native graph database, NEO4J while I was doing research on a regional group of specialists. The idea was that with the provider specialty we needed to understand the referral patterns between the practitioners. I initially started the research by creating a database that had all of the providers, practice geographic locations, procedures, referrals, and shared patient information. While I was analyzing the data, I found that I could not show the patterns of referrals based on the data because the relational database could not look at patterns across multiple provider relationships. In other words, I’d execute a query, and the database would run forever and then fail. This is when I adopted the Neo4j Graph database.</p>
+<p><img src="/blog/2018-05-01-native-graph-database-improves-healthcare_files/neo4j_logo.png" width="300" height="100" /></p>
+<p>###Neo4j Database for Referrals
+I adopted the native graph database, NEO4J while I was doing research on a regional group of specialists. The idea was that with the provider specialty we needed to understand the referral patterns between the practitioners. I initially started the research by creating a database that had all of the providers, practice geographic locations, procedures, referrals, and shared patient information. While I was analyzing the data, I found that I could not show the patterns of referrals based on the data because the relational database could not look at patterns across multiple provider relationships. In other words, I’d execute a query, and the database would run forever and then fail. This is when I adopted the Neo4j Graph database.</p>
 <p>The graph database could rapidly determine the patterns of referrals. I also used unsupervised machine learning to categorize the providers to ensure that we were looking at them based on what they performed and not just based on their specialty code. Below is an R Markdown file I created that displays how dermatologists refer to dermatologists which I analyzed based on 2014 CMS open data.</p>
 <iframe width="1080" height="720" src="/html/referrals.html" frameborder="0" allowfullscreen>
 </iframe>
 <p>This shows a problem you need to be able to analyze. This analysis work takes advantage of the connections between providers.</p>
 <p>If you want to look at a specific provider and see their referrals, you can run a Cypher query like below.</p>
 <pre><code>MATCH pth= (pc1:Provider_Taxonomy)&lt;--(mohs_surgeon:Provider)-[ps1:SHARED]-&gt;(sp:Shared_Patient)&lt;-[ps2:SHARED]-(referring:Provider)-[ica:IS_CLASSIFED_AS]-&gt;(pc2:Provider_Taxonomy) where mohs_surgeon.provider_last_name_legal_name = &quot;BIRKBY&quot; and mohs_surgeon.provider_first_name = &quot;CRAIG&quot; return pth</code></pre>
-<div class="figure">
-<img src="/blog/2018-05-01-native-graph-database-improves-healthcare_files/provider_referral_pattern.png" width="600" height="400" />
-
-</div>
+<p><img src="/blog/2018-05-01-native-graph-database-improves-healthcare_files/provider_referral_pattern.png" width="600" height="400" /></p>
 <p>When performing a referral analysis you, of course, have a hypothesis of how referrals can be determined, and then you will test the hypothesis. This particular visualization is not the final research and will not be 100% accurate. I’m displaying this just to demonstrate how pattern recognition can be performed using this new state of the art native graph database. Patterns are something we need to understand better in healthcare.</p>
-</div>
-<div id="utilization-of-graph-databases-in-healthcare" class="section level3">
-<h3>Utilization of Graph Databases in Healthcare</h3>
-<p>There are many other areas where pattern identification matters including:</p>
+<p>###Utilization of Graph Databases in Healthcare
+There are many other areas where pattern identification matters including:</p>
 <ul>
 <li>Care Delivery</li>
 <li>Software Application Utilization and Integration</li>
@@ -58,4 +49,3 @@ banner: img/banners/neo4j_logo.png
 <p>If you are interested why this might be valuable in our industry, please reach out to me and I’ll give you a quick introduction.</p>
 <p>Thanks,<br />
 Brett</p>
-</div>

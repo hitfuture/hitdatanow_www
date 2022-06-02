@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Brett Randall Taylor</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Brett Taylor&#39;s HIT Past</title>
+      <link>/post/brett-taylor-s-hit-past/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/brett-taylor-s-hit-past/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perioperative Process</title>
+      <link>/post/perioperative-process/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/perioperative-process/</guid>
+      <description>Phases Preoperative The preoperative phase is used to perform tests, attempt to limit preoperational anxiety and may include the preoperative fasting.
+ Perooperative The peroperative period begins when the patient is transferred to the operating room table and ends with the transfer of a patient to the postanaesthesia care unit (PACU). During this period the patient is peroperatively monitored, anaesthetized, prepped, and draped, and the operation is performed. Nursing activities during this period focus on safety, infection prevention, and physiological response to peroperative anaesthesia.</description>
+    </item>
+    
+  </channel>
+</rss>

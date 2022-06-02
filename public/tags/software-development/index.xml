@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Software Development on Brett Randall Taylor</title>
+    <link>/tags/software-development/</link>
+    <description>Recent content in Software Development on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 03 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/software-development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Applying Natural Language Processing to Predict</title>
+      <link>/blog/2019/04/03/2019-04-03-applying-natural-language-processing-to-predict-text/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/03/2019-04-03-applying-natural-language-processing-to-predict-text/</guid>
+      <description>Utilizing Natural Language Processing to predict text is interesting. I built a small little tool to test the NLP process.
+ The video shows how to use this tool to predict text. I embedded this video within the application I wrote that utilizes the Natural Language Processing model I built to predict the next text word after you put them in place. I developed this when I was in the Data Science Capstone on-line course with John Hopkins University.</description>
+    </item>
+    
+  </channel>
+</rss>

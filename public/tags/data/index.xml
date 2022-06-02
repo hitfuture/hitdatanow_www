@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data on Brett Randall Taylor</title>
+    <link>/tags/data/</link>
+    <description>Recent content in Data on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cluster Analysis</title>
+      <link>/blog/2019/05/14/2019-05-14-cluster-analysis/</link>
+      <pubDate>Tue, 14 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/05/14/2019-05-14-cluster-analysis/</guid>
+      <description>Basics Tidyverse is a set of R libraries that enables the best methods for Data Management. I will use the tidyverse libraries to perform cluster analysis and provide this information to other data science teams in the industry.
+library(devtools) install_github(&amp;quot;kassambara/factoextra&amp;quot;) Introduction to R  Data Preparation and R Packages Required Packages  dplyr tidyr testthat cluster factoextra   Data Standardization We need the ability to transform vectors in our data frames to standard variables.</description>
+    </item>
+    
+    <item>
+      <title>Statistics: Central Limit Theorem</title>
+      <link>/blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/</link>
+      <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/</guid>
+      <description>Overview The Central Limit Theorem states that when samples of a population are large, the sampliing distribution will take the shape of a normal distribution regardless of the shape of the population from which the sample was drawn. This is proven out through the simulation below that projects the theoretical mean of the exponential distribution compared to the sampling. The variance between the theorectical mean, and the sample mean is .</description>
+    </item>
+    
+    <item>
+      <title>Statistical Analysis: Vitamin C of Tooth Growth on Guinea Pigs</title>
+      <link>/blog/2019/04/25/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs/</link>
+      <pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/25/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs/</guid>
+      <description>Overview A data set has been created from an experiment in 1952 which demonstrates the impact of Vitamin C, on the growth of guinea pigs teeth. The response is the length of teeth in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid). The analysis below works to determine if the two supplement types have different impacts on growth of the guinea pig’s teeth.</description>
+    </item>
+    
+    <item>
+      <title>HIT Data Now</title>
+      <link>/blog/2018/04/30/2018-04-30-hit-future-now/</link>
+      <pubDate>Mon, 30 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/04/30/2018-04-30-hit-future-now/</guid>
+      <description>I have wanted to make a blog post for awhile to describe how I think we can extend the power of the Healthcare Information Technology environment. My focus has been on the development and the management of Healthcare I.T. since the late 1980’s. I have worked for several Health Systems, including Sutter Health, St. Luke’s Idaho, Tahoe Forest as an employee and as a consultant, I have worked with dozen’s of other Health Systems.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data on Brett Randall Taylor</title>
+    <link>/categories/data/</link>
+    <description>Recent content in Data on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cluster Analysis</title>
+      <link>/blog/2019/05/14/2019-05-14-cluster-analysis/</link>
+      <pubDate>Tue, 14 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/05/14/2019-05-14-cluster-analysis/</guid>
+      <description>Basics Tidyverse is a set of R libraries that enables the best methods for Data Management. I will use the tidyverse libraries to perform cluster analysis and provide this information to other data science teams in the industry.
+library(devtools) install_github(&amp;quot;kassambara/factoextra&amp;quot;) Introduction to R  Data Preparation and R Packages Required Packages  dplyr tidyr testthat cluster factoextra   Data Standardization We need the ability to transform vectors in our data frames to standard variables.</description>
+    </item>
+    
+    <item>
+      <title>Applying Natural Language Processing to Predict</title>
+      <link>/blog/2019/04/03/2019-04-03-applying-natural-language-processing-to-predict-text/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/03/2019-04-03-applying-natural-language-processing-to-predict-text/</guid>
+      <description>Utilizing Natural Language Processing to predict text is interesting. I built a small little tool to test the NLP process.
+ The video shows how to use this tool to predict text. I embedded this video within the application I wrote that utilizes the Natural Language Processing model I built to predict the next text word after you put them in place. I developed this when I was in the Data Science Capstone on-line course with John Hopkins University.</description>
+    </item>
+    
+    <item>
+      <title>Native Graph Database, Neo4j, improves Healthcare</title>
+      <link>/blog/2018/05/01/2018-05-01-native-graph-database-improves-healthcare/</link>
+      <pubDate>Tue, 01 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/05/01/2018-05-01-native-graph-database-improves-healthcare/</guid>
+      <description>Data are one of the most import resources in Healthcare to enable the Triple Aim. If you not familiar with the triple aim, it is focused on:
+ Better Health Better Care Lower Cost  Better health means that your organization and you are working on finding ways to create a better experience for the healthcare population that you support. Better care requires that you are delivering care at the highest level.</description>
+    </item>
+    
+  </channel>
+</rss>

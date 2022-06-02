@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Brett Randall Taylor</title>
+    <link>/</link>
+    <description>Recent content on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Resume</title>
+      <link>/faq/resume/</link>
+      <pubDate>Sun, 28 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/faq/resume/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cluster Analysis</title>
+      <link>/blog/2019/05/14/2019-05-14-cluster-analysis/</link>
+      <pubDate>Tue, 14 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/05/14/2019-05-14-cluster-analysis/</guid>
+      <description>Basics Tidyverse is a set of R libraries that enables the best methods for Data Management. I will use the tidyverse libraries to perform cluster analysis and provide this information to other data science teams in the industry.
+library(devtools) install_github(&amp;quot;kassambara/factoextra&amp;quot;) Introduction to R  Data Preparation and R Packages Required Packages  dplyr tidyr testthat cluster factoextra   Data Standardization We need the ability to transform vectors in our data frames to standard variables.</description>
+    </item>
+    
+    <item>
+      <title>Statistics: Central Limit Theorem</title>
+      <link>/blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/</link>
+      <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/</guid>
+      <description>Overview The Central Limit Theorem states that when samples of a population are large, the sampliing distribution will take the shape of a normal distribution regardless of the shape of the population from which the sample was drawn. This is proven out through the simulation below that projects the theoretical mean of the exponential distribution compared to the sampling. The variance between the theorectical mean, and the sample mean is .</description>
+    </item>
+    
+    <item>
+      <title>Statistical Analysis: Vitamin C of Tooth Growth on Guinea Pigs</title>
+      <link>/blog/2019/04/25/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs/</link>
+      <pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/25/2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs/</guid>
+      <description>Overview A data set has been created from an experiment in 1952 which demonstrates the impact of Vitamin C, on the growth of guinea pigs teeth. The response is the length of teeth in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid). The analysis below works to determine if the two supplement types have different impacts on growth of the guinea pig’s teeth.</description>
+    </item>
+    
+    <item>
+      <title>Applying Natural Language Processing to Predict</title>
+      <link>/blog/2019/04/03/2019-04-03-applying-natural-language-processing-to-predict-text/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/03/2019-04-03-applying-natural-language-processing-to-predict-text/</guid>
+      <description>Utilizing Natural Language Processing to predict text is interesting. I built a small little tool to test the NLP process.
+ The video shows how to use this tool to predict text. I embedded this video within the application I wrote that utilizes the Natural Language Processing model I built to predict the next text word after you put them in place. I developed this when I was in the Data Science Capstone on-line course with John Hopkins University.</description>
+    </item>
+    
+    <item>
+      <title>Non-Verbal Communication In Leadership</title>
+      <link>/blog/2019/04/03/2019-04-03-non-verbal-communication-in-leadership/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/03/2019-04-03-non-verbal-communication-in-leadership/</guid>
+      <description>As a leader, you need to understand that your facial expressions are important.
+ Leaders sometimes are not focused on how they are sharing their expressions with others when speaking with staff members. Please take a look why this all matters, and how you realize that non-verbal communication often provides a receiver with information that many not make them happy.
+Take a look at how I respond in the video!</description>
+    </item>
+    
+    <item>
+      <title>IT Leadership</title>
+      <link>/blog/2019/04/02/2019-04-02-healthcareitleadership/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/02/2019-04-02-healthcareitleadership/</guid>
+      <description> Exceptional Experience  As a leader, focus on providing an exceptional experience to employees and providers. This video shows my former experience with improving the experience for the staff members of a good Healthcare organization.
+   So the employees can provide an exceptional experience to the patients
+  </description>
+    </item>
+    
+    <item>
+      <title>Brett Taylor&#39;s HIT Past</title>
+      <link>/post/brett-taylor-s-hit-past/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/brett-taylor-s-hit-past/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Happy Trails to You</title>
+      <link>/blog/2018/07/29/2018-07-29-happy-trails/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/07/29/2018-07-29-happy-trails/</guid>
+      <description>I’ve been very fortunate to be in healthcare throughout my career. My introduction to the industry occurred when I took on a job in the O/R at Sutter Health. I ended up getting a position as a Surgical attendant in the O/R department at age 19. This job was all about ensuring the patients were in the operating room at the right time and making sure the O/R was clean.</description>
+    </item>
+    
+    <item>
+      <title>Perioperative Process</title>
+      <link>/post/perioperative-process/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/perioperative-process/</guid>
+      <description>Phases Preoperative The preoperative phase is used to perform tests, attempt to limit preoperational anxiety and may include the preoperative fasting.
+ Perooperative The peroperative period begins when the patient is transferred to the operating room table and ends with the transfer of a patient to the postanaesthesia care unit (PACU). During this period the patient is peroperatively monitored, anaesthetized, prepped, and draped, and the operation is performed. Nursing activities during this period focus on safety, infection prevention, and physiological response to peroperative anaesthesia.</description>
+    </item>
+    
+    <item>
+      <title>Leveraging Python in R to use the Neo4j Bolt driver</title>
+      <link>/blog/2018/05/17/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j/</link>
+      <pubDate>Thu, 17 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/05/17/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j/</guid>
+      <description>Neo4j in the language R I have been fortunate to work with the Neo4j graph database using the language R over the last two years. A former data scientist that worked for Neo4j, Nicole White, implemented the package RNeo4j and released it in 2015. This solution enabled R developers and data scientists to access the Neo4j database in the R language. The package uses the Neo4j REST API and then process the data in a data.</description>
+    </item>
+    
+    <item>
+      <title>Native Graph Database, Neo4j, improves Healthcare</title>
+      <link>/blog/2018/05/01/2018-05-01-native-graph-database-improves-healthcare/</link>
+      <pubDate>Tue, 01 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/05/01/2018-05-01-native-graph-database-improves-healthcare/</guid>
+      <description>Data are one of the most import resources in Healthcare to enable the Triple Aim. If you not familiar with the triple aim, it is focused on:
+ Better Health Better Care Lower Cost  Better health means that your organization and you are working on finding ways to create a better experience for the healthcare population that you support. Better care requires that you are delivering care at the highest level.</description>
+    </item>
+    
+    <item>
+      <title>HIT Data Now</title>
+      <link>/blog/2018/04/30/2018-04-30-hit-future-now/</link>
+      <pubDate>Mon, 30 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/04/30/2018-04-30-hit-future-now/</guid>
+      <description>I have wanted to make a blog post for awhile to describe how I think we can extend the power of the Healthcare Information Technology environment. My focus has been on the development and the management of Healthcare I.T. since the late 1980’s. I have worked for several Health Systems, including Sutter Health, St. Luke’s Idaho, Tahoe Forest as an employee and as a consultant, I have worked with dozen’s of other Health Systems.</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/contact/</guid>
+      <description>We are here to help you Please contact us now!</description>
+    </item>
+    
+    <item>
+      <title>FAQ</title>
+      <link>/faq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/faq/</guid>
+      <description>Brett Taylor&amp;rsquo;s Resume
+1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?  ASSESSMENT OF A HEALTHCARE I.T. DEPARTMENT DATA MANAGEMENT DATA ANALYSIS WITH MACHINE LEARNING PROGRAMMING IN THE LANGUAGE R ENABLING USE OF NEO4J GRAPH DATABASE  2. DO YOU HAVE RESOURCES AVAILABLE TO HELP US? We partner with many other consulting groups that are focused in the industry. One of our strengths is finding the right resources to help you move forward.</description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>/faq/faq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/faq/faq/</guid>
+      <description>Brett Taylor&amp;rsquo;s Resume
+1. WHAT ARE HIT FUTURE SOLUTIONS BEST SKILLS IN THE ARE OF HEALTHCARE I.T.?  ASSESSMENT OF A HEALTHCARE I.T. DEPARTMENT DATA MANAGEMENT DATA ANALYSIS WITH MACHINE LEARNING PROGRAMMING IN THE LANGUAGE R ENABLING USE OF NEO4J GRAPH DATABASE  2. DO YOU HAVE RESOURCES AVAILABLE TO HELP US? We partner with many other consulting groups that are focused in the industry. One of our strengths is finding the right resources to help you move forward.</description>
+    </item>
+    
+  </channel>
+</rss>

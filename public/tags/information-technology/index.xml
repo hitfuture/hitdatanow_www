@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Information Technology on Brett Randall Taylor</title>
+    <link>/tags/information-technology/</link>
+    <description>Recent content in Information Technology on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/information-technology/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IT Leadership</title>
+      <link>/blog/2019/04/02/2019-04-02-healthcareitleadership/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/02/2019-04-02-healthcareitleadership/</guid>
+      <description> Exceptional Experience  As a leader, focus on providing an exceptional experience to employees and providers. This video shows my former experience with improving the experience for the staff members of a good Healthcare organization.
+   So the employees can provide an exceptional experience to the patients
+  </description>
+    </item>
+    
+    <item>
+      <title>Happy Trails to You</title>
+      <link>/blog/2018/07/29/2018-07-29-happy-trails/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/07/29/2018-07-29-happy-trails/</guid>
+      <description>I’ve been very fortunate to be in healthcare throughout my career. My introduction to the industry occurred when I took on a job in the O/R at Sutter Health. I ended up getting a position as a Surgical attendant in the O/R department at age 19. This job was all about ensuring the patients were in the operating room at the right time and making sure the O/R was clean.</description>
+    </item>
+    
+  </channel>
+</rss>

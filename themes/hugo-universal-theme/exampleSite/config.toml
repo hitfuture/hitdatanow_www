@@ -28,7 +28,7 @@ paginate = 10
     weight = 2
 
 [[menu.main]]
-    name = "FAQ"
+    name = "Resume"
     identifier = "faq"
     url  = "/faq/"
     weight = 3

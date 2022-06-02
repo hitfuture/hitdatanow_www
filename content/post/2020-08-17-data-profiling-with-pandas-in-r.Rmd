@@ -1,0 +1,18 @@
+---
+title: Data Profiling with Pandas in R
+author: "[Brett R. Taylor](https://www.hitdatanow.com/)"
+date: '2020-08-17'
+slug: data-profiling-with-pandas-in-r
+categories:
+  - Data
+  - Science
+tags:
+  - Data
+  - Database
+  - Healthcare
+output:
+  html_document:
+    df_print: paged
+    highlight: zenburn
+    theme: journal
+---

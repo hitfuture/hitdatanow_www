@@ -1,0 +1,22 @@
+---
+title: "Historical Work in Healthcare"
+author: "Brett R. Taylor"
+date: '2020-11-25'
+slug: []
+categories:
+- Business Opportunity
+- Data
+tags:
+- Communication
+- Leadership
+- Management
+---
+
+## Historical Locations
+
+|Time Period| City | State | Company |Job Type | Description |
+|-----|------|--------|----------|----------------|-------------|
+|1979-1990| Sacramento | California | Sutter General Hospital| O/R Attendant |  Multiple work including Software Support for MUMPs Sugical Scheduling system. Ran data related Performance improvement for the O/R. |
+| 1989 - 1990 | Sacramento | California | Sutter General Hospital | Patient Care Operating Analyst | Data Analysis of Nursing |
+|1990-1991 | Sacramento | California | Sutter Health Information Systems | Programmer Analyst | Data development - Perinatal Management System / Accounting Data |
+| 1991-1993 | Sacramento | California | Sutter Health Information Systems | Strategic Planning Analyst | Capitation for capitated market, Healthcare Information System | 

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leveraging Python in R to use the Neo4j Bolt driver</title>
+  <meta name="author" content="" />
+
+  
+  <meta name="keywords" content="R, RStudio, Python, Data Science, Healthcare, Leadership, Data Archiving">	
+  
+
+  
+  <meta name="description" content="HIT Data Now">	
+  
+
+  <meta name="generator" content="Hugo 0.73.0" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+ 
+
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  
+  <link href="../../../../../css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="../../../../../css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="../../../../../css/custom.css" rel="stylesheet">
+
+  
+  
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+  <link rel="shortcut icon" href="../../../../../img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="../../../../../img/apple-touch-icon.png" />
+  
+
+  <link href="../../../../../css/owl.carousel.css" rel="stylesheet">
+  <link href="../../../../../css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="../../../../../index.xml" type="application/rss+xml" title="Brett Randall Taylor">
+
+  
+  <meta property="og:title" content="Leveraging Python in R to use the Neo4j Bolt driver" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/blog/2018/05/17/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j//" />
+  <meta property="og:image" content="img/bretts_image001.jpg" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="../../../../../">
+                    <img src="../../../../../img/logo.png" alt="Leveraging Python in R to use the Neo4j Bolt driver logo" class="hidden-xs hidden-sm">
+                    <img src="../../../../../img/logo-small.png" alt="Leveraging Python in R to use the Neo4j Bolt driver logo" class="visible-xs visible-sm">
+                    <span class= "sr-only">Leveraging Python in R to use the Neo4j Bolt driver - go to homepage</span>
+                </a>
+                 
+                    <span class = "navbar-brand"> Brett Randall Taylor </span>
+                
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                      <span class="sr-only">Toggle Navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                  
+                  <li class="dropdown">
+                    
+                    <a href="../../../../../">Home</a>
+                    
+                  </li>
+                  
+                  <li class="dropdown">
+                    
+                    <a href="../../../../../blog/">Examples</a>
+                    
+                  </li>
+                  
+                  <li class="dropdown">
+                    
+                    <a href="../../../../../faq/">Experience</a>
+                    
+                  </li>
+                  
+                  <li class="dropdown">
+                    
+                    <a href="../../../../../contact/">Contact</a>
+                    
+                  </li>
+                  
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Leveraging Python in R to use the Neo4j Bolt driver</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">By <a href="#">Brett Taylor</a> | May 17, 2018</p>
+
+                        <div id="post-content">
+                          
+
+
+<div id="neo4j-in-the-language-r" class="section level3">
+<h3>Neo4j in the language R</h3>
+<p>I have been fortunate to work with the Neo4j graph database using the language R over the last two years. A former data scientist that worked for Neo4j, Nicole White, implemented the package RNeo4j and released it in 2015. This solution enabled R developers and data scientists to access the Neo4j database in the R language. The package uses the Neo4j REST API and then process the data in a data.frame, tabular format, which is the norm in the language R. I started to use this solution in products that were based in Shiny, a R web environment, and queried the Neo4j database as a data source for the application. The Neo4j library for R is very good. It does have some limitations due to the focus on tabular data and the use of the REST API. I would say that if Nicole hadn’t released the RNeo4j package, I wouldn’t have been able to use Neo4j in the environment I was developing in.</p>
+<p>Neo4j evolved significantly in April of 2016 with the release of Neo4j 3.0. This release standardized the method of communicating with the database by creating the Bolt protocol which provides a very efficient and secure binary interface to the database. Neo4j provided Bolt drivers for Java, JavaScript, Python and C# as part of the release so that this is standardized in the most used languages. Communities began working on this protocol for other languages and some have been released. Version 3.1 was released in December of 2016 and had a lot of new features including the Enterprise Casual Cluster. This solution allowed a very modern scalable database with multiple nodes and it requires the bolt protocol for access to the database.</p>
+<p>Bolt supports a load balancing solution that allows you to query the cluster and if a node in the cluster fails it will redirect your query to another node. The RNeo4j driver did not support the bolt protocol and I was trying to see how we could get the next version of RNeo4j to support bolt and the enterprise database. I was very fortunate to have a great software developer working with me that took on implementing a new version of RNeo4j that supports Bolt and he used the language RUST to integrate a Neo4j C library. This version of RNeo4j is now in Nicole White’s GitHub repository. Unfortunately the package is no longer in the R CRAN package system so it is not accessible through install.packages function in R. The way to use this latest version RNeo4j is using devtools.</p>
+<pre><code>devtools::install_github(&quot;nicolewhite/RNeo4j&quot;)</code></pre>
+<p>Support of this package is minimal and we need to be focused on getting the next Neo4j driver for R up and running.</p>
+</div>
+<div id="next-generation-neo4j-in-r" class="section level3">
+<h3>Next Generation Neo4j in R</h3>
+<p><img src="../../../../../blog/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j_files/neo4j-rstats.png" alt="RStats-Neo4j" width="100" height="100" /><br />
+I spend time on Slack in the Neo4j community and found out that there is an “neo4j=rstats” channel focused on using Neo4j in R. One of the interesting areas of this channel is that there is a team of great R data scientists named ThinkR, <span class="citation">@thinkR_fr</span>, focused on creatinga new way of accessing the Neo4j platform from within the language R. One of the first packages they built allows integration of Neo4j in the R Markdown files. It is very much like using SQL in the RStudio environment. Colin Fay, data analyst, is driving this work right now and is looking for the R community to support the work they are doing. You can experiment with these new packages by installing them from <a href="https://github.com/neo4j-rstats" class="uri">https://github.com/neo4j-rstats</a>. I think the community should invest in this area to make the Graph Database part of the R environment. Right now, the driver does not support the Bolt protocol and I’m going to show a workaround in this post on how to integrate Neo4j via the language Python in the R environment.</p>
+</div>
+<div id="using-python-in-the-language-r" class="section level3">
+<h3>Using Python in the language R</h3>
+<p>Python is now directly acessible in the language R. RStudio has supported the use of Python in their Integrated Development Environment (IDE) for quite a while. While it was good to be able to access Python in the IDE, there wasn’t a solution to easily integrate Python within the language R. This is no longer true. There is a new R package that has been released by RStudio on March 26, 2018 named reticulate. Reticulate allows you to embed Python code and objects within your R code. The reason this matters is the Neo4j company created the Python Neo4j driver and supports it for all updates. Embedding this driver within the R environment is possible now and will provide a workaround until more development occurs to support a robust Neo4j driver in R.</p>
+</div>
+<div id="r-dependencies-to-integrate-python" class="section level3">
+<h3>R Dependencies to integrate Python</h3>
+<p>The R language is highly dependent upon other languages including C++, Fortran, and C. Operating system packages are also a common dependency. Running the language R on Ubuntu 16.4 Linux O/S, you will have to install certain packages to integrate R packages. It is very similar in the Mac OS X environment. Windows tends to have binary installations which requires less dependencies. Most R programmers know that integration is built in through special packages that allow easy access to other languages. Below are some of the requirements for accessing Neo4j in R through the official Python Neo4j driver.</p>
+<div id="os-dependencies" class="section level4">
+<h4>O/S Dependencies</h4>
+<p>One of the main dependencies of course is that you have the language Python installed on your computer. It is recommended that you use Python 3.5 or later. Installing this on Linux is pretty straight forward. Ubuntu based installation requires:</p>
+<pre><code>sudo apt-get update
+sudo apt-get install python3 \
+           python3-pip
+sudo pip3 upgrade
+sudo pip3 install --upgrade pip</code></pre>
+<p>Installing on Windows requires a download and there is a YouTube video that will show you how to do this if you haven’t done this yet.</p>
+<p><a href="https://www.youtube.com/watch?v=dX2-V2BocqQ" class="uri">https://www.youtube.com/watch?v=dX2-V2BocqQ</a></p>
+</div>
+<div id="r-dependencies" class="section level4">
+<h4>R Dependencies</h4>
+<p>There is one major dependency required to integrate Python in the language R. This package mentioned before allows you to access Python within your R environment. It provides access to Python functions, data, and also Python objects which enables the ability to call the Python methods in R. This is a pretty amazing expansion of R since a lot of Data Science tools are now built in the language Python. Installing the Reticulate from CRAN is as follows:</p>
+<pre><code>install.packages(&quot;reticulate&quot;)</code></pre>
+</div>
+<div id="python-dependencies" class="section level4">
+<h4>Python Dependencies</h4>
+<p>There is one package you need to install in order to use the Python Neo4j driver in R.</p>
+<ul>
+<li>neo4j-driver</li>
+</ul>
+<p>There are 2 ways to install Python packages in the R environment. One way is to install it through the command line.</p>
+<pre><code>pip3 install neo4j-driver</code></pre>
+<p>The alternative is to install the Python package using the R reticulate function. Reticulate will install in two <em>virtual</em> environments available:</p>
+<ul>
+<li>Virtualenv</li>
+<li>Conda</li>
+</ul>
+<p>Virtualenv only runs on the Mac OS and Linux. Conda is a data science platform that installs both Python and R and has hundreds of embeded packages that support data science. Conda may be valuable as you start to use both languages. When installing Python libraries using Reticulate, it will determine if you have the virtualenv or conda installed and use this as the default.</p>
+<pre class="r"><code>reticulate::py_install(&quot;neo4j_driver&quot;)</code></pre>
+<pre><code>## virtualenv: ~/.virtualenvs/r-reticulate 
+## Upgrading pip ...
+## Upgrading wheel ...
+## Upgrading setuptools ...
+## Installing packages ...
+## 
+## Installation complete.</code></pre>
+<p>There is more control you can place through reticulate and I recommend that you review the RStudio documentation on Github. The site is here <a href="https://rstudio.github.io/reticulate/">Github Reticulate Documentation</a>.</p>
+</div>
+</div>
+<div id="introduction-to-neo4j-in-python" class="section level3">
+<h3>Introduction to Neo4j in Python</h3>
+<p>The first thing to understand prior to embedding the Neo4j Python driver in R is to see how the driver works in Python. We will work with a little bit of public data from the United States CMS organization. I frequently use public data and I’m going to manualy create a very small subgraph with the Python driver by using cypher in a Python script to implement the nodes and relationships.</p>
+<pre><code>from neo4j.v1 import GraphDatabase
+user_id = &quot;public_user&quot;
+password = &quot;passwd&quot;
+uri = &quot;bolt://localhost:7687&quot;
+driver = GraphDatabase.driver(uri, auth=(user_id, password ))
+with driver.session() as sess:
+   sess.run(&quot;MERGE (a1.Hospital{provider_id:50108,hospital_name: &#39;SUTTER MEDICAL CENTER, SACRAMENTO&#39;})&quot;
+            &quot;MERGE (a2.Hospital{provider_id:51328  ,hospital_name: &#39;TAHOE FOREST HOSPITAL&#39;})&quot;
+            &quot;MERGE (a3.Hospital{provider_id: 130006 ,hospital_name: &#39;ST LUKE\&#39;S REGIONAL MEDICAL CENTER&#39;})&quot;
+            &quot;MERGE (t1.Hospital_Type{name:&#39;Acute Care Hospitals&#39;})&quot;
+            &quot;MERGE (t2.Hospital_Type{name:&#39;Critical Access Hospitals&#39;})&quot;
+            &quot;MERGE (a1)-[:ISA]-&gt;(t1)&quot;
+            &quot;MERGE (a2)-[:ISA]-&gt;(t2)&quot;
+            &quot;MERGE (a3)-[:ISA]-&gt;(t3)&quot;)
+           </code></pre>
+<p>The Python language requires a well defined structured format of the code. The language is very Object-Oriented so you will see objects returned back from each of the calls to methods below. The first step is to create the driver which requires you authticate with your user id and your password. We next create a Python function, def print_hospital_info_and_typePyth(), so that we can send the provider id to Neo4j and it will return the prvider id, hospital name and the hospital type. The function next executes the transaction and iterates through the records that are returned. It then prints out the fields in the record. The final step is to run the function based on the provider ids. The results are printed in this R markdown file below.</p>
+<pre class="python"><code>from neo4j.v1 import GraphDatabase
+uri = &quot;bolt://localhost:7687&quot;
+driver = GraphDatabase.driver(uri, auth=(&quot;public_user&quot;, &quot;passwd&quot;))
+def print_hospital_info_and_typePyth(provider_id): 
+     with driver.session() as session:  
+         with session.begin_transaction() as tx:  
+              for record in tx.run(&quot;MATCH (a:Hospital)-[:ISA]-&gt;(t:Hospital_Type) &quot; 
+                                   &quot;WHERE a.provider_id = {id} &quot; 
+                                  &quot;RETURN a.provider_id, a.hospital_name, t.name&quot;, id=provider_id):  
+                  print(str(record[&quot;a.provider_id&quot;])+ &quot;, &quot;+record[&quot;a.hospital_name&quot;] +&quot;, &quot; + record[&quot;t.name&quot;])  
+                 
+print_hospital_info_and_typePyth(50108) </code></pre>
+<pre><code>## 50108, SUTTER MEDICAL CENTER, SACRAMENTO, Acute Care Hospitals</code></pre>
+<pre class="python"><code>print_hospital_info_and_typePyth(51328) </code></pre>
+<pre><code>## 51328, TAHOE FOREST HOSPITAL, Critical Access Hospitals</code></pre>
+<pre class="python"><code>print_hospital_info_and_typePyth(130006) </code></pre>
+<pre><code>## 130006, ST LUKE&#39;S REGIONAL MEDICAL CENTER, Acute Care Hospitals</code></pre>
+</div>
+<div id="how-python-and-r-work-together-to-access-neo4j" class="section level3">
+<h3>How Python and R work together to access Neo4j</h3>
+<p>Embedding Python in R with Reticulate is more sophisticated than I expected. There is a great amount of capabilities. The first thing you have to do is to import the driver module into the R environment. When you import the driver, it will be an object accessible in the R environment. Below, it tests to make sure that Python is available in your R environment.</p>
+<pre class="r"><code>library(reticulate)
+is_python_available &lt;- py_available()
+paste(&quot;Is Python Available?&quot;, is_python_available)</code></pre>
+<pre><code>## [1] &quot;Is Python Available? TRUE&quot;</code></pre>
+<pre class="r"><code>if(is_python_available){
+        neo4j &lt;- reticulate::import(module = &quot;neo4j.v1&quot;,as = &quot;neo4j&quot;)
+        str(neo4j)
+       }</code></pre>
+<pre><code>## Module(neo4j.v1)</code></pre>
+</div>
+<div id="r-integration-with-the-python-neo4j-driver" class="section level3">
+<h3>R Integration with the Python Neo4j Driver</h3>
+<p>Using the Python driver in R requires that you perform similar methods in the R environment. The process is nearly identical to the Python script and it does require some changes. Accessing a method in R from a Python based object requires that use the <code>$</code> separator between the object and the method. I handled authentication differently in this R script by creating the token independently. I use the basic_auth() method which solved a problem I was having with passing a list to the driver method which would fail. I iterate over the data results of the transaction by using sapply R function directly from the data in the record. Putting this into production would require you to use testthat library for unit testing where you will make sure that this works with your consumption of Neo4j Python driver in R.</p>
+<pre class="r"><code> uri = &quot;bolt://localhost:7687&quot;
+
+neo4j &lt;- reticulate::import(module = &quot;neo4j.v1&quot;,as = &quot;neo4j&quot;)
+token &lt;- neo4j$basic_auth(&quot;public_user&quot;,&quot;passwd&quot;)
+driver &lt;- neo4j$GraphDatabase$driver(uri, auth=token)
+print_hospital_info_and_typeR &lt;- function(provider_id) {
+        the_session &lt;- driver$session()
+        tx &lt;- the_session$begin_transaction()
+        record &lt;- tx$run(&quot;MATCH (a:Hospital)-[:ISA]-&gt;(t:Hospital_Type) 
+                                   WHERE a.provider_id = {id}
+                                  RETURN a.provider_id, a.hospital_name, t.name&quot;, id=provider_id)
+        record_data &lt;- record$data()
+        sapply(record_data,function(rec){ 
+                paste(rec$a.provider_id, rec$a.hospital_name, rec$t.name  ,sep = &quot;, &quot;)})
+         
+        }
+print_hospital_info_and_typeR(50108) </code></pre>
+<pre><code>## [1] &quot;50108, SUTTER MEDICAL CENTER, SACRAMENTO, Acute Care Hospitals&quot;</code></pre>
+<pre class="r"><code>print_hospital_info_and_typeR(51328) </code></pre>
+<pre><code>## [1] &quot;51328, TAHOE FOREST HOSPITAL, Critical Access Hospitals&quot;</code></pre>
+<pre class="r"><code>print_hospital_info_and_typeR(130006) </code></pre>
+<pre><code>## [1] &quot;130006, ST LUKE&#39;S REGIONAL MEDICAL CENTER, Acute Care Hospitals&quot;</code></pre>
+</div>
+<div id="next-posibility-for-the-r-neo4j-driver" class="section level3">
+<h3>Next Posibility for the R Neo4j Driver</h3>
+<p>Coming out of this experiment, I think there is an opportunity to build a package that would enable R to use the Python driver in an easy and reproducible way. One thing that I discovered through reticulate is that there is a way to embed Python packages in R packages. The Reticulate Documentation is here: <a href="https://rstudio.github.io/reticulate/articles/package.html" class="uri">https://rstudio.github.io/reticulate/articles/package.html</a>. We could build this so that it enables all of the features in the Neo4j Python driver and is accessible to R users. This driver would allow us to determine if we need to eventually rewrite it using a different language library like the community edition based on C that was used to upgrade the RNeo4j library. I would like the future R Neo4j driver to not have all of the capabilities that we need in R to use Neo4j. It should only allow simple and secure access to the database in the format that works well for more interesting Packages to be built on top of it and be updated as new versions of the Neo4j platform are released. I think that I may experiment with this idea and learn more about Reticulate and Python in R. I’ll expose what I learn as I’m going forward.</p>
+<p>Brett Taylor<br />
+<a href="https://linkedin.com/in/brettrtaylor" class="uri">https://linkedin.com/in/brettrtaylor</a></p>
+</div>
+
+                        </div>
+                        
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+      <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" class="form-control" placeholder="Search">
+                <input type="hidden" name="sitesearch" value="/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+      <h3 class="panel-title">Categories</h3>
+    </div>
+
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            
+            <li><a href="../../../../../categories/business-opportunity">business-opportunity (4)</a>
+            </li>
+            
+            <li><a href="../../../../../categories/data">data (3)</a>
+            </li>
+            
+            <li><a href="../../../../../categories/development">development (2)</a>
+            </li>
+            
+            <li><a href="../../../../../categories/leadership">leadership (3)</a>
+            </li>
+            
+            <li><a href="../../../../../categories/science">science (3)</a>
+            </li>
+            
+            <li><a href="../../../../../categories/statistics">statistics (2)</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="panel sidebar-menu">
+    <div class="panel-heading">
+      <h3 class="panel-title">Tags</h3>
+    </div>
+
+    <div class="panel-body">
+        <ul class="tag-cloud">
+            
+            <li><a href="../../../../../tags/communication"><i class="fa fa-tags"></i> communication</a>
+            </li>
+            
+            <li><a href="../../../../../tags/data"><i class="fa fa-tags"></i> data</a>
+            </li>
+            
+            <li><a href="../../../../../tags/database"><i class="fa fa-tags"></i> database</a>
+            </li>
+            
+            <li><a href="../../../../../tags/healthcare"><i class="fa fa-tags"></i> healthcare</a>
+            </li>
+            
+            <li><a href="../../../../../tags/information-technology"><i class="fa fa-tags"></i> information-technology</a>
+            </li>
+            
+            <li><a href="../../../../../tags/leadership"><i class="fa fa-tags"></i> leadership</a>
+            </li>
+            
+            <li><a href="../../../../../tags/management"><i class="fa fa-tags"></i> management</a>
+            </li>
+            
+            <li><a href="../../../../../tags/neo4j"><i class="fa fa-tags"></i> neo4j</a>
+            </li>
+            
+            <li><a href="../../../../../tags/nlp"><i class="fa fa-tags"></i> nlp</a>
+            </li>
+            
+            <li><a href="../../../../../tags/python"><i class="fa fa-tags"></i> python</a>
+            </li>
+            
+            <li><a href="../../../../../tags/r"><i class="fa fa-tags"></i> r</a>
+            </li>
+            
+            <li><a href="../../../../../tags/science"><i class="fa fa-tags"></i> science</a>
+            </li>
+            
+            <li><a href="../../../../../tags/software-development"><i class="fa fa-tags"></i> software-development</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<footer id="footer">
+    <div class="container">
+
+        
+        <div class="col-md-4 col-sm-6">
+            <h4>About us</h4>
+
+            <!-- raw HTML omitted -->
+
+            <hr class="hidden-md hidden-lg hidden-sm">
+
+        </div>
+        
+        
+
+        <div class="col-md-4 col-sm-6">
+
+             
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="../../../../../blog/">
+                          
+                            <img src="../../../../../img/blogInfo.png" class="img-responsive" alt="Blogs">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="../../../../../blog/">Blogs</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="../../../../../blog/2019/05/14/2019-05-14-cluster-analysis/">
+                          
+                            <img src="../../../../../img/cluster_analysis.png" class="img-responsive" alt="Cluster Analysis">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="../../../../../blog/2019/05/14/2019-05-14-cluster-analysis/">Cluster Analysis</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="../../../../../blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/">
+                          
+                            <img src="../../../../../img/plot2-1.png" class="img-responsive" alt="Statistics: Central Limit Theorem">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="../../../../../blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/">Statistics: Central Limit Theorem</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+             
+
+        </div>
+        
+
+        
+        <div class="col-md-4 col-sm-6">
+
+          <h4>Contact</h4>
+
+            <!-- raw HTML omitted -->
+
+            <a href="../../../../../contact" class="btn btn-small btn-template-main">Go to contact page</a>
+
+            <hr class="hidden-md hidden-lg hidden-sm">
+
+        </div>
+        
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-left">Copyright (c) 2020, Brett Taylor; all rights reserved.</p>
+            
+            <p class="pull-right">
+             
+              
+
+              
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-117328123-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB0PaVgTjOXPlrBt_LVxRZItFNgf2OQSio&v=3.exp"></script>
+
+<script src="../../../../../js/hpneo.gmaps.js"></script>
+<script src="../../../../../js/gmaps.init.js"></script>
+<script src="../../../../../js/front.js"></script>
+
+
+<script src="../../../../../js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>

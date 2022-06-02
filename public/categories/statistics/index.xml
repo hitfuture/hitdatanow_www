@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Statistics on Brett Randall Taylor</title>
+    <link>/categories/statistics/</link>
+    <description>Recent content in Statistics on Brett Randall Taylor</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cluster Analysis</title>
+      <link>/blog/2019/05/14/2019-05-14-cluster-analysis/</link>
+      <pubDate>Tue, 14 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/05/14/2019-05-14-cluster-analysis/</guid>
+      <description>Basics Tidyverse is a set of R libraries that enables the best methods for Data Management. I will use the tidyverse libraries to perform cluster analysis and provide this information to other data science teams in the industry.
+library(devtools) install_github(&amp;quot;kassambara/factoextra&amp;quot;) Introduction to R  Data Preparation and R Packages Required Packages  dplyr tidyr testthat cluster factoextra   Data Standardization We need the ability to transform vectors in our data frames to standard variables.</description>
+    </item>
+    
+    <item>
+      <title>Statistics: Central Limit Theorem</title>
+      <link>/blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/</link>
+      <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/04/30/2019-04-30-statistics-central-limit-theorm/</guid>
+      <description>Overview The Central Limit Theorem states that when samples of a population are large, the sampliing distribution will take the shape of a normal distribution regardless of the shape of the population from which the sample was drawn. This is proven out through the simulation below that projects the theoretical mean of the exponential distribution compared to the sampling. The variance between the theorectical mean, and the sample mean is .</description>
+    </item>
+    
+  </channel>
+</rss>

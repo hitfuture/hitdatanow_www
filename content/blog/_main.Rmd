@@ -1,0 +1,1656 @@
+---
+title: HIT Data Now
+author: Brett Taylor
+date: '2018-04-30'
+slug: hit-data-now
+categories:
+  - Business Opportunity
+tags:
+  - Data
+  - Management
+  - Science
+banner: "img/bretts_image001.jpg"
+
+---
+
+```{r setup, include=FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+I have wanted to make a blog post for awhile to describe how I think we can extend the power of the Healthcare Information Technology environment.  My focus has been on the development and the management of Healthcare I.T. since the late 1980's.  I have worked for several Health Systems, including Sutter Health, St. Luke's Idaho, Tahoe Forest as an employee and as a consultant, I have worked with dozen's of other Health Systems.  I have had many different experiences in the industry including Strategic Planning, EHR Software Development, Data Science and managing Infrastructure and Operations.   
+
+
+I'm back in the consulting business now and I expect to be able to get as close as possible to the I.T. departments to enable their ability to adopt data analytics to improve their ability to deliver a good experience to the staff and others that deliver care.  I've focused on this in the past and I used analytics to make sure that we are focused in the right areas.  Healthcare I.T. needs to learn to innovate and to have a simple, stable, secure and sustainable environment.  I will share my opinions on how to move forward in H.I.T.
+
+My future posts will have a variety of topics which will include:
+
+* Business Opportunity in Healthcare I.T.
+* Analytics in I.T.
+* Dev/Ops
+* Programming and Deploying the Language R
+* Programming and Deploying Language Python
+* Machine Learning and A.I.
+* Data Management and Governance
+* Using the Neo4j Graph Database to Analyze Healthcare
+
+
+There are many reasons I want to start getting the blog posts up and running.   I do need to expose people to some of the analytics work and the tools that I'm using in our industry.  I prefer that our industry adopts solutions that are the best for your experience, and the best in cost.  I also want you to know that one of my main reasons to post to the blog is that since I'm working on a lot of different topics, I need a way to remember how I did this work.   Writing about it tends to allow me to look backward to remember I accomplished something in the past.   Yes, these blog posts are really all about me <i class="fa fa-2x fa-male"></i>.
+  You will see more posts and details in the areas above in the near future.
+
+Thank you,      
+
+Brett R. Taylor    
+Consultant, __HIT Future Solutions, LLC__
+
+<!--chapter:end:2018-04-30-hit-future-now.Rmd-->
+
+---
+title: Native Graph Database, Neo4j, improves Healthcare
+author: Brett Taylor
+date: '2018-05-01'
+categories:
+  - Data
+tags:
+  - Database
+  - Neo4j
+slug: native-graph-database-improves-healthcare
+banner: img/banners/neo4j_logo.png
+---
+Data are one of the most import resources in Healthcare to enable the Triple Aim.  If you not familiar with the triple aim, it is focused on:     
+
+* Better Health
+* Better Care
+* Lower Cost
+
+__Better health__ means that your organization and you are working on finding ways to create a better experience for the healthcare population that you support.   __Better care__ requires that you are delivering care at the highest level.  __Lower cost__ is required to create a better patient experience and to ensure that you can deliver care at the best level.  Healthcare Information Technology will help to drive forward the application of data analytics to enable the triple aim.  Making good solutions in this area requires that we understand the connections between our data.   The Neo4j graph platform will help you enable this.
+
+![](/blog/2018-05-01-native-graph-database-improves-healthcare_files/neo4j_logo.png){width=300px height=100px}
+
+ 
+###Neo4j Database for Referrals
+I adopted the native graph database, NEO4J while I was doing research on a regional group of specialists.  The idea was that with the provider specialty we needed to understand the referral patterns between the practitioners.   I initially started the research by creating a database that had all of the providers, practice geographic locations, procedures, referrals, and shared patient information.  While I was analyzing the data, I found that I could not show the patterns of referrals based on the data because the relational database could not look at patterns across multiple provider relationships.   In other words, I'd execute a query, and the database would run forever and then fail.   This is when I adopted the Neo4j Graph database.
+
+The graph database could rapidly determine the patterns of referrals.   I also used unsupervised machine learning to categorize the providers to ensure that we were looking at them based on what they performed and not just based on their specialty code.   Below is an R Markdown file I created that displays how dermatologists refer to dermatologists which I analyzed based on 2014 CMS open data.  
+
+
+<iframe width="1080" height="720" src="/html/referrals.html" frameborder="0" allowfullscreen></iframe>
+
+This shows a problem you need to be able to analyze.  This analysis work takes advantage of the connections between providers.  
+
+If you want to look at a specific provider and see their referrals, you can run a Cypher query like below.
+```
+MATCH pth= (pc1:Provider_Taxonomy)<--(mohs_surgeon:Provider)-[ps1:SHARED]->(sp:Shared_Patient)<-[ps2:SHARED]-(referring:Provider)-[ica:IS_CLASSIFED_AS]->(pc2:Provider_Taxonomy) where mohs_surgeon.provider_last_name_legal_name = "BIRKBY" and mohs_surgeon.provider_first_name = "CRAIG" return pth
+```
+![](/blog/2018-05-01-native-graph-database-improves-healthcare_files/provider_referral_pattern.png){width=600px height=400px}
+
+
+When performing a referral analysis you, of course, have a hypothesis of how referrals can be determined, and then you will test the hypothesis.  This particular visualization is not the final research and will not be 100% accurate.  I'm displaying this just to demonstrate how pattern recognition can be performed using this new state of the art native graph database.   Patterns are something we need to understand better in healthcare.   
+
+###Utilization of Graph Databases in Healthcare
+There are many other areas where pattern identification matters including:    
+
+* Care Delivery
+* Software Application Utilization and Integration
+* Fraud Detection
+* Common Data Model - Concept and Observations (OMOP) 
+* Master Data Management
+
+This is a very quick introduction to the Neo4j Graph Database and Cypher.  I have used this toolset for analysis purposes and integration into applications over that 2 years.  I recently became certified as a Neo4j Professional because I feel that this is one of the directions that healthcare needs to migrate to so that they can manage the future.   There are some great resources out on the web for you to learn about graph databases which include:
+
+* [Neo4j's Website](https://neo4j.com/)
+* [Graph Databases vs. Relational Databases](https://neo4j.com/developer/graph-db-vs-rdbms/)
+* [Intro to Cypher](https://www.youtube.com/watch?v=pMjwgKqMzi8)
+
+
+If you are interested why this might be valuable in our industry, please reach out to me and I'll give you a quick introduction.
+
+Thanks,    
+Brett
+
+<!--chapter:end:2018-05-01-native-graph-database-improves-healthcare.Rmd-->
+
+---
+title: Leveraging Python in R to use the Neo4j Bolt driver
+author: Brett Taylor
+date: '2018-05-17'
+categories:
+  - Development
+tags:
+  - Neo4j
+  - Python
+  - R
+slug: leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j
+banner: "img/rp.png"
+
+---
+
+
+```{r setup, include=FALSE}
+library(reticulate)
+knitr::opts_chunk$set(echo = FALSE) 
+use_condaenv('mdata',conda = '/opt/conda/bin/conda',required = TRUE)
+neo4j <- reticulate::import(module = "neo4j")
+knitr::knit_engines$set(python=reticulate::eng_python)
+
+```
+
+###Neo4j in the language R
+
+I have been fortunate to work with the Neo4j graph database using the language R over the last two years.  A former data scientist that worked for Neo4j, Nicole White,  implemented the package RNeo4j and released it in 2015.  This solution enabled R developers and data scientists to access the Neo4j database in the R language.  The package uses the Neo4j REST API and then process the data in a data.frame, tabular format, which is the norm in the language R.   I started to use this solution in products that were based in Shiny, a R web environment, and queried the Neo4j database as a data source for the application.   The Neo4j library for R is very good.  It does have some limitations due to the focus on tabular data and the use of the REST API.   I would say that if Nicole hadn't released the RNeo4j package, I wouldn't have been able to use Neo4j in the environment I was developing in.
+
+Neo4j evolved significantly in April of 2016 with the release of Neo4j 3.0.  This release standardized the method of communicating with the database by creating the Bolt protocol which provides a very efficient and secure binary interface to the database.  Neo4j provided Bolt drivers for Java, JavaScript, Python and C# as part of the release so that this is standardized in the most used languages.  Communities began working on this protocol for other languages and some have been released.  Version 3.1 was released in December of 2016 and had a lot of new features including the Enterprise Casual Cluster.  This solution allowed a very modern scalable database with multiple nodes and it requires the bolt protocol for access to the database.  
+
+Bolt supports a load balancing solution that allows you to query the cluster and if a node in the cluster fails it will redirect your query to another node.  The RNeo4j driver did not support the bolt protocol and I was trying to see how we could get the next version of  RNeo4j to support bolt and the enterprise database.  I was very fortunate to have a great software developer working with me that took on implementing a new version of RNeo4j that supports Bolt and he used the language RUST to integrate a Neo4j C library.  This version of RNeo4j is now in Nicole White's GitHub repository.  Unfortunately the package is no longer in the R CRAN package system so it is not accessible through install.packages function in R.   The way to use this latest version RNeo4j is using devtools.
+
+```
+devtools::install_github("nicolewhite/RNeo4j")
+```
+Support of this package is minimal and we need to be focused on getting the next Neo4j driver for R up and running.
+
+### Next Generation Neo4j in R 
+![RStats-Neo4j](/blog/2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j_files/neo4j-rstats.png){width=100px height=100px}    
+I spend time on Slack in the Neo4j community and found out that there is an "neo4j=rstats" channel focused on using Neo4j in R.  One of the interesting areas of this channel is that there is a team of great R data scientists named ThinkR, @thinkR_fr, focused on creatinga new way of accessing the Neo4j platform from within the language R.  One of the first packages they built allows integration of Neo4j in the R Markdown files.  It is very much like using SQL in the RStudio environment.   Colin Fay, data analyst, is driving this work right now and is looking for the R community to support the work they are doing.  You can experiment with these new packages by installing them from  https://github.com/neo4j-rstats.  I think the community should invest in this area to make the Graph Database part of the R environment. Right now, the driver does not support the Bolt protocol and I'm going to show a workaround in this post on how to integrate Neo4j via the language Python in the R environment.
+ 
+
+###Using Python in the language R
+Python is now directly acessible in the language R.  RStudio has supported the use of Python in their Integrated Development Environment (IDE) for quite a while.  While it was good to be able to access Python in the IDE, there wasn't a solution to easily integrate Python within the language R.  This is no longer true.  There is a new R package that has been released by RStudio  on March 26, 2018 named reticulate.  Reticulate allows you to embed Python code and objects within your R code.  The reason this matters is the Neo4j company created the Python Neo4j driver and supports it for all updates.  Embedding this driver within the R environment is possible now and will provide a workaround until more development occurs to support a robust Neo4j driver in R.
+
+
+### R Dependencies to integrate Python
+
+The R language is highly dependent upon other languages including C++, Fortran, and C.  Operating system packages are also a common dependency.  Running the language R on Ubuntu 16.4 Linux O/S, you will have to install certain packages to integrate R packages. It is very similar in the Mac OS X environment. Windows tends to have binary installations which requires less dependencies.   Most R programmers know that integration is built in through special packages that allow easy access to other languages.  Below are some of the requirements for accessing Neo4j in R through the official Python Neo4j driver.
+
+#### O/S Dependencies
+
+One of the main dependencies of course is that you have the language Python installed on your computer.  It is recommended that you use Python 3.5 or later.  Installing this on Linux is pretty straight forward.  Ubuntu based installation requires:
+
+```
+sudo apt-get update
+sudo apt-get install python3 \
+           python3-pip
+sudo pip3 upgrade
+sudo pip3 install --upgrade pip
+```
+
+
+Installing on Windows requires a download and there is a YouTube video that will show you how to do this if you haven't done this yet.
+
+https://www.youtube.com/watch?v=dX2-V2BocqQ
+
+
+#### R Dependencies
+
+There is one major dependency required to integrate Python in the language R.  This package mentioned before allows you to access Python within your R environment.  It provides access to Python functions, data, and also Python objects which enables the ability to call the Python methods in R.   This is a pretty amazing expansion of R since a lot of Data Science tools are now built in the language Python.  Installing the Reticulate from CRAN is as follows:
+
+``` 
+install.packages("reticulate")
+```
+
+
+#### Python Dependencies
+
+There is one package you need to install in order to use the Python Neo4j driver in R.
+
+* neo4j-driver
+ 
+
+
+There are 2 ways to install Python packages in the R environment.   One way is to install it through the command line. 
+
+
+```{}
+pip3 install neo4j-driver
+```
+
+The alternative is to install the Python package using the R reticulate function.  Reticulate will install in two _virtual_ environments available:
+
+* Virtualenv
+* Conda
+
+Virtualenv only runs on the Mac OS and Linux.  Conda is a data science platform that installs both Python and R and has hundreds of embeded packages that support data science.  Conda may be valuable as you start to use both languages.  When installing Python libraries using Reticulate, it will determine if you have the virtualenv or conda installed and use this as the default.
+
+```{r}
+reticulate::py_install("neo4j_driver")
+
+```
+There is more control you can place through reticulate and I recommend that you review the RStudio documentation on Github. The site is here [Github Reticulate Documentation](https://rstudio.github.io/reticulate/).
+
+###Introduction to Neo4j in Python
+The first thing to understand prior to embedding the Neo4j Python driver in R is to see how the driver works in Python.   We will work with a little bit of public data from the United States CMS organization. I frequently use public data and I'm going to manualy create a very small subgraph with the Python driver by using cypher in a Python script to implement the nodes and relationships.  
+
+
+```
+from neo4j.v1 import GraphDatabase
+user_id = "public_user"
+password = "passwd"
+uri = "bolt://localhost:7687"
+driver = GraphDatabase.driver(uri, auth=(user_id, password ))
+with driver.session() as sess:
+   sess.run("MERGE (a1.Hospital{provider_id:50108,hospital_name: 'SUTTER MEDICAL CENTER, SACRAMENTO'})"
+            "MERGE (a2.Hospital{provider_id:51328  ,hospital_name: 'TAHOE FOREST HOSPITAL'})"
+            "MERGE (a3.Hospital{provider_id: 130006 ,hospital_name: 'ST LUKE\'S REGIONAL MEDICAL CENTER'})"
+            "MERGE (t1.Hospital_Type{name:'Acute Care Hospitals'})"
+            "MERGE (t2.Hospital_Type{name:'Critical Access Hospitals'})"
+            "MERGE (a1)-[:ISA]->(t1)"
+            "MERGE (a2)-[:ISA]->(t2)"
+            "MERGE (a3)-[:ISA]->(t3)")
+           
+```
+
+
+
+The Python language requires a well defined structured format of the code.  The language is very Object-Oriented so you will see objects returned back from each of the calls to methods below.  The first  step is to create  the driver which requires you authticate with your user id and your password.  We next create a  Python function, def print_hospital_info_and_typePyth(), so that we can send the provider id to Neo4j and it will return the prvider id, hospital name and the hospital type.  The function next executes the transaction and iterates through the records that are returned. It then prints out the fields in the record.   The final step is to run the function based on the provider ids.  The results are printed in this R markdown file below.
+
+
+```{python engine.path="/usr/bin/python3"}
+from neo4j.v1 import GraphDatabase
+
+uri = "bolt://localhost:7687"
+driver = GraphDatabase.driver(uri, auth=("public_user", "passwd"))
+def print_hospital_info_and_typePyth(provider_id): 
+     with driver.session() as session:  
+         with session.begin_transaction() as tx:  
+              for record in tx.run("MATCH (a:Hospital)-[:ISA]->(t:Hospital_Type) " 
+                                   "WHERE a.provider_id = {id} " 
+                                  "RETURN a.provider_id, a.hospital_name, t.name", id=provider_id):  
+                  print(str(record["a.provider_id"])+ ", "+record["a.hospital_name"] +", " + record["t.name"])  
+                 
+
+print_hospital_info_and_typePyth(50108) 
+print_hospital_info_and_typePyth(51328) 
+print_hospital_info_and_typePyth(130006) 
+
+```
+
+
+### How Python and R work together to access Neo4j
+
+
+Embedding Python in R with Reticulate is more sophisticated than I expected.  There is a great amount of capabilities.  The first thing you have to do is to import the driver module into the R environment.  When you import the driver, it will be an object accessible in the R environment.  Below, it tests to make sure that Python is available in your R environment. 
+
+```{r}
+library(reticulate)
+is_python_available <- py_available()
+paste("Is Python Available?", is_python_available)
+if(is_python_available){
+        neo4j <- reticulate::import(module = "neo4j.v1",as = "neo4j")
+        str(neo4j)
+       }
+
+```
+
+###R Integration with the Python Neo4j Driver
+
+Using the Python driver in R requires that you perform similar methods in the R environment.  The process is nearly identical to the Python script and it does require some changes.   Accessing a method in R from a Python based object requires that use the `$` separator between the object and the method.   I handled authentication differently in this R script by creating the token independently.  I use the basic_auth() method which solved a problem I was having with passing a list to the driver method which would fail.  I iterate over the data results of the transaction by using sapply R function directly from the data in the record.  Putting this into production would require you to use testthat library for unit testing where you will make sure that this works with your consumption of Neo4j Python driver in R.
+
+
+```{r}
+ uri = "bolt://localhost:7687"
+
+neo4j <- reticulate::import(module = "neo4j.v1",as = "neo4j")
+token <- neo4j$basic_auth("public_user","passwd")
+driver <- neo4j$GraphDatabase$driver(uri, auth=token)
+print_hospital_info_and_typeR <- function(provider_id) {
+        the_session <- driver$session()
+        tx <- the_session$begin_transaction()
+        record <- tx$run("MATCH (a:Hospital)-[:ISA]->(t:Hospital_Type) 
+                                   WHERE a.provider_id = {id}
+                                  RETURN a.provider_id, a.hospital_name, t.name", id=provider_id)
+        record_data <- record$data()
+        sapply(record_data,function(rec){ 
+                paste(rec$a.provider_id, rec$a.hospital_name, rec$t.name  ,sep = ", ")})
+         
+        }
+print_hospital_info_and_typeR(50108) 
+print_hospital_info_and_typeR(51328) 
+print_hospital_info_and_typeR(130006) 
+```
+
+### Next Posibility for the R Neo4j Driver
+
+Coming out of this experiment, I think there is an opportunity to build a package that would enable R to use the Python driver in an easy and reproducible way.  One thing that I discovered through reticulate is that there is a way to embed Python packages in R packages.  The Reticulate Documentation is here: https://rstudio.github.io/reticulate/articles/package.html.    We could build this so that it enables all of the features in the Neo4j Python driver and is accessible to R users.  This driver would allow us to determine if we need to eventually rewrite it using a different language library like the community edition based on C that was used to upgrade the RNeo4j library.    I would like the future R Neo4j driver to not have all of the capabilities that we need in R to use Neo4j.  It should only allow simple and secure access to the database in the format that works well for more interesting Packages to be built on top of it and be updated as new versions of the Neo4j platform are released.   I think that I may experiment with this idea and learn more about Reticulate and Python in R.  I'll expose what I learn as I'm going forward.
+
+
+
+
+Brett Taylor    
+https://linkedin.com/in/brettrtaylor
+
+ 
+
+
+<!--chapter:end:2018-05-14-leveraging-python-in-r-to-access-the-bolt-protocol-of-neo4j.Rmd-->
+
+---
+title: Happy Trails to You
+author: Brett Taylor
+date: '2018-07-29'
+categories:
+  - Business Opportunity
+tags:
+  - Healthcare
+  - Information Technology
+  - Leadership
+slug: happy-trails
+banner: img/BRT_OR.png
+---
+
+
+I’ve been very fortunate to be in healthcare throughout my career. My introduction to the industry occurred when I took on a job in the O/R at Sutter Health. I ended up getting a position as a Surgical attendant in the O/R department at age 19.  This job was all about ensuring the patients were in the operating room at the right time and making sure the O/R was clean. While I ended up on the I.T. side of healthcare, starting out in the O/R has really helped me understand some of the challenges and opportunities in the industry. This post is to show you that teaming up with the people that deliver care can help you improve your world in healthcare I.T.
+ 
+I want to share the publication below because while I’ve been working in Healthcare Information Technology (H.I.T.) for many years.  Most people don’t know how I got so focused on the medical field. If you know my history, I’ve worked in healthcare I.T. for over 30 years and have had some fascinating work. My work includes advanced leadership in the I.T. departments in the areas of development, data science, and infrastructure and operations. I’ve also done product development and consulting for the industry. I love to do work in the area of data analytics in healthcare in which I build software and data models to improve performance in organizations.
+![__Brett in the O/R in the 1980's__](/blog/2018-07-29-happy-trails_files/BRT_OR.png){width=400px}
+ 
+
+The document called _Happy Trails to You_ was created by Sutter Health in the early 1990s.  This gives a view of my 13+ years at Sutter.  I  want you to know that I think that the staff in H.I.T. should get tightly integrated to care delivery. My best times working for healthcare has been when I engaged directly with physicians, R.N.'s, and other care delivery staff.   We focused on optimizing their world by reducing the complexity of the E.H.R. and providing them predictions of outcomes.  The interaction always allows me to listen to the real problems and opportunities, which is better than me trying to say I know all of the answers to solve healthcare issues.  If you work in H.I.T., I recommend you find ways to do the same.
+
+![__Happy Trails to You__](/blog/2018-07-29-happy-trails_files/Sutter_Page_3_BRT.png){width=1000px height=1200px} 
+
+
+![](/blog/2018-07-29-happy-trails_files/Sutter_Page_4_BT.png)
+
+### Summary
+
+I'm glad to introduce how I started working in the Healthcare industry. My passion for enabling better care, better health, and lowering cost in the industry is persistent.  I expect to spend the rest of my career, helping health systems to improve performance and create better outcomes.  If you can work with me, you'll see a guy that looks a bit older than in the pictures above! 
+
+
+![](/blog/2018-07-29-happy-trails_files/4d1e6b889d5a0.image.jpg)
+
+<!--chapter:end:2018-07-29-happy-trails.Rmd-->
+
+---
+title: IT Leadership 
+subtitle: The Value of IT for Healthcare
+author: Brett Taylor
+date: '2019-04-02'
+slug: healthcareitleadership
+categories:
+  - Leadership
+tags:
+  - Information Technology
+  - Management
+  - Leadership
+banner: "img/hit_value_healthcare.png"
+html_notebook:
+   theme: journal
+   highlight: zenburn
+---
+
+# Exceptional Experience
+
+> As a leader, focus on providing an exceptional experience to employees and providers.  This video shows my former experience with improving the experience for the staff members of a good Healthcare organization.
+
+<iframe src="https://player.vimeo.com/video/143468945" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+> So the employees can provide an exceptional experience to the patients
+
+<!--chapter:end:2019-04-02-healthcareitleadership.Rmd-->
+
+---
+title: Applying Natural Language Processing to Predict
+author: Brett R. Taylor
+date: '2019-04-03'
+slug: applying-natural-language-processing-to-predict-text
+categories:
+  - Data
+  - Development
+  - Science
+tags:
+  - R
+  - Software Development
+  - NLP
+banner: "img/NLP.jpg"
+---
+
+> Utilizing Natural Language Processing to predict text is interesting. I built a small little tool to test the NLP process.
+
+The video shows how to use this tool to predict text. I embedded this video within the application I wrote that utilizes the Natural Language Processing model I built to predict the next text word after you put them in place. I developed this when I was in the Data Science Capstone on-line course with John Hopkins University.
+
+<iframe src="https://player.vimeo.com/video/152905392" width="640" height="378" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+> This tool is available online on shinyapp.io 
+
+https://hitfuturenow.shinyapps.io/DataScienceCapstoneWow/
+
+<!--chapter:end:2019-04-03-applying-natural-language-processing-to-predict-text.Rmd-->
+
+---
+title: 'Statistical Analysis: Vitamin C of Tooth Growth on Guinea Pigs'
+author: Brett R. Taylor
+date: '2019-04-25'
+slug: statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs
+categories:
+  - Science
+tags:
+  - Data
+  - R
+  - Science
+banner: "img/teeth.jpeg"
+
+---
+# Overview 
+A data set has been created from an experiment in 1952 which demonstrates the impact of Vitamin C, on the growth of guinea pigs teeth.   The response is the length of teeth in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).  The analysis below works to determine if the two supplement types have different impacts on growth of the guinea pig's teeth.  
+
+# Analysis
+The beginning of the analysis is based on graphical review, and data analysis to determine what trends are seen in tooth growth of guinea pigs. The dataset "ToothGrowth" is utilized for this work.  The source of the data is from C. I. Bliss (1952) _The Statistics of Bioassay._ Academic Press     
+
+## Explore the data     
+The first component of the work is to load and clean up the data so that it is understandable, and presentable.    
+```{r cleanData, echo=TRUE,warning=FALSE,message=FALSE}
+library(plyr);library(dplyr);library(knitr)
+data("ToothGrowth")
+#Re-value factor so that the data is easier to understand
+ToothGrowth$supp <- revalue(x=ToothGrowth$supp,c( OJ="Orange Juice", VC="Ascorbic Acid"))
+ToothGrowth$dose <-factor(ToothGrowth$dose)
+#Rename columns for easy understanding
+names(ToothGrowth)<- c("tooth.length", "supplement", "dosage.mg")
+summ.data <- ToothGrowth%>%group_by(supplement,dosage.mg)%>%summarise(Count=n(),Mean=mean(tooth.length),Var=var(tooth.length),SD=sd(tooth.length))
+cross.tab <- xtabs(~supplement+dosage.mg,ToothGrowth)
+```
+
+
+```{r summaryOne}
+kable(cross.tab,caption="Observations Counts: Supplement Type vs. dosage")
+```
+
+A study was performed on 10 guinea pigs, with three dosage levels of Vitamin C.  There are two different types of Vitamin C supplements administered, orange juice and Ascorbic Acid, to each Guinea Pig. Three dosage levels were applied to each subject.  The data set has a total of `r nrow(ToothGrowth)` observations. Each subject was tested with the various supplements and dosages.   This indicates that the sample sizes are small, and we should expect results to be in a t-distribution.   
+
+```{r summaryTwo}
+kable(summ.data,caption="Summary by dosage and supplement type",digits = 2)
+```
+
+Figure 1. in the appendix shows the difference of tooth growth based on dosage.  It is clear that the dosages increase growth of the teeth as the dosage is increased.  Figure 2. demonstrates the impact of supplement type on tooth growth. It appears that _Orange Juice_ has a greater impact on tooth growth for guinea pigs. Finally, Figure 3. compares both supplement type and dosage and shows the impact on tooth growth.   This is an interesting area.  It is clear that at the first 2 dosage levels .5 and 1.0 mg _Orange Juice_ has more impact on tooth growth, when you look at the 2.0 mg dosage, the means are closer between the supplement types, and _Ascorbic Acid_ appears to have had a significant growth in the mean.   
+
+## Theory    
+What causes the most impact on tooth growth of the guinea pig subjects, the supplement type, or the dosage?   It appears that if you look at just the mean values of tooth growth, growth is based on dosage and supplement type.     
+
+## Initial Hypothesis - Supplement Type impact on growth   
+$H_0$ = The Vitamin-C supplement type _Orange Juice_, has a greater impact on tooth growth than _Ascorbic Acid_.    
+$H_1$ = The supplement type _Ascorbic Acid_ has more or no  greater impact on tooth growth than _Orange Juice_.     
+
+## Test the hypothesis      
+We will test using the t.test() function in R to determine if the 
+
+```{r test.hypoth02}
+orange.juice <- ToothGrowth%>%filter(supplement == "Orange Juice")
+ascorbic.acid <- ToothGrowth%>%filter(supplement == "Ascorbic Acid")
+
+t1<- t.test(orange.juice$tooth.length,ascorbic.acid$tooth.length,paired=FALSE,conf.level=0.95)
+p1<-t1$p.value
+print(t1)
+```
+
+The t.test results indicate that the $H_0$ NULL hypothesis is true since the p value is `r p1` and is greater than .05.  
+
+## Secondary Hypothesis - High dosage supplement type impact    
+$H_0$ = The Vitamin-C supplement type _Orange Juice_, has no significant difference on tooth growth than _Ascorbic Acid_ at dosage 2.0mg.    
+$H_1$ = There is a significant variance between the 2 supplement types when the guinea pigs are receiving dosage of 2.0mg.  
+
+## Hypothesis test - High dosage supplement type impact
+
+**Test the variance - is it homogeneous?**     
+```{r test.hypoth03,echo=FALSE,results='hide'}
+dose2.data <- ToothGrowth%>%filter(dosage.mg == "2")
+var.test(tooth.length~supplement,data=dose2.data,paired=FALSE)
+```
+Since the p-value is 0.09, this means that the variances show homegeneity. 
+```{r test.hypoth04}
+t.test(tooth.length~supplement,data=dose2.data,var.equal=TRUE,paired=FALSE,conf.level=0.975)
+```
+
+
+## Conclusions     
+The impact of supplement type on tooth growth is clear based on the assessment performed above.  First of all, tooth growth is most impacted by the dosage of _Vitamin C_.   Secondly, The _Orange Juice_ supplement causes significantly higher tooth growth than _Ascorbic Acid_ when not considering the dosage.  Finally, what is interesting is that at 2 mg, the mean growth is statistically similar, and the supplement type is no longer of significance. 
+
+There are certain assumptions made during this analysis.  The first is that measurements were accurate during the experiment.  Secondly, the outliers could have been impacted by significant differences in the genome.  The assumption is that this was not the driving factor due to the variance alignment of the supplement types.  
+
+
+\pagebreak 
+
+# Appendix   
+
+## Graphical Exploration of Data
+```{r plot1,echo=TRUE,fig.cap="The tooth length by the dosage",message=FALSE,warning=FALSE}
+library(ggplot2)
+str(ToothGrowth)
+ggplot(ToothGrowth,aes(x=dosage.mg,y=tooth.length))+
+  geom_boxplot()+
+  theme_bw()
+```
+
+
+dosage has a significant impact on tooth growth when you look at both supplements together.    
+
+\pagebreak 
+
+
+```{r plot2,echo=TRUE,fig.cap="The tooth length by the supplement type"}
+ 
+ggplot(ToothGrowth,aes(x=supplement,y=tooth.length,fill=supplement))+
+  geom_boxplot()+
+  theme_bw()
+```
+
+
+It does appear that _Orange Juice_ has the most impact of tooth growth for guinea pigs.  
+
+\pagebreak 
+
+```{r plot3,echo=TRUE,fig.cap="Tooth length by supplement type and dosage"}
+ggplot(ToothGrowth,aes(x=dosage.mg,y=tooth.length,fill=supplement))+
+  geom_boxplot()+
+#  facet_wrap(~supplement)+
+  theme_bw()
+```
+
+
+Figure 3. demonstrates that while _Orange Juice_ impacts growth at lower dosages (.5, 1), it appears that the mediate is identical at 2 mg.  
+
+<!--chapter:end:2019-04-25-statistical-analysis-vitamin-c-of-tooth-growth-on-guinea-pigs.Rmd-->
+
+---
+title: 'Statistics: Central Limit Theorem'
+author: Brett Taylor
+date: '2019-04-30'
+slug: statistics-central-limit-theorm
+categories:
+  - Statistics
+tags:
+  - R
+  - Data
+banner: "img/plot2-1.png"
+--- 
+# Overview 
+The _Central Limit Theorem_ states that when samples of a population are large, the _sampliing distribution_ will take the shape of a normal distribution regardless of the shape of the population from which the sample was drawn.  This is proven out through the simulation below that projects the theoretical mean of the exponential distribution compared to the sampling.  The variance between the theorectical mean, and the sample mean is .03.  This maps correctly to the _Central Limit Theorem_.   
+
+# Analysis   
+
+## Simulation Methods
+
+To ensure that this report is reproducible, we set the random generator seed, and set overall parameters including the number of simulations and lambda rate.  We have set the sample size above 30 to ensure that we can use the normal distribution.   
+
+```{r, echo=TRUE}
+set.seed(4957)
+# Total number of simulation samples sets that will be ran.
+sim.count <- 1000  
+lambda <- .2  #Rate
+sample.size <-40  #Number of observations per sample
+```
+ 
+This simulation generates a couple of random simulations of the Exponential Distribution utilizing the R function rexp().  Lambda ($\lambda$) was set at `r lambda`.  The inital simulation generates `r sim.count` observations. It utilizes the rexp() R function and sets the rate at the recommended lambda = 0.2.       
+
+```{r sim1, echo=TRUE }
+exp.sim <- rexp(sim.count,rate = lambda)
+sim.mean <- mean(exp.sim)
+sim.sd <- sd(exp.sim)
+```
+This simulation is displayed in Figure 1 in the Appendix.  It shows how the exponential distribution exponentially declines from x=0 to $x=\infty$.  It also displays the mean of the distribution, and has an overaly of the exponential function.
+
+
+Central Limit Theorem
+$\sigma _{x} =\frac{s}{\sqrt{N}}$    
+Sample should be larger than 30  
+
+## How close is the Sample Mean to the Theoretical Mean?    
+
+
+The theoretical mean of exponential distribution is:    
+$\mu=\frac{1}{\lambda}$ =`r theoretical.mean <- 1/lambda;theoretical.mean`
+
+**Sample Mean Simulation**    
+To generate the sample mean, there are several possible methods of performing this.  The method chosen here is to create a matrix which is randomly generated using the rexp() function.  The total number of simulations is `r sim.count` with a sample size of `r sample.size`. The method for calculating this is the creation of a matrix  with dimensions `r sim.count` x `r sample.size`.  The matrix has a set of samples on each row.   The number of observations in the matrix is 40000.  The apply() function is used to iterate through each row of the matrix, and apply the mean to the observations of the row.   This creates an array of size `r sim.count `, and assigns it to variable _sample.means_.   
+
+```{r sim2,echo=TRUE,message=FALSE,warning=FALSE}
+library(knitr)
+# Generate a matrix that has 1000 rows
+sample.matrix <-matrix(rexp(sim.count*sample.size,rate=lambda),sim.count)  
+sample.means <- apply(sample.matrix, 1,mean) #1 has apply mean() at the row level.
+sample.mean <- mean(sample.means)
+ summary(sample.means)
+ kable(head(sample.matrix),digits=2)
+
+```
+
+
+The sample mean is displayed in Figure 2 in the appendix.  The mean value of all samples is `r round(sample.mean,3)`.  This is compared to the theoretical mean which is `r theoretical.mean`.  The difference between these is `r round(sample.mean - theoretical.mean,3)`.   
+ 
+
+
+## What is the difference between the Sample Variance and the Theoretical Variance?    
+We have several components of distribution that vary compared to the exponential distribution.  
+**Theoretical Variance Equation** $\sigma^2 =\frac{\sum(x_{i}-\mu)^2}{N}$ 
+The theoretical variance of an exponential distribution is the following formula:    
+$Var=S^2=\frac{(\frac{1}{\lambda})^2}{N}$  
+    
+
+**Sample Variance Equation** $s^2 =\frac{\sum(x_{i}-\overline{x})^2}{N-1}$   
+```{r sample.var,echo=TRUE}
+  sample.var <- apply(sample.matrix, 1,var)
+  sample.mean.var <- mean(sample.var)
+  sample.mean.sd <- sqrt(sample.mean.var)
+```
+
+**Theoretical Variance** = `r theoretical.var<-round(((1/lambda^2)/sample.size),3); theoretical.var `    
+**Sample Varariance** = `r sample.var <-round(var(sample.means),3); sample.var`    
+
+The theoretical variance is approximately equal to the sample variance.
+
+## Is the sample mean simulation a normal Distribution?   
+ It was chosen to use 40 observations per sample.  This leveraged the Central Limit Theorem that states that with large samples (greater than 30), the means of the samples will be normally distributed, and the mean will approximate the population mean.   Figure 2 shows a histogram of the mean samples of the exponential distribution.  There is a distribution normal function overlayed on the plot, which shows that the histogram is close to the standard normal distribution. In addition, the Standard Error is the same as the standard deviation which is `r round(sample.mean.sd,2)`.  This is close to the standard deviation of the exponential distribution which value is `r round(1/lambda,2)/sample.size`
+ 
+
+
+**The distribution is approximately normal based on the mapping of the normal distributions .**    
+
+\pagebreak  
+
+# Appendix    
+## Figure 1 - Exponential Distribution
+
+```{r plot1,warning=FALSE, echo=TRUE,fig.cap=paste("The mean of random exponential simulation of",sim.count," observations")}
+library(ggplot2)
+ggplot(data.frame(x=exp.sim),aes(x=x))+
+  geom_histogram(fill="red",color="black", binwidth=.5)+
+  stat_function(fun = function(x, rate,n){n * dexp(x = x, rate = rate)},
+                args =  c(rate= lambda, n= sim.count *.5)
+        ,geom="line",color="green") +
+  geom_vline(aes(xintercept=sim.mean),color="blue",size=1) +
+  annotate("text", x = sim.mean , y =50, vjust=-1, hjust=-1,
+        label =sprintf("Sample mean = %03.2f",sim.mean),
+        colour ="Dark Red", angle=0 ) + 
+   annotate("text", x =theoretical.mean, y =50,  hjust=-1,
+        label =sprintf("Theoretical mean = %03.2f",theoretical.mean),
+        colour ="Dark Red", angle=0 ) + 
+    annotate("text", x = 30, y = 40, parse = TRUE, 
+        label ="mu==frac(1,lambda)")+
+  theme_bw()
+```
+
+
+\pagebreak     
+ 
+
+## Figure 2 - Normal Distribution of Sample Means
+
+
+```{r plot2,echo=TRUE,fig.cap="40 average samples is close to a normal distribution"}
+sample.mean<-mean(sample.means)
+ggplot(data.frame(x=sample.means),aes(x=x))+
+  geom_histogram(fill="red",color="black", binwidth=.1)+
+  geom_density()+
+  stat_function(
+                fun = function(x, mean, sd, n){
+                        n * dnorm(x = x, mean = mean, sd = sd)},
+                args =  c(mean =sample.mean, sd = sd(sample.means), 
+                                n = sim.count/5/2)
+        ) +
+
+  geom_vline(aes(xintercept=sample.mean),color="blue",size=1) +
+  annotate("text", x = sample.mean , y =((sim.count/10)/4), vjust=-1,  
+  label =sprintf("Sample mean = %03.2f",sample.mean),colour ="white", angle=270 ) + 
+   annotate("text", x = 7, y = 30, parse = TRUE, 
+        label ="f(x)==frac( 1, sqrt( 2 * pi)) * e ^ {-x ^ 2 / 2}") +
+ 
+  theme_bw()
+```
+   
+   
+\pagebreak 
+
+## Normality of the Sample Mean distribution     
+
+### Figure 3 - QQPlot of Sample Means     
+
+A method of testing the mean distribution is to plot the qq-norm of the sample means.  
+```{r plot4,echo=TRUE,fig.cap="Variance"}
+qqnorm(sample.means)
+qqline(sample.means)
+```
+
+
+The results of this show that the norm of the sample means is following the qqline, and demonstrates that this a a normal distribution as expected based on the Central Limit Theorem
+
+<!--chapter:end:2019-04-30-statistics-central-limit-theorm.Rmd-->
+
+---
+title: Cluster Analysis
+author: Brett R. Taylor
+date: '2019-05-14'
+slug: cluster-analysis
+categories:
+  - Data
+  - Statistics
+  - Science
+tags:
+  - Data
+  - R
+banner: "img/cluster_analysis.png"
+
+---
+# Basics
+
+Tidyverse is a set of R libraries that enables the best methods for Data Management.  I will use the tidyverse libraries to perform cluster analysis and provide this information to other data science teams in the industry. 
+
+
+```{r eval=FALSE}
+library(devtools)
+install_github("kassambara/factoextra")
+```
+
+
+```{r setup,message=FALSE,error=FALSE,echo=FALSE}
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE
+)
+library(tidyverse)
+
+```
+
+## Introduction to R
+
+## Data Preparation and R Packages
+
+### Required Packages
+
+* dplyr
+* tidyr
+* testthat
+* cluster
+* factoextra
+
+
+### Data Standardization 
+We need the ability to transform vectors in our data frames to standard variables.  A standard variable is the 0 +|- 1 std.  In other words, the variables need to be similar so that clustering algorithms can accurately determine the distance between each variable used in the algorithm.  The solution is to standardize the variables using the scale() function.
+
+#### How to apply Data Standardization with tidyverse
+
+Tidyverse has evolved over the last year and a half significantly since version 0.7 was released.  A new way to mutate columns in a data.frame is to use the function mutate_at().  This function allows you to programatically create a solution to transform specific columns into a different format.  
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+
+set.seed(1234)
+dat <- data.frame(x = rnorm(20, 30, .2), 
+                  y = runif(20, 3, 5),
+                  z = runif(20, 10, 20))
+head(dat)
+
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+dat2 <- dat %>% mutate_at(.vars = vars(c("y","z")),.funs = funs(scale(.) %>% as.vector))
+head(dat2)
+
+```
+
+## Clustering Distance Measures
+
+### Distance Matrix Computation
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+str(USArrests)
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(123)
+data("USArrests")
+df <- USArrests%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+
+### Calculate Euclidean Distance
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+dist_eucl <- dist(df_scaled,method = "euclidean")
+dist_eucl
+
+```
+
+Reformat as Matrix
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+round(as.matrix(dist_eucl),1)
+```
+
+
+### Computing correlation based distances
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+dist_cor <- df_scaled%>%get_dist(method = "pearson")
+dist_cor
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+round(as.matrix(dist_cor),1)
+```
+
+### Computing distances for mixed data
+
+Gower's metric
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+data(flower)
+head(flower,3)
+ 
+``` 
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+str(flower)
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+dd <- daisy(flower)
+dd
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+round(as.matrix(dd),2)
+```
+
+
+### Visualize distance matricies
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dist(dist_eucl)
+```
+
+# Partitioning Clustering
+
+* K-means clustering
+* K-medoids clustering (PAM)
+* CLARA algorithm (Clustering Large Applications)
+
+### How it works
+* Classify observations in a data-set
+* Based on similarity
+* Requires the analyst to specify the number of clusters.
+
+## K-means clustering
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df <- USArrests #%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_nbclust(df_scaled,kmeans,method = "wss")+
+  geom_vline(xintercept = 4,linetype=2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(123)
+km_res <- kmeans(df_scaled,4,nstart = 25)
+print(km_res)
+```
+
+### Compute the mean for each varabiles by clusters
+
+#### Build a combined dataset of the USArrests and the Clusters
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+the_us_arrests <- USArrests
+the_us_arrests$state <- rownames(USArrests)
+
+the_clusters <- data.frame(state = names(km_res$cluster),cluster=km_res$cluster)
+
+
+the_us_arrests <- left_join(the_us_arrests,the_clusters)
+the_us_arrests
+
+```
+#### Summarize the data set to determine the mean
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+the_us_arrests%>%group_by(cluster)%>%summarise_if(.predicate = is.numeric,.funs = mean)
+```
+
+### Visualizing k-means clusters
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(km_res,data = df,
+             palette=c("#C1FFC1", "#FFB6C1", "#98F5FF", "#FFD700"),
+             ellipse.type = "euclid",star.plot=TRUE,repel = TRUE,ggtheme = theme_minimal())
+```
+
+## K-medoids
+K-medoids utilize the median to remove the impact of outliers on the cluster.
+
+* Cluster medoids
+* Less reactive to noise and outliers
+* silhouette algorithm determines cluster counts (k)
+
+### PAM (Partioning Arround Medoids)
+
+### Computing PAM in R
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df <- USArrests #%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+There are 2 packages that support PAM.
+* cluster
+* fpc
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+install.packages("cluster","fpc")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+library(factoextra)
+fviz_nbclust(df_scaled, pam, method = "silhouette") +
+  theme_classic()
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+pam_res <- pam(df_scaled, 2)
+pam_res
+```
+```{r}
+the_us_arrests <- USArrests
+the_us_arrests$state <- rownames(USArrests)
+
+the_clusters <- data.frame(state = names(pam_res$cluster),cluster=pam_res$cluster)
+
+
+the_us_arrests <- left_join(the_us_arrests,the_clusters)
+the_us_arrests
+```
+```{r}
+pam_res$medoids
+```
+```{r}
+pam_res$clustering
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(pam_res,palete = c("#00CDCD", "#FFA07A"),ellipse.type = "t",
+             repel = TRUE, ggtheme =  theme_classic())
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(fpc)
+pamk_res <- fpc::pamk(data = df_scaled)
+pamk_res
+```
+```{r}
+the_us_arrests <- USArrests
+the_us_arrests$state <- rownames(USArrests)
+
+the_clusters <- data.frame(state = names(pamk_res$pamobject$clustering),cluster=pamk_res$pamobject$clustering)
+
+
+the_us_arrests <- left_join(the_us_arrests,the_clusters)
+the_us_arrests
+```
+```{r}
+ plot(pamk_res$pamobject)
+```
+
+## CLARA - Clustering Large Applications
+
+CLARA extends the k-medoids algorithm to handle big data.  It utilizes sampling to handle the large data sets.
+
+### CLARA concept
+
+Minimize Sampling Bias by running multiple samples and comparing the results.  Each sample medoid is measured by the avergage dissimilarity of each object.
+
+
+### Computing CLARA in R
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(1234)
+df_clust_1 <- data.frame(x=rnorm(n = 200,mean = 0,sd = 8),y=rnorm(n = 200,mean = 0,sd = 8))
+df_clust_2 <- data.frame(x=rnorm(n = 300,mean = 50,sd = 8),y=rnorm(n = 300,mean = 50,sd = 8))
+df <- rbind(df_clust_1,df_clust_2)
+rownames(df) <- paste0("S",1:nrow(df))
+head(df)
+
+```
+### Required R packages and functions
+
+__Packages:__ cluster, factoextra
+__functions:__ 
+clara()
+
+### Estimating the optimal number of clusters
+Utilize factoextra::fviz_nbclust() function to determine the correct number of clusters.
+
+```{r ,fig.cap="The number of clusters created in the simulated data frame is 2.  The results from the optimal cluster determination is 2."}
+library(cluster)
+library(factoextra)
+fviz_nbclust(df,clara,method = "silhouette") +
+  theme_classic()
+```
+
+### Computing CLARA
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+clara_res <- clara(df, 2, samples = 50, pamLike = TRUE)
+
+knitr::knit_print(clara_res)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+df$id <- rownames(df)
+df <- df%>%select(id,x,y)
+clustering <- data.frame(id= names(clara_res$clustering), cluster = clara_res$clustering)
+df <- left_join(df,clustering)
+head(df)
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+clara_res$medoids
+```
+
+### Visualizing CLARA clusters
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(clara_res,palette=c("#008B8B", "#EE3B3B"),ellipse.type = "t",geom = "point",ggtheme = theme_classic()
+             )
+```
+
+### Summary 
+The CLARA algorithm is an extension to the PAM clustering method for large data sets.  You must specify the number of clusters.  
+
+# Hierachial Clustering 
+
+Also known as _Hierarchial cluster analysis_ __(HCA)__
+
+There are two types of Hierachial Clusting
+
+* Agglomerative
+* Divisive
+
+
+Agglomearative is from the bottom up and Divisive is from the top down.  
+
+The term dendogram is used to describe the hierarchial structure of clustering.  
+
+## Agglomerative Clustering
+
+This clustering method initially assigns each observation as its own cluster (leaf), and then iterates to find common leafs that will match together to create the next level of cluster.
+
+### Algorithm
+
+### Data Structure and preparation
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(123)
+data("USArrests")
+df <- USArrests
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+head(df_scaled)
+```
+
+### Similarity Measures
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_dist <- df_scaled%>%dist(method = "euclidian")
+head(res_dist)
+```
+ 
+
+
+### Linkage
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_hc <- hclust(d = res_dist,method = "ward.D2")
+
+```
+
+### Dendogram
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dend(res_hc, cex = 0.8)
+```
+
+### Verify the cluster tree
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_coph <- cophenetic(res_hc)
+
+
+cor(res_dist,res_coph)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_hc2 <- hclust(res_dist, method="average")
+cor(res_dist,cophenetic(res_hc2))
+```
+
+### Cut the dendogram into different groups
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+grp <- cutree(res_hc,k = 4)
+grp
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+table(grp)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+str(grp)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_dend(res_hc,k = 4, cex = 0.5, k_colors = c("cornflowerblue", "aquamarine", "darkorange2", "darkkhaki"),
+          color_labels_by_k = TRUE,
+          rect = TRUE)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_cluster(list(data=df,cluster = grp),
+             palette =  c("cornflowerblue", "aquamarine", "darkorange2", "darkkhaki"),
+             ellipse.type = "convex",
+             repel = TRUE,
+             show.clust.cent = FALSE,
+             ggtheme = theme_minimal())
+```
+
+### Cluster R package
+
+
+Agglomerative Nesting (Hierarchial Clustering)
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+res_agnes  <- agnes(x = USArrests, 
+                    stand = TRUE,
+                    metric = "euclidean",
+                    method = "ward")
+res_agnes
+```
+
+DIvisive ANAlysis Clustering
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+res_diana <- diana(x = USArrests,
+                   stand = TRUE,
+                   metric = "euclidean")
+
+res_diana
+```
+
+
+Visualize 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dend(res_agnes, cex = 0.6, k = 4)
+```
+
+
+# Comparing Dendograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df <- USArrests #%>%sample_n(15)
+ 
+df_scaled <- df%>%mutate_all(.funs =funs(scale(.) %>% as.vector) )
+row.names(df_scaled) <- row.names(df)
+df_scaled
+```
+
+### Sample 10 rows
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+set.seed(123)
+df_sample <- df_scaled%>%sample_n(10)
+head(df_sample)
+
+```
+
+
+## Comparing dendograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dendextend)
+res_dist <- dist(df_sample, method = "euclidean")
+
+hc1 <- hclust(res_dist, method = "average")
+hc2 <- hclust(res_dist, method = "ward.D2")
+
+
+dend1 <- as.dendrogram(hc1)
+dend2 <- as.dendrogram(hc2)
+
+dend_list <- dendlist(dend1,dend2)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+tanglegram(dend1,dend2)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+tanglegram(dend1,dend2,
+           highlight_distinct_edges = FALSE,
+           common_subtrees_color_lines = FALSE,
+           common_subtrees_color_branches = TRUE,
+           main = paste("entanglement =",round(entanglement(dend_list),2)))
+```
+
+### Correlation matrix between a list of dendograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(cluster)
+cor.dendlist(dend_list,method = "cophenetic")
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor.dendlist(dend_list,method = "baker")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor_cophenetic(dend1,dend2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor_bakers_gamma(dend1,dend2)
+```
+
+```{r}
+dend1 <- df_sample%>%dist%>% hclust("complete" ) %>% as.dendrogram
+dend2 <- df_sample%>%dist%>% hclust("single" ) %>% as.dendrogram
+dend3 <- df_sample%>%dist%>% hclust("average" ) %>% as.dendrogram
+dend4 <- df_sample%>%dist%>% hclust("centroid" ) %>% as.dendrogram
+
+dend_list <- dendlist("Complete"= dend1, "Single" = dend2,
+                      "Average"=dend3, "Centroid"= dend4)
+
+cors <-- cor.dendlist(dend_list)
+round(cors, 2)
+
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(corrplot)
+corrplot(cors, "pie","lower")
+```
+
+# Visualizing Dendrograms
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data("USArrests")
+df_scale <- USArrests%>%mutate_all(.funs = funs(scale(.)))
+
+rownames(df_scale) <- rownames(USArrests)
+dd <- dist(df_scale, method = "euclidean")
+
+hc <- dd%>%hclust(method =  "ward.D2")
+hc
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(factoextra)
+fviz_dend(hc, cex = 0.5)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_dend(hc, cex = 0.5,
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",
+          sub = "")
+```
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fviz_dend(hc, k=4, 
+          cex = 0.5,
+          k_colors = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",
+          sub = "",
+          color_labels_by_k = TRUE,
+          rect = TRUE,
+          rect_border = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          rect_fill = TRUE)
+```
+
+```{r}
+fviz_dend(hc, k=4, 
+          cex = 0.5,
+          k_colors = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",type = "circular",
+          sub = "",
+          color_labels_by_k = TRUE,
+          rect = TRUE,
+          rect_border = c("#EE3B3B", "#8470FF", "#76EEC6", "#EEC900"),
+          rect_fill = TRUE)
+```
+
+```{r}
+require(igraph)
+
+```
+```{r}
+fviz_dend(hc, k=4, 
+          k_colors = "jco",
+          main = "Dendogram - ward.D2",
+          xlab = "Objects",
+          ylab = "Distance",
+          sub = "",
+          type = "phylogenic",
+          phylo_layout = "layout.gem",
+          repel = TRUE)
+```
+
+
+# Cluster Validation
+
+* Assessing clustering tendency
+* Determing the optimal number of clusters
+* Cluster validation statistics
+* Choosing the best clustering algorithms
+* Computing p-value for hierarchial clustering
+
+## Assessing Clustering Tendency
+
+### Required R packages
+```{r eval=FALSE, include=FALSE}
+install.packages(c("factoextra","clustertend"))
+```
+
+
+### Data preparation
+
+```{r}
+head(iris, 3)
+```
+
+```{r}
+df <- iris%>%select(-Species)
+random_df <- apply(df,2, function(x){
+  runif(length(x),min(x),max(x))
+})
+random_df <- as.data.frame(random_df)
+df <- iris_scaled <- df%>%mutate_all(.funs = funs(scale(.)))%>%as.vector
+random_df <- random_df %>% mutate_all(.funs = funs(scale(.))) %>% as.vector
+```
+
+
+### Visual inspection of the data
+```{r}
+library(factoextra)
+fviz_pca_ind(prcomp(df), title= "PCA - Iris data",
+             habillage = iris$Species, palette = "jco",
+             geom = "point",
+             ggtheme = theme_classic(),
+             legend = "bottom")
+```
+
+```{r}
+fviz_pca_ind(prcomp(random_df), title= "PCA - Random data",
+             habillage = iris$Species, palette = "jco",
+             geom = "point",
+             ggtheme = theme_classic(),
+             legend = "bottom")
+```
+
+### Why assessing clustering tendency?
+
+ 
+
+
+```{r}
+library(factoextra)
+set.seed(123)
+
+km_res1 <- kmeans(df, 3)
+fviz_cluster(list(data = df, cluster = km_res1$cluster),
+             ellipse.type = "norm", geom = "point", stand = FALSE,
+             palette = "jco", ggtheme = theme_classic())
+```
+
+### K-means on the random dataset
+```{r}
+km_res2 <- kmeans(random_df, 3)
+fviz_cluster(list(data = df, cluster = km_res2$cluster),
+             ellipse.type = "norm", geom = "point", stand = FALSE,
+             palette = "jco", ggtheme = theme_classic())
+```
+
+### Hierarchial clustering on random data set
+```{r}
+fviz_dend(hclust(dist(random_df)), k = 3, k_colors = "jco", as.ggplot = TRUE, show_labels = FALSE)
+```
+
+### Methods for assessing clustering tendency
+There are two methods recommended for evaluating the clustering tendency:
+
+* Statistical method - _Hopkins statistic_
+* Visual methods - _Visual Assessment of cluster Tendency (VAT) algorithm_
+
+#### Statistical Methods
+
+Hopkins statistical method.  
+
+
+* __Null hypothesis:__  the data set D is uniformly distributed (i.e., no meaningful clusters)
+* __Alternative hypothesis:__ the dataset D is not uniformly distributed (i.e., contains meaningful clusters)
+
+Rejecting the Null hypothesis occurs if the Hopkins statistic is close to zero.
+
+
+__Non-Random Data Set__
+```{r}
+library(clustertend)
+set.seed(123)
+hopkins(df,n = nrow(df)-1)
+```
+Null Hypothesis is rejected.  Clustering is possible.
+
+__Random Data Set__
+
+```{r}
+set.seed(123)
+hopkins(random_df,n = nrow(random_df) - 1)
+```
+Null Hypothesis is TRUE.  Clustering is not possible
+
+
+#### Visual methods
+
+```{r}
+fviz_dist(dist(df), show_labels = FALSE) + 
+  labs(title = "Iris data")
+```
+
+```{r}
+fviz_dist(dist(random_df), show_labels = FALSE) +
+  labs(title = "Random data")
+```
+
+## Determining the Optimal Number of Clusters
+
+There is no specific method for determing the optimal number of clusters.  There are about 30 algorithms that can be used to project the best number of clusters.   The following 3 methods are fequently consumed:
+
+* Elbow method
+* Average silhoette method
+* Gap statistic method
+
+
+### Computing the number of clusters using R
+
+Two functions to use:   
+1) factoextra::fviz_nbclust()
+2) NbClust::NbClust()  
+
+```{r}
+library(factoextra)
+library(NbClust)
+```
+
+### Data preparation
+
+```{r}
+df <- USArrests %>% mutate_all(.funs = funs(scale(.))) %>% as.vector
+head(df)
+```
+
+__Elbow Method (WSS)__
+```{r}
+fviz_nbclust(df,kmeans, method = "wss") +
+  geom_vline(xintercept = 4, linetype = 2)
+```
+
+__Silhouette Method__
+
+```{r}
+fviz_nbclust(df, kmeans, method = "silhouette") + 
+  labs(subtitle = "Silhouette method")
+```
+
+__Gap Statitic Method__
+
+```{r}
+set.seed(123)
+fviz_nbclust(df,kmeans, nstart = 25, method = "gap_stat", nboot =50) +
+  labs(subtitle = "Gap statitic method")
+```
+
+<!--chapter:end:2019-05-14-cluster-analysis.Rmd-->
+
+---
+title: "Data Profiling using Pandas in R Shiny"
+author: "[Brett R. Taylor](https://www.hitdatanow.com/)"
+categories: Business Opportunity
+output:
+  html_document:
+    df_print: paged
+    highlight: zenburn
+    theme: journal
+  html_notebook:
+    highlight: zenburn
+    theme: journal
+slug: data-profiling-pandas
+tags:
+- Data
+- Management
+- Science
+banner: img/bretts_image001.jpg
+---
+
+```{r init, echo=TRUE, message=FALSE, warning=FALSE}
+library(DBI)
+library(reticulate)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(progress = FALSE,verbose = FALSE)
+use_condaenv('mdata',conda = '/opt/conda/bin/conda',required = TRUE)
+ 
+
+```
+
+
+
+
+
+
+Data Profiling
+
+Profiling data in SQL is possible.  There are many other tools today that are better at analyzing the data, and this will increase in the future.  
+
+
+```{python}
+import sys
+from  pandas import read_csv,concat
+ 
+df1 =  read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_archive.csv")
+df2 =  read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_investigate.csv")
+df =  concat([df1,df2],ignore_index=True) 
+```
+
+### Breach Data Output
+ 
+ 
+
+ 
+## Profiling DataFrames using Data Science Tools
+
+Data Science has evolved over the last thirteen years, and one of the best tools for understanding tables in databases, and CSV file sources is based on Python.  The Python tool that should be used is pandas-profiling which is opensource, and avaiable on [GitHub](https://github.com/pandas-profiling/pandas-profiling)
+
+This is an example of how to display the analysis of pandas-profiling in the markdown file.
+
+```{python echo=TRUE, error=TRUE, message=TRUE}
+
+import sys
+import pandas as pd
+import pandas_profiling as pdp
+import matplotlib
+ 
+df1 = pd.read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_archive.csv")
+df2 = pd.read_csv("/data_source/public_data/phi_data/breach_report_2020_08_06_investigate.csv")
+df = pd.concat([df1,df2],ignore_index=True) 
+profile = df.profile_report(title='Portfolio Report', plot={'histogram': {'bins': 8}},progress_bar=True)
+
+```
+ 
+ 
+## Error Occurs and displaying HTML on Markdown fails 
+ 
+```{r display_pandas_profile_in_rmarkdown, echo=TRUE, error=TRUE, message=FALSE}
+library(shiny)
+
+ tags$div(
+                HTML(py$profile$to_html()  )
+ )  
+ 
+```
+
+
+# Fixing the RMarkdown and Shiny problem
+
+
+
+Displaying the profile using shiny works in the Rmarkdown environment.
+
+```{r display_pandas_profile_in_rmarkdown_works, echo=TRUE, error=FALSE, message=FALSE}
+library(shiny)
+reticulate::import("matplotlib") 
+py$matplotlib$use("Agg")
+tags$iframe(srcdoc=HTML(py$profile$to_html()), height=800, width=900)
+ 
+```
+
+## Enabling the Pandas Profiler to be interactive in the RMarkdown file 
+ 
+ 
+
+<!--chapter:end:data_profiling_in_R_and_Python.Rmd-->
+
